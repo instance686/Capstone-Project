@@ -1,16 +1,16 @@
-package com.reminders.location.locatoinreminder.view.activity;
+package com.reminders.location.locatoinreminder.view.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.reminders.location.locatoinreminder.R;
-import com.reminders.location.locatoinreminder.adapters.ViewPagerAdapter;
+import com.reminders.location.locatoinreminder.view.adapters.ViewPagerAdapter;
 import com.reminders.location.locatoinreminder.view.BaseModel.BaseActivity;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity {
+    public class MainActivity extends BaseActivity {
     @BindView(R.id.viewpager)
     ViewPager viewPager;
     @BindView(R.id.sliding_tabs)

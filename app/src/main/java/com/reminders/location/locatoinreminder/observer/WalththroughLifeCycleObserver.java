@@ -6,7 +6,7 @@ import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Context;
 import android.util.Log;
 
-import com.reminders.location.locatoinreminder.view.activity.WalkthroughActivity;
+import com.reminders.location.locatoinreminder.view.ui.activity.WalkthroughActivity;
 
 /**
  * Created by ayush on 26/12/17.

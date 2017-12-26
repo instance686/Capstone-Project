@@ -1,4 +1,4 @@
-package com.reminders.location.locatoinreminder.view.fragments;
+package com.reminders.location.locatoinreminder.view.ui.fragments;
 
 import android.content.Context;
 import android.os.Bundle;

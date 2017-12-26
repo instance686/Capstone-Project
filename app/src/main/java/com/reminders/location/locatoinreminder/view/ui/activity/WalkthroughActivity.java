@@ -1,7 +1,6 @@
-package com.reminders.location.locatoinreminder.view.activity;
+package com.reminders.location.locatoinreminder.view.ui.activity;
 
 import android.Manifest;
-import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -29,21 +28,17 @@ import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.ResultCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.reminders.location.locatoinreminder.R;
-import com.reminders.location.locatoinreminder.adapters.WalkThroughViewPagerAdapter;
+import com.reminders.location.locatoinreminder.view.adapters.WalkThroughViewPagerAdapter;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
-import com.reminders.location.locatoinreminder.observer.WalththroughLifeCycleObserver;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
 import com.reminders.location.locatoinreminder.util.Utils;
 import com.reminders.location.locatoinreminder.view.BaseModel.BaseActivity;
 import com.reminders.location.locatoinreminder.viewmodel.WalkthroughActivityViewModel;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Collections;
 

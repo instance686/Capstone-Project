@@ -1,4 +1,4 @@
-package com.reminders.location.locatoinreminder.adapters;
+package com.reminders.location.locatoinreminder.view.adapters;
 
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
