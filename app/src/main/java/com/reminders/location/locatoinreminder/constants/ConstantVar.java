@@ -10,4 +10,10 @@ public interface ConstantVar {
     String SHOUT="SHOUT";
     String CONTACTS="CONTACTS";
     String APPNAME="LOCSHOUT";
+    String VERIFY_PHN="Verify Phonenumber";
+    String LOGGED="LOGGED";
+
+
+    int RC_SIGN_IN = 9001;
+
 }

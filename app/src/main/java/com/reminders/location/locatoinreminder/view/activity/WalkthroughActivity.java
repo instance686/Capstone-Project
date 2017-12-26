@@ -1,6 +1,9 @@
 package com.reminders.location.locatoinreminder.view.activity;
 
 import android.Manifest;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -9,9 +12,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -20,11 +23,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.IdpResponse;
+import com.firebase.ui.auth.ResultCodes;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.adapters.WalkThroughViewPagerAdapter;
+import com.reminders.location.locatoinreminder.constants.ConstantVar;
+import com.reminders.location.locatoinreminder.observer.WalththroughLifeCycleObserver;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
 import com.reminders.location.locatoinreminder.util.Utils;
 import com.reminders.location.locatoinreminder.view.BaseModel.BaseActivity;
+import com.reminders.location.locatoinreminder.viewmodel.WalkthroughActivityViewModel;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Collections;
 
 import butterknife.BindView;
 
@@ -49,15 +70,25 @@ public class WalkthroughActivity extends BaseActivity {
     private int currentAPIVersion;
     @BindView(R.id.next)
     FloatingActionButton next;
+    private FirebaseUser currentUser;
+    private FirebaseAuth mAuth;
 
+
+    private WalkthroughActivityViewModel walkthroughActivityViewModel;
+
+    public WalkthroughActivity() throws FileNotFoundException {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        findViewById(buttons[0]).setSelected(true);
-        viewPager.setAdapter(new WalkThroughViewPagerAdapter(getLayoutInflater()));
-        viewPager.setOffscreenPageLimit(2);
 
+        walkthroughActivityViewModel= ViewModelProviders.of(this).get(WalkthroughActivityViewModel.class);
+
+        findViewById(buttons[0]).setSelected(true);
+
+        viewPager.setAdapter(new WalkThroughViewPagerAdapter(this,getLayoutInflater(),walkthroughActivityViewModel));
+        viewPager.setOffscreenPageLimit(2);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -85,7 +116,7 @@ public class WalkthroughActivity extends BaseActivity {
         currentAPIVersion = Build.VERSION.SDK_INT;
 
         if (currentAPIVersion < android.os.Build.VERSION_CODES.M) {
-            start.setText("Verify Phone Number");
+            start.setText(ConstantVar.VERIFY_PHN);
         }
 }
     public void buttonClicked(View view) {      //Step 1
@@ -146,19 +177,94 @@ public class WalkthroughActivity extends BaseActivity {
     }
     public void startVerification() {
 
+
+        mAuth = FirebaseAuth.getInstance();
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setTheme(R.style.AppTheme)
+                        .setAvailableProviders(
+                                Collections.singletonList(
+                                        new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build()
+                                ))
+                        .build(),
+                ConstantVar.RC_SIGN_IN);
+
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ConstantVar.RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+            // Successfully signed in
+            if (resultCode == ResultCodes.OK) {
+                currentUser = mAuth.getCurrentUser();
+               // FirebaseMessaging.getInstance().subscribeToTopic(currentUser.getUid());
+                if (currentUser.getDisplayName() == null)
+                    viewCardView();
+                else
+                    //Toast.makeText(this, ""+currentUser.getDisplayName(), Toast.LENGTH_SHORT).show();
+                    loginUserOnServer();
+                return;
+            } else {
+                // Sign in failed
+                if (response == null) {
+                    // User pressed back button
+                    Toast.makeText(this, "Login Canceled", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (response.getErrorCode() == ErrorCodes.NO_NETWORK) {
+                    Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
+                    Log.e("Login", "Unknown Error");
+                    return;
+                }
+            }
+            Log.e("Login", "Unknown sign in response");
+        }
+    }
+
+    private void viewCardView() {
+        name_card.setVisibility(View.VISIBLE);
+        editText.requestFocus();
+    }
+
     public void doneAll(final View view) {
         if (editText.getText().toString().equalsIgnoreCase("")) {
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
         } else {
             final String Name = editText.getText().toString();
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(Name)
+                    .build();
+            currentUser.updateProfile(profileUpdates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            initials.setText(new Utils().getInitial(Name));
+                            initial_background.startAnimation(AnimationUtils.loadAnimation(WalkthroughActivity.this, R.anim.selection));
+                            initial_background.setVisibility(View.VISIBLE);
+                            view.setClickable(false);
+                            loginUserOnServer();
+                        }
+                    });
 
 
         }
     }
+    private void loginUserOnServer() {
+        editText.clearFocus();
+        sharedPreferenceSingleton.saveAs(this,ConstantVar.LOGGED, true);
+        startActivity(new Intent(this, MainActivity.class));
+        overridePendingTransition(R.anim.view_enter, R.anim.view_exit);
+        finish();
+    }
 
 
-    public void nextPage(View view) {
+        public void nextPage(View view) {
         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
     }
 

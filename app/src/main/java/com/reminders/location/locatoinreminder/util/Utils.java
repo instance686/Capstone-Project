@@ -9,6 +9,17 @@ import android.net.NetworkInfo;
  */
 
 public class Utils {
+    public String getInitial(String s) {
+        int spaceIndex = s.indexOf(' ');
+        try {
+            if (spaceIndex != -1) {
+                return "" + s.charAt(0) + s.charAt(spaceIndex + 1);
+            }
+        } catch (Exception e) {
+        }
+
+        return "" + s.charAt(0);
+    }
     public static boolean isConnectedToNetwork(Context context){
         ConnectivityManager cm =
                 (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
