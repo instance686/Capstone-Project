@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "211805383621",
-    "firebase_url": "https://capstoneproject-f1cf2.firebaseio.com",
-    "project_id": "capstoneproject-f1cf2",
-    "storage_bucket": "capstoneproject-f1cf2.appspot.com"
+    "project_number": "128609872315",
+    "firebase_url": "https://capstone-project-master.firebaseio.com",
+    "project_id": "capstone-project-master",
+    "storage_bucket": "capstone-project-master.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:211805383621:android:b2f869ba3b4d34da",
+        "mobilesdk_app_id": "1:128609872315:android:b2f869ba3b4d34da",
         "android_client_info": {
           "package_name": "com.reminders.location.locatoinreminder"
         }
       },
       "oauth_client": [
         {
-          "client_id": "211805383621-l34j9mt64ajso9t9n95shd9vrk0fv9fn.apps.googleusercontent.com",
+          "client_id": "128609872315-lml1fttijc2nhlq3hc2oc00kd6muumfk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.reminders.location.locatoinreminder",
@@ -23,13 +23,13 @@
           }
         },
         {
-          "client_id": "211805383621-v2hcceqb4hhh37me1khi61one0jd7s45.apps.googleusercontent.com",
+          "client_id": "128609872315-nl5t1b22gfo3vt3bg3qs6u4ekelqdchl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDXaPNMJfj3-Juaz78vJYfGxWKkHs5UoB8"
+          "current_key": "AIzaSyBDwHx1v0HD9R16Ucg6E7OvBLz5kti8IWU"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "211805383621-v2hcceqb4hhh37me1khi61one0jd7s45.apps.googleusercontent.com",
+              "client_id": "128609872315-nl5t1b22gfo3vt3bg3qs6u4ekelqdchl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

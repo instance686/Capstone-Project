@@ -15,5 +15,6 @@ public interface ConstantVar {
 
 
     int RC_SIGN_IN = 9001;
+    int CONTACT_LOADER=1;
 
 }

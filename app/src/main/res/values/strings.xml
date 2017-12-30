@@ -3,5 +3,9 @@
     <string name="give_permission">Give Permissions</string>
     <string name="your_name">Your Name</string>
     <string name="permission_rational">Contacts access needed to show your App contacts</string>
+    <string name="syncing_contacts">Syncing Contacts</string>
+    <string name="invite">Invite Family and Friends to LocShout</string>
+    <string name="invite_button">Invite</string>
+    <string name="refresh_contacts">Refresh Contacts</string>
 
 </resources>

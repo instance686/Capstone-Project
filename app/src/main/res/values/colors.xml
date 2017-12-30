@@ -10,4 +10,18 @@
     <color name="colorAccentDark">#c50e29</color>
     <color name="colorAccentLight">#ff867f</color>
     <color name="tan_background">#FFF7DA</color>
+
+
+    <color name="textColorPrimary1">#212121</color>
+    <color name="textColorSecondary1">#424242</color>
+    <color name="colorMainBackground1">#FFFFFF</color>
+
+    <color name="color1">#ffcdd2</color>
+    <color name="color2">#E1BEE7</color>
+    <color name="color3">#bbada0</color>
+    <color name="color4">#FFE0B2</color>
+    <color name="color5">#B2EBF2</color>
+
+  <color name="contactBackground">#f5f5f5</color>
+
 </resources>

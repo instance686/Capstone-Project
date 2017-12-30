@@ -1,6 +1,6 @@
 package com.reminders.location.locatoinreminder;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.reminders.location.locatoinreminder.database.AppDatabase;
 
@@ -8,19 +8,29 @@ import com.reminders.location.locatoinreminder.database.AppDatabase;
  * Created by ayush on 25/12/17.
  */
 
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
+    private String UID;
 
-    private AppExecutors mAppExecutors;
+
+
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-        mAppExecutors = new AppExecutors();
+        getDatabase();
     }
 
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
+
+
     public AppDatabase getDatabase() {
-        return AppDatabase.getInstance(this, mAppExecutors);
+        return AppDatabase.getInstance(this);
     }
 
     public DataRepository getRepository() {

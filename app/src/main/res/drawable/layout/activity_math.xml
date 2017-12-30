@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.ui.activity.MathWake">
+
+    <!-- -->
+    <LinearLayout
+        android:id="@+id/row_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal"
+        android:layout_marginBottom="1dp">
+
+        <Button
+            android:id="@+id/n9"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:background="?iconDual"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:text="@string/_9"
+            android:fontFamily="@font/semi_bold"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:layout_marginStart="1dp" />
+
+        <Button
+            android:id="@+id/n3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:background="?iconDual"
+            android:layout_weight="0.25"
+            android:text="@string/_3"
+            android:fontFamily="@font/semi_bold"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:layout_marginStart="1dp" />
+
+        <Button
+            android:id="@+id/n7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:background="?iconDual"
+            android:layout_weight="0.25"
+            android:textColor="@android:color/white"
+            android:text="@string/_7"
+            android:fontFamily="@font/semi_bold"
+            android:textSize="24sp"
+            android:layout_marginStart="1dp" />
+
+        <Button
+            android:id="@+id/n6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:background="?iconDual"
+            android:layout_weight="0.25"
+            android:textColor="@android:color/white"
+            android:text="@string/_6"
+            android:fontFamily="@font/semi_bold"
+            android:textSize="24sp"
+            android:layout_marginStart="1dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/row_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/row_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/n2"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:background="?iconDual"
+            android:text="@string/_2"
+            android:fontFamily="@font/semi_bold"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:layout_marginStart="1dp" />
+
+        <Button
+            android:id="@+id/n1"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:background="?iconDual"
+            android:textColor="@android:color/white"
+            android:text="@string/_1"
+            android:fontFamily="@font/semi_bold"
+            android:textSize="24sp"
+            android:layout_marginStart="1dp" />
+
+        <Button
+            android:id="@+id/n0"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:background="?iconDual"
+            android:textColor="@android:color/white"
+            android:text="@string/_0"
+            android:fontFamily="@font/semi_bold"
+            android:textSize="24sp"
+            android:layout_marginStart="1dp" />
+
+        <Button
+            android:id="@+id/clear_all"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:background="?iconDual"
+            android:textColor="@android:color/white"
+            android:layout_marginStart="1dp"
+            android:fontFamily="@font/semi_bold"
+            android:text="@string/_C"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/row_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/row_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/n5"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_weight="0.25"
+            android:background="?iconDual"
+            android:textColor="@android:color/white"
+            android:text="@string/_5"
+            android:fontFamily="@font/semi_bold"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/n4"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_weight="0.25"
+            android:background="?iconDual"
+            android:textColor="@android:color/white"
+            android:text="@string/_4"
+            android:fontFamily="@font/semi_bold"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/n8"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_weight="0.25"
+            android:background="?iconDual"
+            android:textColor="@android:color/white"
+            android:text="@string/_8"
+            android:fontFamily="@font/semi_bold"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/bck"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_weight="0.25"
+            android:textColor="@android:color/white"
+            android:background="?iconDual"
+            android:text="@string/_BCK"
+            android:fontFamily="@font/semi_bold"
+            android:textAllCaps="false"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/snooze"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        app:srcCompat="@drawable/ic_snooze"
+        android:background="@drawable/border_background"
+        app:layout_constraintBottom_toBottomOf="@+id/ans"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ans"
+        android:onClick="snoozeAlarm" />
+
+    <ImageButton
+        android:id="@+id/stop"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ans"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ans"
+        app:srcCompat="@drawable/ic_sound_off"
+        android:background="@drawable/border_background"
+        android:onClick="stopAlarm" />
+
+    <TextView
+        android:id="@+id/ans"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="70dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:gravity="center"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="50sp"
+        android:background="#f5f5f5"
+        app:layout_constraintBottom_toTopOf="@+id/row_1"
+        app:layout_constraintEnd_toStartOf="@id/snooze"
+        app:layout_constraintStart_toEndOf="@id/stop"
+        tools:text="28" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@id/ans"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/number1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/light"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="50sp"
+            tools:text="14" />
+
+        <TextView
+            android:id="@+id/operator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/light"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="40sp"
+            android:text="+" />
+
+        <TextView
+            android:id="@+id/number2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/light"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="50sp"
+            tools:text="14" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="12sp"
+        android:text="@string/math_hint"
+        app:layout_constraintEnd_toEndOf="@+id/ans"
+        app:layout_constraintStart_toStartOf="@+id/ans"
+        app:layout_constraintTop_toBottomOf="@+id/ans" />
+
+    <RelativeLayout
+        android:id="@+id/hidden"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="?iconDual"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="Alarm Stopped"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="36sp"
+            android:fontFamily="@font/light" />
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

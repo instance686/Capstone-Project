@@ -1,0 +1,315 @@
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.ui.fragment.Settings"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingEnd="2dp"
+        android:paddingStart="2dp">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/setting_alarm_method"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="1dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?selectableItemBackgroundBorderless"
+            card_view:cardCornerRadius="2dp"
+            card_view:cardElevation="0dp"
+            card_view:cardBackgroundColor="?android:colorBackground">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/setting_method_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    app:srcCompat="@drawable/ic_swipe" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="26dp"
+                    android:layout_toEndOf="@+id/setting_method_image"
+                    android:text="@string/select_wake_method"
+                    android:fontFamily="@font/regular"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="15sp" />
+
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/setting_volume"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="1dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?selectableItemBackgroundBorderless"
+            card_view:cardCornerRadius="2dp"
+            card_view:cardElevation="0dp"
+            card_view:cardBackgroundColor="?android:colorBackground">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/setting_volume_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    app:srcCompat="@drawable/ic_music"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_toEndOf="@id/setting_volume_image"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Alarm Volume : 7"
+                        android:textColor="?android:textColorPrimary"/>
+                    <android.support.v7.widget.AppCompatSeekBar
+                        style="@style/Widget.AppCompat.SeekBar.Discrete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:max="7"
+                        android:text="@string/support_developement"
+                        android:layout_marginTop="8dp"/>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/setting_support"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="1dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?selectableItemBackgroundBorderless"
+            card_view:cardCornerRadius="2dp"
+            card_view:cardElevation="0dp"
+            card_view:cardBackgroundColor="?android:colorBackground">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/setting_support_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    app:srcCompat="@drawable/ic_make_a_donation" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/support_developement"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="24dp"
+                    android:fontFamily="@font/regular"
+                    android:layout_toEndOf="@id/setting_support_image" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+        <!-- <android.support.v7.widget.CardView
+             android:id="@+id/setting_theme"
+             android:layout_width="match_parent"
+             android:layout_height="75dp"
+             android:layout_marginTop="2dp
+             android:clickable="true"
+             android:focusable="true"
+             android:foreground="?selectableItemBackgroundBorderless"
+             card_view:cardCornerRadius="2dp
+             card_view:cardElevation="0dp"
+             card_view:cardBackgroundColor="?card_color">
+
+             <RelativeLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center">
+
+                 <Switch
+                     android:id="@+id/setting_theme_switch"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:enabled="true"
+                     android:thumb="@drawable/custom_switch_thumb"
+                     android:track="@drawable/switch_track_custom"
+                     android:layout_alignParentStart="true"
+                     android:layout_marginStart="12dp" />
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Switch theme"
+                     android:textColor="?android:textColorPrimary"
+                     android:textSize="15sp"
+                     android:layout_centerVertical="true"
+                     android:layout_marginStart="16dp"
+                     android:fontFamily="@font/regular"
+                     android:layout_toEndOf="@id/setting_theme_switch" />
+
+             </RelativeLayout>
+
+         </android.support.v7.widget.CardView>-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/setting_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="1dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?selectableItemBackgroundBorderless"
+            card_view:cardCornerRadius="2dp"
+            card_view:cardElevation="0dp"
+            card_view:cardBackgroundColor="?android:colorBackground">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/setting_privacy_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    app:srcCompat="@drawable/ic_pages" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/privacy_policy"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="24dp"
+                    android:fontFamily="@font/regular"
+                    android:layout_toEndOf="@id/setting_privacy_image" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/setting_rate"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="1dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?selectableItemBackgroundBorderless"
+            card_view:cardCornerRadius="2dp"
+            card_view:cardElevation="0dp"
+            card_view:cardBackgroundColor="?android:colorBackground">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/setting_rate_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    app:srcCompat="@drawable/ic_star" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rate_with_5_stars"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="24dp"
+                    android:fontFamily="@font/regular"
+                    android:layout_toEndOf="@id/setting_rate_image" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/setting_share"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginTop="1dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?selectableItemBackgroundBorderless"
+            card_view:cardCornerRadius="2dp"
+            card_view:cardElevation="0dp"
+            card_view:cardBackgroundColor="?android:colorBackground">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/setting_share_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    app:srcCompat="@drawable/ic_invite" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/invite_your_friends"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/regular"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="24dp"
+                    android:layout_toEndOf="@id/setting_share_image" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+
+</android.support.v4.widget.NestedScrollView>
