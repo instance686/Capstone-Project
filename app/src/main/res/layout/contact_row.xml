@@ -52,10 +52,10 @@
             android:fontFamily="@font/semi_bold"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/pic"
-            app:layout_constraintEnd_toEndOf="@+id/pic"
-            app:layout_constraintStart_toStartOf="@+id/pic"
-            app:layout_constraintTop_toTopOf="@+id/pic"
+            app:layout_constraintBottom_toBottomOf="@id/pic"
+            app:layout_constraintEnd_toEndOf="@id/pic"
+            app:layout_constraintStart_toStartOf="@id/pic"
+            app:layout_constraintTop_toTopOf="@id/pic"
             android:transitionName="initials"
             tools:ignore="UnusedAttribute" />
 
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/pic"
+            app:layout_constraintStart_toEndOf="@id/pic"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="12dp"
@@ -94,8 +94,8 @@
             android:id="@+id/selected_state"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            app:layout_constraintBottom_toBottomOf="@+id/pic"
-            app:layout_constraintEnd_toEndOf="@+id/pic"
+            app:layout_constraintBottom_toBottomOf="@id/pic"
+            app:layout_constraintEnd_toEndOf="@id/pic"
             app:srcCompat="@drawable/ic_selected"
             android:background="@drawable/selected" />
 

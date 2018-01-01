@@ -24,25 +24,15 @@ import com.reminders.location.locatoinreminder.viewmodel.WalkthroughActivityView
 public class WalkThroughViewPagerAdapter extends PagerAdapter {
 
     private WalkthroughActivityViewModel walkthroughActivityViewModel;
-    final Observer<Integer> imageSrcObserver=new Observer<Integer>() {
-        @Override
-        public void onChanged(@Nullable Integer integer) {
+    final Observer<Integer> imageSrcObserver=(@Nullable Integer integer)->{
             displayImageSrc(integer);
-        }
+
     };
-    final Observer<String> headingObserver=new Observer<String>() {
-        @Override
-        public void onChanged(@Nullable String s) {
+    final Observer<String> headingObserver=(@Nullable String s)->{
             displayHeading(s);
-
-        }
     };
-    final Observer<String> subHeadingObserver=new Observer<String>() {
-        @Override
-        public void onChanged(@Nullable String s) {
+    final Observer<String> subHeadingObserver=(@Nullable String s)->{
             displaySubHeading(s);
-
-        }
     };
 
     LifecycleOwner lifecycleOwner;

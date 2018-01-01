@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,6 @@ public class ContactsAdapter extends RecyclerView.Adapter {
         this.contacts=contacts;
         c=context;
         contactSelection= this.contactSelection;
-
     }
 
     @Override
@@ -65,20 +65,18 @@ public class ContactsAdapter extends RecyclerView.Adapter {
         contactsViewHolder.cardView.setCardBackgroundColor(contact.isSelection()?colorSelected:colorNormal);
         ((ContactsViewHolder)holder).contact=contact;
     }
-    public void addItems(List<Contact_Entity> contact_entityList){
 
+
+
+    public void addItems(List<Contact_Entity> contact_entityList){
         this.contacts= (ArrayList<Contact_Entity>) contact_entityList;
         notifyDataSetChanged();
     }
 
-    @Override
-    public long getItemId(int position) {
-        return contacts.size();
-    }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return contacts.size();
     }
     public class ContactsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
         Contact_Entity contact;
@@ -98,7 +96,7 @@ public class ContactsAdapter extends RecyclerView.Adapter {
 
         public ContactsViewHolder(View itemView){
             super(itemView);
-            ButterKnife.bind(c,itemView);
+            ButterKnife.bind(this,itemView);
             cardView.setOnClickListener(this);
             cardView.setOnClickListener(this);
         }

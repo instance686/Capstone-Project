@@ -44,7 +44,7 @@ import java.util.Collections;
 
 import butterknife.BindView;
 
-public class WalkthroughActivity extends BaseActivity {
+public class WalkthroughActivity extends BaseActivity  {
 
     private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
     private static final int REQUEST_PERMISSION = 0;

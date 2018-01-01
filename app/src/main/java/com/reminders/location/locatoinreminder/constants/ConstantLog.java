@@ -10,6 +10,7 @@ public interface ConstantLog {
         String SHOUT_TAG="SHOUTS_FRAGMENT";
         String CONTACT_TAG="CONTACT_FRAGMENT";
         String REMINDERCHAT_TAG="REMINDERCHAT_FRAGMENT";
+        String CONTACTS_FRAGMENT_TAG="CONTACTS_FRAGMENT";
     }
 
     interface MethodConstants{

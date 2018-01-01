@@ -12,6 +12,7 @@ public interface ConstantVar {
     String APPNAME="LOCSHOUT";
     String VERIFY_PHN="Verify Phonenumber";
     String LOGGED="LOGGED";
+    String SELF_SAVED="SELF_SAVED";
 
 
     int RC_SIGN_IN = 9001;

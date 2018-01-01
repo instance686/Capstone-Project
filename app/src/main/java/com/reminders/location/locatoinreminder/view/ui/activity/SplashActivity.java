@@ -5,10 +5,9 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.reminders.location.locatoinreminder.R;
+import com.reminders.location.locatoinreminder.MyApplication;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
-import com.reminders.location.locatoinreminder.view.BaseModel.BaseActivity;
 
 public class SplashActivity extends AppCompatActivity {
     private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
@@ -23,14 +22,16 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();
                 } else {
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    startActivity(new Intent(SplashActivity.this, WalkthroughActivity.class));
                     finish();
                 }
             }
         },100);
 
 
-
     }
 
+    public MyApplication getMyapp() {
+        return (MyApplication) getApplicationContext();
+    }
 }

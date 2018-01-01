@@ -2,15 +2,12 @@ package com.reminders.location.locatoinreminder.view.ui.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.reminders.location.locatoinreminder.MyApplication;
 import com.reminders.location.locatoinreminder.R;
@@ -43,7 +39,7 @@ import butterknife.Unbinder;
 
 public class ContactsFragment extends BaseFragment implements ContactSelection,DialogInterface.OnClickListener {
 
-    private ArrayList<Contact_Entity> contactArrayList = new ArrayList<>();
+    private ArrayList<Contact_Entity> c = new ArrayList<>();
     @BindView(R.id.contacts)
     RecyclerView recyclerView;
     private ContactsAdapter contactsAdapter;
@@ -72,7 +68,7 @@ public class ContactsFragment extends BaseFragment implements ContactSelection,D
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.v(ConstantLog.ViewConstants.CONTACT_TAG, ConstantLog.MethodConstants.ONCREATEVIEW_TAG);
+            Log.v(ConstantLog.ViewConstants.CONTACT_TAG, ConstantLog.MethodConstants.ONCREATEVIEW_TAG);
         View view= inflater.inflate(R.layout.fragment_contacts, container, false);
         unbinder=ButterKnife.bind(this,view);
         contactsFragmentViewModel= ViewModelProviders.of(this).get(ContactsFragmentViewModel.class);
@@ -81,7 +77,7 @@ public class ContactsFragment extends BaseFragment implements ContactSelection,D
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         contactsAdapter = new ContactsAdapter(getActivity(), new ArrayList<Contact_Entity>(),this);
         recyclerView.setAdapter(contactsAdapter);
-        contactsFragmentViewModel.getContactList(getMyapp().getDatabase()).observe(ContactsFragment.this,observer);
+        contactsFragmentViewModel.getContactList(getMyapp().getDatabase()).observe(getActivity(),observer);
 
 
         return view;

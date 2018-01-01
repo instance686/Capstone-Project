@@ -20,6 +20,7 @@ public class ContactsFragmentViewModel extends ViewModel {
         contactList = appDatabase.contactDao().getAll();
         return contactList;
     }
+
     public ArrayList<Contact_Entity> getContacts() {
         return (ArrayList<Contact_Entity>) contactList.getValue();
     }

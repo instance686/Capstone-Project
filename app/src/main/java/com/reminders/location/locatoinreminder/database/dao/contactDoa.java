@@ -32,4 +32,5 @@ public interface contactDoa {
     @Query("SELECT contact_name,contact_number FROM contact_entity WHERE contact_number=:phone")
     ContactFetch getContact(String phone);
 
+
 }
