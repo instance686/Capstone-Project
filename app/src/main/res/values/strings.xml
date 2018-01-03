@@ -7,5 +7,7 @@
     <string name="invite">Invite Family and Friends to LocShout</string>
     <string name="invite_button">Invite</string>
     <string name="refresh_contacts">Refresh Contacts</string>
+    <string name="note_hint">Note...</string>
+    <string name="search_hint">Search...</string>
 
 </resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="search">@drawable/search_icon</drawable>
+    <drawable name="refresh">@drawable/refresh_icon</drawable>
+    <drawable name="list_icon">@drawable/checklist</drawable>
+</resources>

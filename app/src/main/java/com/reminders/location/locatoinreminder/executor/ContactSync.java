@@ -63,8 +63,10 @@ public class ContactSync extends AsyncTask<Void,Void,Void>{
             allContactsList.add(new ContactFetch(name,number));
             numberList.add(number);
         }
-        allContactsList.add(new ContactFetch("Self","Number"));
-        numberList.add("Number");
+        allContactsList.add(new ContactFetch("Self","8081775811"));
+        numberList.add("8081775811");
+        allContactsList.add(new ContactFetch("Self1","7905029506"));
+        numberList.add("7905029506");
 
 
         data.close();
@@ -78,11 +80,13 @@ public class ContactSync extends AsyncTask<Void,Void,Void>{
 
     private void getAppContacts(ArrayList<String> numberList){
         for(ContactFetch contactFetch:allContactsList){
-            if(contactFetch.getContact_name().equalsIgnoreCase("Self")){
+            if(contactFetch.getContact_name().equalsIgnoreCase("Self")
+                    ||contactFetch.getContact_name().equalsIgnoreCase("Self1")){
             appContacts.add(new Contact_Entity(contactFetch.getContact_number(),contactFetch.getContact_name(),false));
             }
-            appDatabase.contactDao().insertFeed(appContacts);
         }
+        appDatabase.contactDao().insertFeed(appContacts);
+
 
     }
     }

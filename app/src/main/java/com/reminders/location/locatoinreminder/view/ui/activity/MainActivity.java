@@ -19,7 +19,7 @@ import butterknife.BindView;
     ViewPager viewPager;
     @BindView(R.id.sliding_tabs)
     TabLayout tabLayout;
-        private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
+    private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
 
 
 

@@ -37,14 +37,13 @@ import butterknife.Unbinder;
  * Created by ayush on 25/12/17.
  */
 
-public class ContactsFragment extends BaseFragment implements ContactSelection,DialogInterface.OnClickListener {
+public class ContactsFragment extends BaseFragment implements DialogInterface.OnClickListener {
 
     private ArrayList<Contact_Entity> c = new ArrayList<>();
     @BindView(R.id.contacts)
     RecyclerView recyclerView;
     private ContactsAdapter contactsAdapter;
     private Utils utils = new Utils();
-    private ArrayList<Integer> selected_positions = new ArrayList<>();
 
     private ContactsFragmentViewModel contactsFragmentViewModel;
     @BindView(R.id.button_done)
@@ -74,8 +73,8 @@ public class ContactsFragment extends BaseFragment implements ContactSelection,D
         contactsFragmentViewModel= ViewModelProviders.of(this).get(ContactsFragmentViewModel.class);
         UID=getMyapp().getUID();
         recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        contactsAdapter = new ContactsAdapter(getActivity(), new ArrayList<Contact_Entity>(),this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        contactsAdapter = new ContactsAdapter(getActivity(), new ArrayList<Contact_Entity>());
         recyclerView.setAdapter(contactsAdapter);
         contactsFragmentViewModel.getContactList(getMyapp().getDatabase()).observe(getActivity(),observer);
 
@@ -94,7 +93,6 @@ public class ContactsFragment extends BaseFragment implements ContactSelection,D
             }else {
                 empty_state.setVisibility(View.VISIBLE);
             }
-            selected_positions.clear();
             done.hide();
         }
     };
@@ -120,28 +118,7 @@ public class ContactsFragment extends BaseFragment implements ContactSelection,D
         return UID;
     }
 
-    public ArrayList<Contact_Entity> getSelectedContacts(){
-        ArrayList<Contact_Entity> selected_contacts=new ArrayList<>();
-        for(int i=0;i<selected_positions.size();i++){
-            selected_contacts.add(contactsFragmentViewModel.getContacts().get(selected_positions.get(i)));
-        }
-        return selected_contacts;
-    }
 
 
-    @Override
-    public void onContactSelected(boolean selected, int position) {
 
-        if (selected) {
-            selected_positions.add(position);
-                     done.show();
-        } else {
-            Integer value = position;
-            selected_positions.remove(value);
-            if (selected_positions.size() == 0) {
-                               done.hide();
-            } else {
-                }
-        }
-    }
 }
