@@ -9,5 +9,8 @@
     <string name="refresh_contacts">Refresh Contacts</string>
     <string name="note_hint">Note...</string>
     <string name="search_hint">Search...</string>
+    <string name="location">Location:</string>
+    <string name="coordinates">Coordinates</string>
+    <string name="loc">Location</string>
 
 </resources>

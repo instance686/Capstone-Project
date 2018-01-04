@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".view.ui.activity.MainActivity" />
-        <activity android:name=".view.ui.activity.WalkthroughActivity"></activity>
+        <activity android:name=".view.ui.activity.WalkthroughActivity" />
         <activity android:name=".view.ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ui.activity.ChatActivity"></activity>
+        <activity android:name=".view.ui.activity.ChatActivity" />
+        <activity android:name=".view.ui.activity.ReminderSet"></activity>
     </application>
 
 </manifest>
