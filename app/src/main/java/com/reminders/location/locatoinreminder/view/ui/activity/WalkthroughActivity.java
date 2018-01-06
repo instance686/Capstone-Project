@@ -31,7 +31,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.reminders.location.locatoinreminder.R;
+import com.reminders.location.locatoinreminder.pojo.User;
 import com.reminders.location.locatoinreminder.view.adapters.WalkThroughViewPagerAdapter;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
@@ -67,6 +73,7 @@ public class WalkthroughActivity extends BaseActivity  {
     FloatingActionButton next;
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
+    private DatabaseReference databaseReference;
 
 
     private WalkthroughActivityViewModel walkthroughActivityViewModel;
@@ -81,6 +88,7 @@ public class WalkthroughActivity extends BaseActivity  {
         walkthroughActivityViewModel= ViewModelProviders.of(this).get(WalkthroughActivityViewModel.class);
 
         findViewById(buttons[0]).setSelected(true);
+        databaseReference=FirebaseDatabase.getInstance().getReference("users");
 
         viewPager.setAdapter(new WalkThroughViewPagerAdapter(this,getLayoutInflater(),walkthroughActivityViewModel));
         viewPager.setOffscreenPageLimit(2);
@@ -251,6 +259,43 @@ public class WalkthroughActivity extends BaseActivity  {
         }
     }
     private void loginUserOnServer() {
+        boolean checkUser=checkUserInDatabase();
+        if(!checkUser)
+            insertUserOnDatabase();
+        gotoMain();
+    }
+    public boolean checkUserInDatabase(){
+        //User user = new User(currentUser.getDisplayName(), currentUser.getPhoneNumber());
+        final boolean[] userRegistered = new boolean[1];
+        databaseReference.child(currentUser.getUid())
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                User u=dataSnapshot.getValue(User.class);
+                                if(u==null) {
+                                    userRegistered[0] = false;
+                                }
+                                else {
+                                    userRegistered[0] = true;
+                                }
+                                }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Toast.makeText(WalkthroughActivity.this,"Failed to read user data",Toast.LENGTH_LONG).show();
+                                userRegistered[0]=false;
+                            }
+                        });
+        return userRegistered[0];
+    }
+    public void insertUserOnDatabase(){
+        User user=new User(currentUser.getDisplayName(),currentUser.getPhoneNumber());
+        databaseReference.child(currentUser.getUid()).setValue(user);
+    }
+
+
+
+    public void gotoMain() {
         editText.clearFocus();
         sharedPreferenceSingleton.saveAs(this,ConstantVar.LOGGED, true);
         startActivity(new Intent(this, MainActivity.class));
@@ -259,7 +304,8 @@ public class WalkthroughActivity extends BaseActivity  {
     }
 
 
-        public void nextPage(View view) {
+
+    public void nextPage(View view) {
         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
     }
 
