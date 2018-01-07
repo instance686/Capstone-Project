@@ -1,10 +1,14 @@
 package com.reminders.location.locatoinreminder.pojo;
 
+import android.arch.persistence.room.ColumnInfo;
+
 /**
  * Created by ayush on 31/12/17.
  */
 public class ContactFetch {
+    @ColumnInfo(name = "contact_name")
     private String contact_name;
+    @ColumnInfo(name = "contact_number")
     private String contact_number;
 
     public ContactFetch(String contact_name, String contact_number) {

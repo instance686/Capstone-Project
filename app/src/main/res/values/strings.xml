@@ -12,5 +12,7 @@
     <string name="location">Location:</string>
     <string name="coordinates">Coordinates</string>
     <string name="loc">Location</string>
+    <string name="delete_reminder">Delete Reminder</string>
+    <string name="change_location">Change Location</string>
 
 </resources>

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/background"
+    android:background="@color/greyBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -75,6 +76,36 @@
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.Toolbar>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_options"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?colorPrimary"
+            android:visibility="gone">
+
+            <ImageButton
+                android:id="@+id/backOnLongClick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/ripple"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_back" />
+            <TextView
+            android:id="@+id/cardCounter"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/backOnLongClick"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
@@ -88,6 +119,9 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#f5f5f5" />
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/chat_messages"
@@ -97,6 +131,8 @@
             android:layout_below="@id/view"
             android:layout_marginBottom="16dp"
             android:layoutAnimation="@anim/layout_animation_from_bottom" />
+
+        </android.support.v4.widget.NestedScrollView>
 
 
         <android.support.constraint.ConstraintLayout
@@ -115,24 +151,8 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/search_hint"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/transparent"
-                    android:imeOptions="actionSend|flagNoEnterAction"
-                    android:inputType="textMultiLine"
-                    android:maxLength="1000"
-                    android:maxLines="5"
-                    android:textColor="?android:textColorPrimary"
-                    android:textColorHint="#757575"
-                    android:textSize="15sp"
-                    android:visibility="gone"/>
                 <TextView
+                    android:id="@+id/notesButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/note_hint"
@@ -151,38 +171,38 @@
 
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/checklist_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/list_icon"
+                    android:background="@drawable/ripple"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/refresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/refresh"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                android:id="@+id/search_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/list_icon"
-                android:background="@drawable/ripple"
+                app:srcCompat="@drawable/search"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1" />
-
-            <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/refresh"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1" />
-
-            <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/search"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1" />
             </LinearLayout>
 
 

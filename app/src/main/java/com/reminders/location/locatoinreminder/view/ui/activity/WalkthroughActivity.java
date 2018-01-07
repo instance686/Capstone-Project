@@ -291,12 +291,16 @@ public class WalkthroughActivity extends BaseActivity  {
     public void insertUserOnDatabase(){
         User user=new User(currentUser.getDisplayName(),currentUser.getPhoneNumber());
         databaseReference.child(currentUser.getUid()).setValue(user);
+
+
+
     }
 
 
 
     public void gotoMain() {
         editText.clearFocus();
+        sharedPreferenceSingleton.saveAs(this,ConstantVar.CONTACT_SELF,currentUser.getPhoneNumber());
         sharedPreferenceSingleton.saveAs(this,ConstantVar.LOGGED, true);
         startActivity(new Intent(this, MainActivity.class));
         overridePendingTransition(R.anim.view_enter, R.anim.view_exit);

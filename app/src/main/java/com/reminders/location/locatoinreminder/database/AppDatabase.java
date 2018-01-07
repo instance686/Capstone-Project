@@ -5,15 +5,18 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import com.reminders.location.locatoinreminder.database.dao.cardDoa;
 import com.reminders.location.locatoinreminder.database.dao.contactDoa;
+import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
 import com.reminders.location.locatoinreminder.database.entity.Contact_Entity;
 
 /**
  * Created by ayush on 25/12/17.
  */
-@Database(entities = {Contact_Entity.class}, version = 1)
+@Database(entities = {Contact_Entity.class, ChatCards_Entity.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract contactDoa contactDao();
+    public abstract cardDoa cardDoa();
 
     private static AppDatabase sInstance;
     public static final String DATABASE_NAME="My_DB";
