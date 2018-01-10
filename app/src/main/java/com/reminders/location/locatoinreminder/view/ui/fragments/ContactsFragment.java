@@ -20,11 +20,10 @@ import com.reminders.location.locatoinreminder.MyApplication;
 import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.constants.ConstantLog;
 import com.reminders.location.locatoinreminder.database.entity.Contact_Entity;
-import com.reminders.location.locatoinreminder.entityinterface.ContactSelection;
 import com.reminders.location.locatoinreminder.util.Utils;
 import com.reminders.location.locatoinreminder.view.BaseModel.BaseFragment;
 import com.reminders.location.locatoinreminder.view.adapters.ContactsAdapter;
-import com.reminders.location.locatoinreminder.viewmodel.ContactsFragmentViewModel;
+import com.reminders.location.locatoinreminder.viewmodel.ContactsActivityViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public class ContactsFragment extends BaseFragment implements DialogInterface.On
     private ContactsAdapter contactsAdapter;
     private Utils utils = new Utils();
 
-    private ContactsFragmentViewModel contactsFragmentViewModel;
+    private ContactsActivityViewModel contactsFragmentViewModel;
     @BindView(R.id.button_done)
     FloatingActionButton done;
     private String UID;
@@ -70,7 +69,7 @@ public class ContactsFragment extends BaseFragment implements DialogInterface.On
             Log.v(ConstantLog.ViewConstants.CONTACT_TAG, ConstantLog.MethodConstants.ONCREATEVIEW_TAG);
         View view= inflater.inflate(R.layout.fragment_contacts, container, false);
         unbinder=ButterKnife.bind(this,view);
-        contactsFragmentViewModel= ViewModelProviders.of(this).get(ContactsFragmentViewModel.class);
+        contactsFragmentViewModel= ViewModelProviders.of(this).get(ContactsActivityViewModel.class);
         UID=getMyapp().getUID();
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

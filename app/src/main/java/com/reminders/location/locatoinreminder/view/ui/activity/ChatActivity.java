@@ -38,40 +38,36 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends BaseActivity implements View.OnClickListener,CardsSelected{
     @BindView(R.id.background)
-     CoordinatorLayout background;
+    CoordinatorLayout background;
     @BindView(R.id.appbar)
-     AppBarLayout appBarLayout;
+    AppBarLayout appBarLayout;
     @BindView(R.id.toolbar_chat)
-     Toolbar toolbar;
+    Toolbar toolbar;
     @BindView(R.id.toolbar_options)
     Toolbar optionsToolbar;
     @BindView(R.id.back)
     ImageButton backbutton;
     @BindView(R.id.profile_pic)
-     CircleImageView profilePic;
+    CircleImageView profilePic;
     @BindView(R.id.initials)
-     TextView initials;
+    TextView initials;
     @BindView(R.id.chat_title)
-     TextView chatTitle;
+    TextView chatTitle;
     @BindView(R.id.chat_messages)
-     RecyclerView chatMessages;
-    @BindView(R.id.notesButton  )
-     TextView notesButton;
-    @BindView(R.id.checklist_button)
-     ImageView checkListButton;
-    @BindView(R.id.refresh)
-     ImageView refresh;
-    @BindView(R.id.search_button)
-     ImageView searchButton;
+    RecyclerView chatMessages;
+    @BindView(R.id.send_note)
+    TextView send_note;
+    @BindView(R.id.send_checklist)
+    ImageView send_checklist;
     @BindView(R.id.backOnLongClick)
     ImageButton longBackClick;
     @BindView(R.id.cardCounter)
     TextView counter;
-     SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
-     ChatActivityViewModel chatActivityViewModel;
-     DatabaseReference databaseReference;
-     ChatAdapter chatAdapter;
-     List<Integer>  cardIds=new ArrayList<>();
+    SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
+    ChatActivityViewModel chatActivityViewModel;
+    DatabaseReference databaseReference;
+    ChatAdapter chatAdapter;
+    List<Integer>  cardIds=new ArrayList<>();
 
 
     @Override
@@ -80,10 +76,8 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
         chatActivityViewModel= ViewModelProviders.of(this).get(ChatActivityViewModel.class);
         chatActivityViewModel.getCardsList(getMyapp().getDatabase(),"+918081775811").observe(this,observer);
 
-         notesButton.setOnClickListener(this);
-        checkListButton.setOnClickListener(this);
-        refresh.setOnClickListener(this);
-        searchButton.setOnClickListener(this);
+        send_note.setOnClickListener(this);
+        send_checklist.setOnClickListener(this);
 
         chatMessages.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         chatAdapter=new ChatAdapter(new ArrayList<ChatCards_Entity>(),ChatActivity.this);
@@ -108,7 +102,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
     Observer<List<ChatCards_Entity>> observer=new Observer<List<ChatCards_Entity>>() {
         @Override
         public void onChanged(@Nullable List<ChatCards_Entity> chatCards_entities) {
-        chatAdapter.addItem(chatCards_entities);
+            chatAdapter.addItem(chatCards_entities);
         }
 
 
@@ -124,15 +118,15 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
     @Override
     public void onClick(View v) {
         Intent intent=new Intent(this,ReminderSet.class);
-        if(v.getId()==notesButton.getId()){
-            intent.putExtra(ConstantVar.NOTES_BUTTON,ConstantVar.NOTES_CLICKED);
-            startActivity(intent);
-        }
-        else if(v.getId()==checkListButton.getId()){
-            intent.putExtra(ConstantVar.CHECKLIST_BUTTON,ConstantVar.CHECKLIST_CLICKED);
-            startActivity(intent);
-        }
-        else if(v.getId()==searchButton.getId()){
+        switch (v.getId()){
+            case R.id.send_note:
+                intent.putExtra(ConstantVar.NEW_CHOICE,ConstantVar.NOTES_CLICKED);
+                startActivity(intent);
+                break;
+            case R.id.send_checklist:
+                intent.putExtra(ConstantVar.NEW_CHOICE,ConstantVar.CHECKLIST_CLICKED);
+                startActivity(intent);
+                break;
 
         }
     }
@@ -153,10 +147,10 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
             toolbar.setVisibility(View.VISIBLE);
         }
         if(seleted){
-                cardIds.add(cardId);
-            }
-            else {
-                cardIds.remove(position);
-            }
+            cardIds.add(cardId);
+        }
+        else {
+            cardIds.remove(position);
+        }
     }
 }

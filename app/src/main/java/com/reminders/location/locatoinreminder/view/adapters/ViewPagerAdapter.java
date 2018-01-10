@@ -26,16 +26,14 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if(position==0)
             return new ReminderChat();
-        else if(position==1)
-            return new ShoutsFragment();
         else
-            return new ContactsFragment();
+            return new ShoutsFragment();
 
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Nullable
@@ -43,10 +41,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         if(position==0)
             return ConstantVar.REMINDER;
-        else if(position==1)
-            return ConstantVar.SHOUT;
         else
-            return ConstantVar.CONTACTS;
+            return ConstantVar.SHOUT;
 
     }
 }

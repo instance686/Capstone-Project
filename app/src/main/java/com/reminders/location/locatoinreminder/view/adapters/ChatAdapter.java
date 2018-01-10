@@ -81,9 +81,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
         TextView note;
         @BindView(R.id.list)
         LinearLayout list;
-        @BindView(R.id.checkBox)
-        CheckBox checkBox;
-        @BindView(R.id.item)
+
         TextView item;
         @BindView(R.id.coordinates)
         TextView coordinates;

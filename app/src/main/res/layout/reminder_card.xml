@@ -9,9 +9,8 @@
     android:layout_margin="@dimen/dimen_2dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?selectableItemBackgroundBorderless"
-    card_view:cardCornerRadius="8dp"
-    card_view:cardElevation="10dp">
+    android:foreground="?selectableItemBackground"
+    card_view:cardElevation="@dimen/dimen_2dp">
 
 
     <LinearLayout
@@ -20,51 +19,40 @@
         android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/regular"
-                tools:text="Title" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/semi_bold"
+            tools:text="Title"
+            android:textColor="?android:textColorPrimary"
+            />
 
-            <TextView
-                android:id="@+id/Note"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/regular"
-                android:lineSpacingMultiplier="1.2"
-                android:layout_below="@id/title"
-                android:text="Note..."/>
+        <TextView
+            android:id="@+id/Note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/light"
+            android:textStyle="bold"
+            android:lineSpacingMultiplier="1.2"
+            android:textColor="?android:textColorPrimary"
+            tools:text="Note..."
+            />
 
         <LinearLayout
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_8dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/note"
             >
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/item"
-                android:layout_width="279dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_4dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Item_1" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -74,12 +62,11 @@
             android:layout_marginLeft="@dimen/dimen_16dp"
             android:layout_marginRight="@dimen/dimen_16dp"
             android:layout_marginBottom="@dimen/dimen_8dp"
-                />
+            />
 
         <LinearLayout
             android:id="@+id/loc"
             android:layout_margin="@dimen/dimen_8dp"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -92,12 +79,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/location"/>
+                android:text="@string/location"
+                android:layout_marginStart="@dimen/dimen_4dp"
+                android:textColor="?android:textColorPrimary"
+                />
             <TextView
                 android:id="@+id/coordinates"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/coordinates"
+                android:layout_marginStart="@dimen/dimen_4dp"
+                android:textColor="?android:textColorPrimary"
+                android:fontFamily="@font/semi_bold"
                 />
 
         </LinearLayout>

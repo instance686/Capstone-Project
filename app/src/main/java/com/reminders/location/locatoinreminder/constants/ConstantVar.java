@@ -12,7 +12,8 @@ public interface ConstantVar {
     String APPNAME="LOCSHOUT";
     String VERIFY_PHN="Verify Phonenumber";
     String LOGGED="LOGGED";
-    String CONTACT_SELF="Contact_Self";
+    String CONTACT_SELF_NUMBER="Contact_Self_Number";
+    String CONSTANT_SELF_NAME="Contact_Self_Name";
     String SELF_SAVED="SELF_SAVED";
 
 
@@ -22,6 +23,7 @@ public interface ConstantVar {
     int CONTACT_LOADER=1;
     int NOTES_CLICKED=0;
     int CHECKLIST_CLICKED=1;
+    String NEW_CHOICE="NEW CHOICE";
     String NOTES_BUTTON="Notesbutton";
     String CHECKLIST_BUTTON="Checklistbutton";
     String REFRESH_BUTTON="Refreshbutton";

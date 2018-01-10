@@ -20,6 +20,10 @@ public interface cardDoa {
     @Query("SELECT * FROM chat_card_entity WHERE contact_number=:phone")
     LiveData<List<ChatCards_Entity>> getCards(String phone);
 
+
+    @Query("SELECT count(*) FROM chat_card_entity WHERE card_id=:cardId")
+    int checkCard(int cardId);
+
     @Insert
     void insertCard(ChatCards_Entity chatCards_entity);
 

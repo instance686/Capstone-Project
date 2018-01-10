@@ -300,7 +300,8 @@ public class WalkthroughActivity extends BaseActivity  {
 
     public void gotoMain() {
         editText.clearFocus();
-        sharedPreferenceSingleton.saveAs(this,ConstantVar.CONTACT_SELF,currentUser.getPhoneNumber());
+        sharedPreferenceSingleton.saveAs(this,ConstantVar.CONSTANT_SELF_NAME,currentUser.getDisplayName());
+        sharedPreferenceSingleton.saveAs(this,ConstantVar.CONTACT_SELF_NUMBER,currentUser.getPhoneNumber());
         sharedPreferenceSingleton.saveAs(this,ConstantVar.LOGGED, true);
         startActivity(new Intent(this, MainActivity.class));
         overridePendingTransition(R.anim.view_enter, R.anim.view_exit);

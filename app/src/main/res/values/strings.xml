@@ -14,5 +14,10 @@
     <string name="loc">Location</string>
     <string name="delete_reminder">Delete Reminder</string>
     <string name="change_location">Change Location</string>
+    <string name="save_reminder">Save Reminder</string>
 
+
+    <string name="api_key">AIzaSyD-FDu_a6rWksybPthkJPKkNGvxANKT59o</string>
+    <string name="title_activity_contacts">ContactsActivity</string>
+    <string name="log_out">Log Out</string>
 </resources>

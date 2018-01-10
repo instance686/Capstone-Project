@@ -16,6 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/api_key" />
+
         <activity android:name=".view.ui.activity.MainActivity" />
         <activity android:name=".view.ui.activity.WalkthroughActivity" />
         <activity android:name=".view.ui.activity.SplashActivity">
@@ -26,7 +30,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.ui.activity.ChatActivity" />
-        <activity android:name=".view.ui.activity.ReminderSet"></activity>
+        <activity android:name=".view.ui.activity.ReminderSet" />
+        <activity
+            android:name=".view.ui.activity.ContactsActivity"
+            android:label="@string/title_activity_contacts"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -13,7 +13,7 @@ import java.util.List;
  * Created by ayush on 31/12/17.
  */
 
-public class ContactsFragmentViewModel extends ViewModel {
+public class ContactsActivityViewModel extends ViewModel {
 
     private LiveData<List<Contact_Entity>> contactList;
     public LiveData<List<Contact_Entity>> getContactList(AppDatabase appDatabase) {

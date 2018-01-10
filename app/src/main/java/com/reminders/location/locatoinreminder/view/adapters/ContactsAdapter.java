@@ -47,6 +47,7 @@ public class ContactsAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_row, parent, false);
+        view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,RecyclerView.LayoutParams.WRAP_CONTENT));
         return new ContactsViewHolder(view);
            }
 
@@ -54,6 +55,7 @@ public class ContactsAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Contact_Entity contact=contacts.get(position);
         ContactsViewHolder contactsViewHolder= (ContactsViewHolder) holder;
+        contactsViewHolder.cardView.setMinimumWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         String name=contact.getName();
         contactsViewHolder.name.setText(name);
         contactsViewHolder.phone.setText(contact.getNumber());
