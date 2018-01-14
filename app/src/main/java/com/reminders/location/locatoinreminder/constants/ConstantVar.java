@@ -15,6 +15,10 @@ public interface ConstantVar {
     String CONTACT_SELF_NUMBER="Contact_Self_Number";
     String CONSTANT_SELF_NAME="Contact_Self_Name";
     String SELF_SAVED="SELF_SAVED";
+    String CHAT_ID="CHAT_ID";
+    String CONTACT_NAME="CONTACT_NAME";
+    String INSERTION_CARD="INSERTION_CARD";
+    String DELETION_CARD="DELETION_CARD";
 
 
 

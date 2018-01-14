@@ -1,33 +1,56 @@
 package com.reminders.location.locatoinreminder.view.ui.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.reminders.location.locatoinreminder.MyApplication;
 import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
+import com.reminders.location.locatoinreminder.database.AppDatabase;
+import com.reminders.location.locatoinreminder.executor.CardsSelected;
+import com.reminders.location.locatoinreminder.executor.ContactCard;
 import com.reminders.location.locatoinreminder.executor.ContactSync;
 import com.reminders.location.locatoinreminder.executor.TaskRunning;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
+import com.reminders.location.locatoinreminder.view.adapters.ContactChatAdapter;
 import com.reminders.location.locatoinreminder.view.adapters.ViewPagerAdapter;
 import com.reminders.location.locatoinreminder.view.BaseModel.BaseActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 
-    public class MainActivity extends BaseActivity implements TaskRunning {
+    public class MainActivity extends BaseActivity implements TaskRunning,ContactCard {
     @BindView(R.id.maintoolbar)
     Toolbar toolbar;
+    @BindView(R.id.toolbarDelOptions)
+    Toolbar toolbarOptions;
+    @BindView(R.id.backOnLongClick)
+    ImageButton backLongClick;
+    @BindView(R.id.cardCounter)
+    TextView cardCounter;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
     @BindView(R.id.sliding_tabs)
     TabLayout tabLayout;
-    private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
+    List<String>  numbers =new ArrayList<>();
+        AppDatabase appDatabase;
+        ContactChatAdapter contactChatAdapter;
+
+
+        private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
         private FirebaseAuth mAuth;
 
 
@@ -35,8 +58,11 @@ import butterknife.BindView;
         @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        toolbar.inflateMenu(R.menu.mainactivity_menu);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+
+            appDatabase=getMyapp().getDatabase();
+            contactChatAdapter=new ContactChatAdapter(MainActivity.this);
+            toolbar.inflateMenu(R.menu.mainactivity_menu);
+            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 sharedPreferenceSingleton.saveAs(MainActivity.this,ConstantVar.LOGGED,false);
@@ -46,6 +72,20 @@ import butterknife.BindView;
                 return true;
             }
         });
+
+
+        toolbarOptions.inflateMenu(R.menu.mainactivity_options);
+        toolbarOptions.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(item.getItemId()==R.id.delete){
+                    deleteCards();
+                }
+
+                return true;
+            }
+        });
+
         tabLayout.setTabTextColors(
                 getResources().getColor(R.color.textColorPrimary1),
                 getResources().getColor(R.color.textColorPrimary1)
@@ -56,6 +96,17 @@ import butterknife.BindView;
 
 
     }
+
+        public void deleteCards(){
+        if(numbers.size()>0){
+            AsyncTask.execute(()->{
+                appDatabase.reminderContactDoa().deleteCard(numbers);
+                });
+        }
+        else
+            Toast.makeText(MainActivity.this,"Select Cards for Deletion",Toast.LENGTH_SHORT).show();
+
+        }
 
         @Override
         protected void onStart() {
@@ -82,6 +133,28 @@ import butterknife.BindView;
 
         @Override
         public void taskRunning(boolean runVal) {
+
+        }
+
+
+        @Override
+        public void onContactCardSelected(int count, String number, int position, boolean selected) {
+            if(count>0){
+                toolbar.setVisibility(View.GONE);
+                cardCounter.setText(count);
+                toolbarOptions.setVisibility(View.VISIBLE);
+            }
+            else {
+                toolbarOptions.setVisibility(View.GONE);
+                toolbar.setVisibility(View.VISIBLE);
+            }
+
+            if(selected)
+                numbers.add(number);
+            else {
+                int index=number.indexOf(number);
+                numbers.remove(index);
+            }
 
         }
     }

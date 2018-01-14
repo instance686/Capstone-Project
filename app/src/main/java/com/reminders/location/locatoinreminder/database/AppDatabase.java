@@ -7,16 +7,19 @@ import android.content.Context;
 
 import com.reminders.location.locatoinreminder.database.dao.cardDoa;
 import com.reminders.location.locatoinreminder.database.dao.contactDoa;
+import com.reminders.location.locatoinreminder.database.dao.reminderContactDoa;
 import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
 import com.reminders.location.locatoinreminder.database.entity.Contact_Entity;
+import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
 
 /**
  * Created by ayush on 25/12/17.
  */
-@Database(entities = {Contact_Entity.class, ChatCards_Entity.class}, version = 1)
+@Database(entities = {Contact_Entity.class, ChatCards_Entity.class, ReminderContact.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract contactDoa contactDao();
     public abstract cardDoa cardDoa();
+    public abstract reminderContactDoa reminderContactDoa();
 
     private static AppDatabase sInstance;
     public static final String DATABASE_NAME="My_DB";
@@ -41,6 +44,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase buildDatabase(final Context appContext)
                                              {
         return Room.databaseBuilder(appContext, AppDatabase.class, DATABASE_NAME)
+                .fallbackToDestructiveMigration()
                 .build();
     }
 

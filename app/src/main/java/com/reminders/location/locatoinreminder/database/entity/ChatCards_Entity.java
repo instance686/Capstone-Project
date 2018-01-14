@@ -21,6 +21,8 @@ public class ChatCards_Entity {
     private String cardTitle;
     @Embedded
     private ContactFetch contactFetch;
+    @ColumnInfo(name = "sender_contact_number")
+    private String sendContact;
     @ColumnInfo(name = "notes_present")
     private boolean notesPresent;
     @ColumnInfo(name = "notes_data")
@@ -37,10 +39,16 @@ public class ChatCards_Entity {
     private String time;
     @ColumnInfo(name = "selected_card")
     private boolean selected;
-    public ChatCards_Entity(@NonNull int cardId, String cardTitle, ContactFetch contactFetch, boolean notesPresent, String notes, boolean checkListPresent, String checkListData, String location, int color, String time,boolean selected) {
+    @ColumnInfo(name="sent_success")
+    private boolean sentSuccess;
+    public ChatCards_Entity(@NonNull int cardId, String cardTitle, ContactFetch contactFetch,
+                            String sendContact, boolean notesPresent, String notes,
+                            boolean checkListPresent, String checkListData, String location,
+                            int color, String time,boolean selected,boolean sentSuccess) {
         this.cardId = cardId;
         this.cardTitle = cardTitle;
         this.contactFetch = contactFetch;
+        this.sendContact=sendContact;
         this.notesPresent = notesPresent;
         this.notes = notes;
         this.checkListPresent = checkListPresent;
@@ -49,6 +57,24 @@ public class ChatCards_Entity {
         this.color = color;
         this.time = time;
         this.selected=selected;
+        this.sentSuccess=sentSuccess;
+
+    }
+
+    public String getSendContact() {
+        return sendContact;
+    }
+
+    public void setSendContact(String sendContact) {
+        this.sendContact = sendContact;
+    }
+
+    public boolean isSentSuccess() {
+        return sentSuccess;
+    }
+
+    public void setSentSuccess(boolean sentSuccess) {
+        this.sentSuccess = sentSuccess;
     }
 
     @NonNull

@@ -26,11 +26,11 @@ public interface contactDoa {
     @Query("DELETE FROM contact_entity")
     public void clearContacts();
 
-    @Query("SELECT COUNT(*) FROM contact_entity WHERE contact_number=:phone")
-    int isContactPresent(String phone);
+    /*@Query("SELECT COUNT(*) FROM contact_entity WHERE contact_number=:phone")
+    int contactCardCount(String phone);*/
 
-    @Query("SELECT contact_name,contact_number FROM contact_entity WHERE contact_number=:phone")
+    /*@Query("SELECT contact_name,contact_number FROM contact_entity WHERE contact_number=:phone")
     ContactFetch getContact(String phone);
-
+*/
 
 }

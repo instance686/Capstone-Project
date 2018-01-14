@@ -35,7 +35,6 @@ import butterknife.BindView;
 import butterknife.Unbinder;
 
 public class ContactsActivity extends BaseActivity implements TaskRunning {
-    private ArrayList<Contact_Entity> c = new ArrayList<>();
     @BindView(R.id.contacts)
     RecyclerView recyclerView;
     private ContactsAdapter contactsAdapter;

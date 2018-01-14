@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -39,6 +40,7 @@ import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.AppDatabase;
 import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
+import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
 import com.reminders.location.locatoinreminder.executor.ChecklistItemClicked;
 import com.reminders.location.locatoinreminder.pojo.ContactFetch;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
@@ -78,31 +80,13 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
     AppDatabase appDatabase;
     boolean notesShowing,checklistShowing;
     boolean bottomSheetShowing=false;
+    boolean insertionFinished=true;
 
-    //GoogleApiClient mGoogleApiClient;
+            //GoogleApiClient mGoogleApiClient;
     protected GeoDataClient mGeoDataClient;
 
     int PLACE_PICKER_REQUEST = 1;
     PlacePicker.IntentBuilder builder;
-
-
-    /*@BindView(R.id.title)
-    EditText title;
-    @BindView(R.id.note)
-     EditText note;
-    @BindView(R.id.list)
-     LinearLayout checkList;
-    @BindView(R.id.checkBox)
-    CheckBox checkBox;
-    @BindView(R.id.item)
-    EditText item;
-    @BindView(R.id.delete)
-    ImageView deleteButton;
-
-    @BindView(R.id.time)
-    TextView editedTime;
-    */
-
 
     private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
     private ReminderSetActivityViewModel reminderSetActivityViewModel;
@@ -137,6 +121,7 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
         recyclerView.setAdapter(checkBoxAdapter);
         add_checkbox.setOnClickListener(this);
         addExtra.setOnClickListener(this);
+        appDatabase=getMyapp().getDatabase();
         bottomSheetBehavior=BottomSheetBehavior.from(bottomSheet);
         if(getIntent().getIntExtra(ConstantVar.NEW_CHOICE,0)==ConstantVar.NOTES_CLICKED){
             notesShowing=true;checklistShowing=false;
@@ -185,31 +170,13 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
     }
 
     private void saveButtonClicked(){
-        /*int cardId= (int) System.currentTimeMillis();
-        Log.v("CARDID",""+cardId);
-        String cardTitle=title.getText().toString().trim();
-        ContactFetch contactFetch=new ContactFetch("Self","+918081775811");
-        boolean notesPresent=true;
-        String notes=note.getText().toString().trim();
-        boolean checkListPresent=false;
-        String checkList="";
-        String location="ABCD";
-        int color=R.color.white;
-        String time="Edited:"+"DUMMY";
-        ChatCards_Entity chatCards_entity=
-                new ChatCards_Entity(cardId,cardTitle,contactFetch,notesPresent,notes
-                ,checkListPresent,checkList,location,color,time,false);*/
-        /*AsyncTask.execute(()->{
-            appDatabase.cardDoa().insertCard(chatCards_entity);
-        });
-        Log.v("Datainserted","DataInserted");*/
-
-
         int cardId=(int)System.currentTimeMillis();
         Log.v("CARDID",""+cardId);
         String cardTitle=title.getText().toString().trim();
         Log.v("CARD_TITLE",""+cardTitle);
-        ContactFetch contactFetch=new ContactFetch("Self","+918081775811");
+        ContactFetch contactFetch=new ContactFetch(getIntent().getStringExtra(ConstantVar.CONTACT_NAME),
+                getIntent().getStringExtra(ConstantVar.CHAT_ID));
+
 
         if(notesShowing && !checklistShowing){
             String notes=note.getText().toString().trim();
@@ -222,12 +189,33 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
                 String time="Edited:"+"DUMMY";
                 ChatCards_Entity chatCards_entity=
                         new ChatCards_Entity(cardId,cardTitle,contactFetch,
-                                notesShowing,notes
+                                sharedPreferenceSingleton.getSavedString(this,ConstantVar.CONTACT_SELF_NUMBER)
+                                ,notesShowing,notes
                                 ,checklistShowing,checkList,
-                                location,color,time,false);
+                                location,color,time,false,false
+                                );
                  AsyncTask.execute(()->{
                  appDatabase.cardDoa().insertCard(chatCards_entity);
+                     int countReminderCard=appDatabase.cardDoa().getContactCardCount(contactFetch.getContact_number());
+                     Log.v("Log1=",""+countReminderCard);
+
+
+                     if(countReminderCard >= 1){
+                         int reminderContactCount=appDatabase.reminderContactDoa().chatCardPresent(contactFetch.getContact_number());
+                         Log.v("Log2=",""+reminderContactCount);
+
+                         if(reminderContactCount>0){
+
+                         }
+                         else {
+                                 appDatabase.reminderContactDoa().inserChatCard(new ReminderContact(contactFetch.getContact_number(),
+                                         contactFetch.getContact_name(),countReminderCard,false,true ));
+                         }
+                     }
+
                  });
+
+                finish();
             }
 
         }

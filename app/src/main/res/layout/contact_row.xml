@@ -86,10 +86,10 @@
                 android:id="@+id/phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="+918272478273"
+                tools:text="8081775811"
                 android:fontFamily="@font/regular"
                 android:layout_marginTop="4dp"
-                android:textColor="?android:textColorSecondary" />
+                android:textColor="@color/textColorPrimary1" />
         </LinearLayout>
 
 

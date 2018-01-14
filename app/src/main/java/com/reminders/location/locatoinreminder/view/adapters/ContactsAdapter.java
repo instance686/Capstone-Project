@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.reminders.location.locatoinreminder.R;
+import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.entity.Contact_Entity;
 import com.reminders.location.locatoinreminder.entityinterface.ContactSelection;
 import com.reminders.location.locatoinreminder.util.Utils;
@@ -47,7 +48,6 @@ public class ContactsAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_row, parent, false);
-        view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,RecyclerView.LayoutParams.WRAP_CONTENT));
         return new ContactsViewHolder(view);
            }
 
@@ -55,7 +55,6 @@ public class ContactsAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Contact_Entity contact=contacts.get(position);
         ContactsViewHolder contactsViewHolder= (ContactsViewHolder) holder;
-        contactsViewHolder.cardView.setMinimumWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         String name=contact.getName();
         contactsViewHolder.name.setText(name);
         contactsViewHolder.phone.setText(contact.getNumber());
@@ -121,8 +120,8 @@ public class ContactsAdapter extends RecyclerView.Adapter {
                     cardView.setCardBackgroundColor(contact.isSelection() ? colorSelected : colorNormal);
                 }else{
                     Intent intent=new Intent(c, ChatActivity.class);
-                    intent.putExtra("chat_id",phone.getText().toString());
-                    intent.putExtra("contact_name",name.getText().toString());
+                    intent.putExtra(ConstantVar.CHAT_ID,phone.getText().toString());
+                    intent.putExtra(ConstantVar.CONTACT_NAME,name.getText().toString());
                     c.startActivity(intent);
 
                 }

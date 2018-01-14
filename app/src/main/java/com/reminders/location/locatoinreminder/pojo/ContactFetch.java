@@ -6,9 +6,9 @@ import android.arch.persistence.room.ColumnInfo;
  * Created by ayush on 31/12/17.
  */
 public class ContactFetch {
-    @ColumnInfo(name = "contact_name")
+    @ColumnInfo(name = "contact_name_reciever")
     private String contact_name;
-    @ColumnInfo(name = "contact_number")
+    @ColumnInfo(name = "contact_number_reciever")
     private String contact_number;
 
     public ContactFetch(String contact_name, String contact_number) {

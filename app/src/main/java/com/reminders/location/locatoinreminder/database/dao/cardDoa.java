@@ -17,7 +17,7 @@ import java.util.List;
 @Dao
 public interface cardDoa {
 
-    @Query("SELECT * FROM chat_card_entity WHERE contact_number=:phone")
+    @Query("SELECT * FROM chat_card_entity WHERE contact_number_reciever=:phone")
     LiveData<List<ChatCards_Entity>> getCards(String phone);
 
 
@@ -26,6 +26,9 @@ public interface cardDoa {
 
     @Insert
     void insertCard(ChatCards_Entity chatCards_entity);
+
+    @Query("SELECT count(*) FROM chat_card_entity WHERE contact_number_reciever=:phone")
+    int getContactCardCount(String phone);
 
     @Query("DELETE FROM chat_card_entity WHERE card_id IN (:cardsList)")
     void deleteCard(List<Integer> cardsList);

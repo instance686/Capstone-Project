@@ -56,10 +56,13 @@ public class ChatAdapter extends RecyclerView.Adapter {
         cardViewHolder.title.setText(chatCards_entity.getCardTitle());
         cardViewHolder.note.setText(chatCards_entity.getNotes());
         cardViewHolder.coordinates.setText(chatCards_entity.getLocation());
-
+        cardViewHolder.reminderCard.setBackgroundColor(colorNormal);
         ((CardViewHolder)cardViewHolder).chatCards_entity=chatCards_entity;
 
+
     }
+
+
     public void addItem(List<ChatCards_Entity> chatCards_entity){
         chatCards_entities= (ArrayList<ChatCards_Entity>) chatCards_entity;
         notifyDataSetChanged();
