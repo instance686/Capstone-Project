@@ -23,6 +23,7 @@ public interface ConstantVar {
 
 
 
+
     int RC_SIGN_IN = 9001;
     int CONTACT_LOADER=1;
     int NOTES_CLICKED=0;
@@ -31,4 +32,14 @@ public interface ConstantVar {
     String NOTES_BUTTON="Notesbutton";
     String CHECKLIST_BUTTON="Checklistbutton";
     String REFRESH_BUTTON="Refreshbutton";
+    String CLICKFROMCHATCARDS="CLICKFROMCHATCARDS";
+    String FROMCHATCRADS="FROMCHATCRADS";
+
+    String CLICKFROMCONTACTCARDS="CLICKFROMCONTACTCARD";
+    String FROMCONTACTCARDS="FROMCONTACTCARDS";
+    String UPDATED_NUMBER ="UPDATED_NUMBER" ;
+    String UPDATION ="UPDATION" ;
+    String INSERTION ="INSERTION" ;
+    String CARD_CLICKED ="CARD_CLICKED" ;
+    String UPDATE_CARD ="UPDATE_CARD" ;
 }

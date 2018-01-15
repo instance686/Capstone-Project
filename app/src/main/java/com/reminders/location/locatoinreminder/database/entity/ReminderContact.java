@@ -20,16 +20,27 @@ public class ReminderContact {
     boolean selection=false;
     @ColumnInfo(name="card_visibilty")
     boolean cardVisibility=false;
-
+    @ColumnInfo(name="current_milliseconds")
+    long curentTimeinMilliseconds;
 
 
     public ReminderContact(@NonNull String number, String name,
-                           int reminderCount, boolean selection,boolean cardVisibility) {
+                           int reminderCount, boolean selection,boolean cardVisibility,
+                           long curentTimeinMilliseconds) {
         this.number = number;
         this.name = name;
         this.reminderCount = reminderCount;
         this.selection = selection;
         this.cardVisibility=cardVisibility;
+        this.curentTimeinMilliseconds=curentTimeinMilliseconds;
+    }
+
+    public long getCurentTimeinMilliseconds() {
+        return curentTimeinMilliseconds;
+    }
+
+    public void setCurentTimeinMilliseconds(long curentTimeinMilliseconds) {
+        this.curentTimeinMilliseconds = curentTimeinMilliseconds;
     }
 
     public boolean isCardVisibility() {

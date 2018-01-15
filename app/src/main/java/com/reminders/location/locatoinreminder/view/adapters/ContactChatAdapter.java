@@ -64,7 +64,13 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
         ReminderContact reminderContact=reminderContacts.get(position);
         ReminderContactViewHolder reminderContactViewHolder= (ReminderContactViewHolder) holder;
        reminderContactViewHolder.name.setText(reminderContact.getName());
-//       reminderContactViewHolder.cardCount.setText(reminderContact.getReminderCount()+" Reminders");
+       //Log.v("reminderCount","pos="+position+" count="+reminderContact.getReminderCount());
+        String rem="";
+        if(reminderContact.getReminderCount()==1)
+            rem=" Reminder";
+            else
+            rem=" Reminders";
+       reminderContactViewHolder.cardCount.setText(reminderContact.getReminderCount()+rem);
        reminderContactViewHolder.initials.setText(utils.getInitial(reminderContact.getName()));
         if(reminderContact.isSelection())
             reminderContactViewHolder.status.setVisibility(View.VISIBLE);
@@ -118,6 +124,7 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
                     Intent intent=new Intent(context, ChatActivity.class);
                     intent.putExtra(ConstantVar.CHAT_ID,contact.getNumber());
                     intent.putExtra(ConstantVar.CONTACT_NAME,name.getText().toString());
+                    intent.putExtra(ConstantVar.CLICKFROMCHATCARDS,ConstantVar.FROMCHATCRADS);
                     context.startActivity(intent);
             }
         }

@@ -15,7 +15,7 @@ import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
 /**
  * Created by ayush on 25/12/17.
  */
-@Database(entities = {Contact_Entity.class, ChatCards_Entity.class, ReminderContact.class}, version = 1)
+@Database(entities = {Contact_Entity.class, ChatCards_Entity.class, ReminderContact.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract contactDoa contactDao();
     public abstract cardDoa cardDoa();

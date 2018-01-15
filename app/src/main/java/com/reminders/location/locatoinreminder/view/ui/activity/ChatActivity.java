@@ -27,6 +27,7 @@ import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.AppDatabase;
 import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
 import com.reminders.location.locatoinreminder.database.entity.Contact_Entity;
+import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
 import com.reminders.location.locatoinreminder.executor.CardsSelected;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
 import com.reminders.location.locatoinreminder.util.Utils;
@@ -120,6 +121,15 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
         if(cardIds.size()>0){
             AsyncTask.execute(()->{
                 appDatabase.cardDoa().deleteCard(cardIds);
+                int countReminderCard=appDatabase.cardDoa().getContactCardCount(chatId);
+                ReminderContact reminderContact=new ReminderContact(chatId,
+                        name,countReminderCard,false,true,System.currentTimeMillis() );
+                appDatabase.reminderContactDoa().updateChatCard(reminderContact);
+                sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATION,true);
+                sharedPreferenceSingleton.saveAs(this,ConstantVar.INSERTION,false);
+                sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATED_NUMBER,chatId);
+
+
             });
             optionsToolbar.setVisibility(View.GONE);
             toolbar.setVisibility(View.VISIBLE);

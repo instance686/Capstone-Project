@@ -1,6 +1,7 @@
 package com.reminders.location.locatoinreminder.database.dao;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -36,7 +37,8 @@ public interface cardDoa {
     @Query("DELETE FROM chat_card_entity WHERE contact_number_reciever IN (:numbers)")
     int deleteContactCards(List<String> numbers);
 
-
+    @Query("SELECT * FROM chat_card_entity WHERE card_id=:cardId")
+    MutableLiveData<ChatCards_Entity> getCard(int cardID);
 
     @Update
     void updateCard(ChatCards_Entity chatCards_entity);

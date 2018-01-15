@@ -17,6 +17,7 @@ public class Contact_Entity {
     @ColumnInfo(name="contact_selection")
     private boolean selection=false;
 
+
     public Contact_Entity(String number, @NonNull String name, boolean selection) {
         this.number = number;
         this.name = name;

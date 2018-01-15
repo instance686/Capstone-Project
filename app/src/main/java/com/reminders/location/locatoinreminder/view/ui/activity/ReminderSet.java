@@ -1,13 +1,11 @@
 package com.reminders.location.locatoinreminder.view.ui.activity;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,24 +13,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.database.DatabaseReference;
 import com.reminders.location.locatoinreminder.MyApplication;
@@ -96,11 +83,11 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-/*
-        reminderSetActivityViewModel= ViewModelProviders.of(this).get(ReminderSetActivityViewModel.class);
-*/
+
+
         int choice=getIntent().getIntExtra(ConstantVar.NEW_CHOICE,0);
         manageLayoutChoice(choice);
+
 
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
@@ -122,6 +109,12 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
         add_checkbox.setOnClickListener(this);
         addExtra.setOnClickListener(this);
         appDatabase=getMyapp().getDatabase();
+
+
+        reminderSetActivityViewModel= ViewModelProviders.of(this).get(ReminderSetActivityViewModel.class);
+        reminderSetActivityViewModel.getChatCardsEntityMutableLiveData(getMyapp().getDatabase(),
+                getIntent().getIntExtra(ConstantVar.CARD_CLICKED,0)).observe(this,observer);
+
         bottomSheetBehavior=BottomSheetBehavior.from(bottomSheet);
         if(getIntent().getIntExtra(ConstantVar.NEW_CHOICE,0)==ConstantVar.NOTES_CLICKED){
             notesShowing=true;checklistShowing=false;
@@ -145,6 +138,49 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
 */
     }
 
+    Observer<ChatCards_Entity> observer=(chatCards_entity)->{
+        setActivityData(chatCards_entity);
+    };
+
+
+    public void setActivityData(ChatCards_Entity chatCardsEntity){
+        titleHandling(chatCardsEntity.getCardTitle());
+        notesHandling(chatCardsEntity.isNotesPresent(),chatCardsEntity.getNotes());
+        checkListHandling(chatCardsEntity.isCheckListPresent(),chatCardsEntity.getCheckListData());
+        locationHandling(chatCardsEntity.getLocation());
+        colorHandling(chatCardsEntity.getColor());
+        editedTimeHandling(chatCardsEntity.getTime());
+
+
+    }
+
+    public void titleHandling(String titleText){
+        if(!(titleText==null) || !titleText.equalsIgnoreCase("")){
+            title.setText(titleText);
+        }
+        else {
+            title.setHint(getResources().getString(R.string.titlehint));
+        }
+    }
+
+    public void notesHandling(boolean notesPresent,String notesdata){
+        if(notesPresent){
+
+        }
+
+    }
+    public void checkListHandling(boolean checkListPresent,String checkListData){
+
+    }
+    public void locationHandling(String location){
+
+    }
+    public void colorHandling(int color){
+
+    }
+    public void editedTimeHandling(String editedTime){
+
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -200,18 +236,29 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
                      Log.v("Log1=",""+countReminderCard);
 
 
-                     if(countReminderCard >= 1){
+                        if(countReminderCard >= 1){
                          int reminderContactCount=appDatabase.reminderContactDoa().chatCardPresent(contactFetch.getContact_number());
                          Log.v("Log2=",""+reminderContactCount);
 
                          if(reminderContactCount>0){
+                             sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATION,true);
+                             sharedPreferenceSingleton.saveAs(this,ConstantVar.INSERTION,false);
+                             sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATED_NUMBER,contactFetch.getContact_number());
 
-                         }
+                             ReminderContact reminderContact=new ReminderContact(contactFetch.getContact_number(),
+                                     contactFetch.getContact_name(),countReminderCard,false,true,System.currentTimeMillis() );
+                             appDatabase.reminderContactDoa().updateChatCard(reminderContact);
+                                                      }
                          else {
-                                 appDatabase.reminderContactDoa().inserChatCard(new ReminderContact(contactFetch.getContact_number(),
-                                         contactFetch.getContact_name(),countReminderCard,false,true ));
+                             sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATION,false);
+                             sharedPreferenceSingleton.saveAs(this,ConstantVar.INSERTION,true);
+                             sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATED_NUMBER,contactFetch.getContact_number());
+
+                             appDatabase.reminderContactDoa().inserChatCard(new ReminderContact(contactFetch.getContact_number(),
+                                     contactFetch.getContact_name(),countReminderCard,false,true ,System.currentTimeMillis()));
                          }
                      }
+
 
                  });
 
@@ -318,6 +365,8 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
                 break;
         }
     }
+
+
 
     @Override
     public void itemClicked() {

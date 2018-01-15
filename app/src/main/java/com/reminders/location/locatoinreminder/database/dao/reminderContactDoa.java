@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
 
@@ -21,6 +22,10 @@ public interface reminderContactDoa {
     @Query("SELECT count(*) FROM reminder_chat WHERE contact_num=:phone")
     int chatCardPresent(String phone);
 
+
+    @Query("SELECT * FROM reminder_chat WHERE contact_num=:phone")
+    ReminderContact getTopCardFromNumber(String phone);
+
     @Query("SELECT card_visibilty FROM reminder_chat WHERE contact_num=:phone")
     boolean isCardVisible(String phone);
 
@@ -29,6 +34,9 @@ public interface reminderContactDoa {
 
     @Delete
     void deleteChatCard(ReminderContact reminderContact);
+
+    @Update
+    void updateChatCard(ReminderContact reminderContact);
 
 
     @Query("DELETE FROM reminder_chat WHERE contact_num IN (:cardsList)")

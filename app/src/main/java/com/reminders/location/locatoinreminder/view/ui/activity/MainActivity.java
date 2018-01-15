@@ -36,7 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-    public class MainActivity extends BaseActivity implements TaskRunning,ContactCard {
+    public class MainActivity extends BaseActivity implements TaskRunning,ContactCard,View.OnClickListener {
     @BindView(R.id.maintoolbar)
     Toolbar toolbar;
     @BindView(R.id.toolbarDelOptions)
@@ -95,6 +95,9 @@ import butterknife.BindView;
                 getResources().getColor(R.color.textColorPrimary1),
                 getResources().getColor(R.color.textColorPrimary1)
         );
+
+
+        backLongClick.setOnClickListener(this);
         ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(MainActivity.this,getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -168,5 +171,14 @@ import butterknife.BindView;
                 numbers.remove(index);
             }
 
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(v.getId()==backLongClick.getId()){
+                toolbarOptions.setVisibility(View.GONE);
+                toolbar.setVisibility(View.VISIBLE);
+
+            }
         }
     }

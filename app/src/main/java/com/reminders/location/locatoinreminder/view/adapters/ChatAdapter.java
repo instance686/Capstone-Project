@@ -1,6 +1,7 @@
 package com.reminders.location.locatoinreminder.view.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.reminders.location.locatoinreminder.R;
+import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
 import com.reminders.location.locatoinreminder.executor.CardsSelected;
 import com.reminders.location.locatoinreminder.util.Utils;
+import com.reminders.location.locatoinreminder.view.ui.activity.ReminderSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +103,10 @@ public class ChatAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View v) {
 
+            Intent intent=new Intent(c, ReminderSet.class);
+            intent.putExtra(ConstantVar.CARD_CLICKED,chatCards_entity.getCardId());
+            intent.putExtra(ConstantVar.UPDATE_CARD,true);
+            c.startActivity(intent);
         }
 
         @Override
