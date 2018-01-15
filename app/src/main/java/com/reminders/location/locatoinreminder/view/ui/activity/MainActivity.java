@@ -2,6 +2,7 @@ package com.reminders.location.locatoinreminder.view.ui.activity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -23,9 +24,12 @@ import com.reminders.location.locatoinreminder.executor.ContactCard;
 import com.reminders.location.locatoinreminder.executor.ContactSync;
 import com.reminders.location.locatoinreminder.executor.TaskRunning;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
+import com.reminders.location.locatoinreminder.singleton.ToastMessage;
 import com.reminders.location.locatoinreminder.view.adapters.ContactChatAdapter;
 import com.reminders.location.locatoinreminder.view.adapters.ViewPagerAdapter;
 import com.reminders.location.locatoinreminder.view.BaseModel.BaseActivity;
+import com.reminders.location.locatoinreminder.view.ui.fragments.ReminderChat;
+import com.reminders.location.locatoinreminder.viewmodel.ReminderChatViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +54,7 @@ import butterknife.BindView;
         ContactChatAdapter contactChatAdapter;
 
 
+
         private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
         private FirebaseAuth mAuth;
 
@@ -60,7 +65,7 @@ import butterknife.BindView;
         super.onCreate(savedInstanceState);
 
             appDatabase=getMyapp().getDatabase();
-            contactChatAdapter=new ContactChatAdapter(MainActivity.this);
+            //contactChatAdapter= ReminderChat.getContactChatAdapter();
             toolbar.inflateMenu(R.menu.mainactivity_menu);
             toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -101,7 +106,13 @@ import butterknife.BindView;
         if(numbers.size()>0){
             AsyncTask.execute(()->{
                 appDatabase.reminderContactDoa().deleteCard(numbers);
-                });
+                int count=appDatabase.cardDoa().deleteContactCards(numbers);
+                Log.v("RowsDelted",""+count);
+            });
+
+            toolbarOptions.setVisibility(View.GONE);
+            toolbar.setVisibility(View.VISIBLE);
+
         }
         else
             Toast.makeText(MainActivity.this,"Select Cards for Deletion",Toast.LENGTH_SHORT).show();
@@ -139,9 +150,10 @@ import butterknife.BindView;
 
         @Override
         public void onContactCardSelected(int count, String number, int position, boolean selected) {
+            ToastMessage.showMessageShort(this,"Count="+count+",Position="+position);
             if(count>0){
                 toolbar.setVisibility(View.GONE);
-                cardCounter.setText(count);
+//                cardCounter.setText(count);
                 toolbarOptions.setVisibility(View.VISIBLE);
             }
             else {

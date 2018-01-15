@@ -33,6 +33,11 @@ public interface cardDoa {
     @Query("DELETE FROM chat_card_entity WHERE card_id IN (:cardsList)")
     void deleteCard(List<Integer> cardsList);
 
+    @Query("DELETE FROM chat_card_entity WHERE contact_number_reciever IN (:numbers)")
+    int deleteContactCards(List<String> numbers);
+
+
+
     @Update
     void updateCard(ChatCards_Entity chatCards_entity);
 

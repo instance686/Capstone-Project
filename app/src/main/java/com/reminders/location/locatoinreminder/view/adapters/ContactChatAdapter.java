@@ -5,24 +5,24 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
-import com.reminders.location.locatoinreminder.database.entity.Contact_Entity;
 import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
 import com.reminders.location.locatoinreminder.executor.ContactCard;
+import com.reminders.location.locatoinreminder.singleton.ToastMessage;
 import com.reminders.location.locatoinreminder.util.Utils;
 import com.reminders.location.locatoinreminder.view.ui.activity.ChatActivity;
 
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
 
 import butterknife.BindView;
@@ -75,6 +75,10 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
 
     }
 
+    public void dataSetChanged(){
+        int count=0;
+    }
+
     public void addItems(List<ReminderContact> reminderContacts){
         this.reminderContacts= (ArrayList<ReminderContact>) reminderContacts;
         notifyDataSetChanged();
@@ -105,7 +109,7 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
             super(itemView);
             ButterKnife.bind(this,itemView);
             cardView.setOnClickListener(this);
-            cardView.setOnClickListener(this);
+            cardView.setOnLongClickListener(this);
         }
 
         @Override
@@ -120,6 +124,7 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
 
         @Override
         public boolean onLongClick(View v) {
+            Log.v("OnLongClick","LongClick");
             if(contact.isSelection()){
                 contact.setSelection(false);
                 count--;

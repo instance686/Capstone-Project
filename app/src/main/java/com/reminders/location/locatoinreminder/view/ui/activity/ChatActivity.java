@@ -121,6 +121,8 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
             AsyncTask.execute(()->{
                 appDatabase.cardDoa().deleteCard(cardIds);
             });
+            optionsToolbar.setVisibility(View.GONE);
+            toolbar.setVisibility(View.VISIBLE);
         }
         else
             Toast.makeText(ChatActivity.this,"Select Cards for Deletion",Toast.LENGTH_SHORT).show();
@@ -129,19 +131,8 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
     Observer<List<ChatCards_Entity>> observer=new Observer<List<ChatCards_Entity>>() {
         @Override
         public void onChanged(@Nullable List<ChatCards_Entity> chatCards_entities) {
-
             chatAdapter.addItem(chatCards_entities);
-
-            /*if (sharedPreferenceSingleton.getSavedBoolean(ChatActivity.this, ConstantVar.INSERTION_CARD)) {
-                sharedPreferenceSingleton.saveAs(ChatActivity.this,ConstantVar.INSERTION_CARD,false);
-            }
-            if(sharedPreferenceSingleton.getSavedBoolean(ChatActivity.this,ConstantVar.DELETION_CARD)){
-
-                sharedPreferenceSingleton.saveAs(ChatActivity.this,ConstantVar.DELETION_CARD,false);
-            }*/
         }
-
-
     };
 
     @Override

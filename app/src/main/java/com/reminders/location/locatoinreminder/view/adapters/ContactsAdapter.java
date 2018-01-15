@@ -20,6 +20,7 @@ import com.reminders.location.locatoinreminder.database.entity.Contact_Entity;
 import com.reminders.location.locatoinreminder.entityinterface.ContactSelection;
 import com.reminders.location.locatoinreminder.util.Utils;
 import com.reminders.location.locatoinreminder.view.ui.activity.ChatActivity;
+import com.reminders.location.locatoinreminder.view.ui.activity.ContactsActivity;
 import com.reminders.location.locatoinreminder.view.ui.activity.MainActivity;
 
 import java.util.ArrayList;
@@ -123,6 +124,7 @@ public class ContactsAdapter extends RecyclerView.Adapter {
                     intent.putExtra(ConstantVar.CHAT_ID,phone.getText().toString());
                     intent.putExtra(ConstantVar.CONTACT_NAME,name.getText().toString());
                     c.startActivity(intent);
+                    ((ContactsActivity)c).finish();
 
                 }
             }
