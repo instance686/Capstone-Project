@@ -36,7 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-    public class MainActivity extends BaseActivity implements TaskRunning,ContactCard,View.OnClickListener {
+public class MainActivity extends BaseActivity implements TaskRunning, View.OnClickListener {
     @BindView(R.id.maintoolbar)
     Toolbar toolbar;
     @BindView(R.id.toolbarDelOptions)
@@ -49,29 +49,26 @@ import butterknife.BindView;
     ViewPager viewPager;
     @BindView(R.id.sliding_tabs)
     TabLayout tabLayout;
-    List<String>  numbers =new ArrayList<>();
-        AppDatabase appDatabase;
-        ContactChatAdapter contactChatAdapter;
+    List<String> numbers = new ArrayList<>();
+    AppDatabase appDatabase;
+    ContactChatAdapter contactChatAdapter;
+
+    private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
+    private FirebaseAuth mAuth;
 
 
-
-        private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
-        private FirebaseAuth mAuth;
-
-
-
-        @Override
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-            appDatabase=getMyapp().getDatabase();
-            //contactChatAdapter= ReminderChat.getContactChatAdapter();
-            toolbar.inflateMenu(R.menu.mainactivity_menu);
-            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        appDatabase = getMyapp().getDatabase();
+        //contactChatAdapter= ReminderChat.getContactChatAdapter();
+        toolbar.inflateMenu(R.menu.mainactivity_menu);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                sharedPreferenceSingleton.saveAs(MainActivity.this,ConstantVar.LOGGED,false);
-                startActivity(new Intent(MainActivity.this,SplashActivity.class));
+                sharedPreferenceSingleton.saveAs(MainActivity.this, ConstantVar.LOGGED, false);
+                startActivity(new Intent(MainActivity.this, SplashActivity.class));
                 FirebaseAuth.getInstance().signOut();
                 finish();
                 return true;
@@ -79,7 +76,7 @@ import butterknife.BindView;
         });
 
 
-        toolbarOptions.inflateMenu(R.menu.mainactivity_options);
+        /*toolbarOptions.inflateMenu(R.menu.mainactivity_options);
         toolbarOptions.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -89,29 +86,29 @@ import butterknife.BindView;
 
                 return true;
             }
-        });
+        });*/
 
-        tabLayout.setTabTextColors(
+        /*tabLayout.setTabTextColors(
                 getResources().getColor(R.color.textColorPrimary1),
                 getResources().getColor(R.color.textColorPrimary1)
-        );
+        );*/
 
 
         backLongClick.setOnClickListener(this);
-        ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(MainActivity.this,getSupportFragmentManager());
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(MainActivity.this, getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
 
     }
 
-        public void deleteCards(){
+        /*public void deleteCards(){
         if(numbers.size()>0){
             AsyncTask.execute(()->{
-                appDatabase.reminderContactDoa().deleteCard(numbers);
-                int count=appDatabase.cardDoa().deleteContactCards(numbers);
+                //appDatabase.reminderContactDoa().deleteCard(numbers);
+              *//*  int count=appDatabase.cardDoa().deleteContactCards(numbers);
                 Log.v("RowsDelted",""+count);
-            });
+*//*            });
 
             toolbarOptions.setVisibility(View.GONE);
             toolbar.setVisibility(View.VISIBLE);
@@ -120,38 +117,38 @@ import butterknife.BindView;
         else
             Toast.makeText(MainActivity.this,"Select Cards for Deletion",Toast.LENGTH_SHORT).show();
 
+        }*/
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!sharedPreferenceSingleton.getSavedBoolean(this, "Cached_Contacts")) {
+            ContactSync contactsSync = new ContactSync(this, getContentResolver(), getMyapp().getDatabase(), this);
+            contactsSync.execute();
+            Log.d("MainActivity", "Syncing");
+            sharedPreferenceSingleton.saveAs(this, "Cached_Contacts", true);
         }
-
-        @Override
-        protected void onStart() {
-            super.onStart();
-            if(!sharedPreferenceSingleton.getSavedBoolean(this,"Cached_Contacts")) {
-                ContactSync contactsSync = new ContactSync(this,getContentResolver(),getMyapp().getDatabase(),this);
-                contactsSync.execute();
-                Log.d("MainActivity","Syncing");
-                sharedPreferenceSingleton.saveAs(this,"Cached_Contacts",true);
-            }
-        }
+    }
 
 
-        public MyApplication getMyapp() {
-            return (MyApplication) getApplicationContext();
-        }
+    public MyApplication getMyapp() {
+        return (MyApplication) getApplicationContext();
+    }
 
 
-        @Override
+    @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_main;
     }
 
 
-        @Override
-        public void taskRunning(boolean runVal) {
+    @Override
+    public void taskRunning(boolean runVal) {
 
-        }
+    }
 
 
-        @Override
+       /* @Override
         public void onContactCardSelected(int count, String number, int position, boolean selected) {
             ToastMessage.showMessageShort(this,"Count="+count+",Position="+position);
             if(count>0){
@@ -171,14 +168,14 @@ import butterknife.BindView;
                 numbers.remove(index);
             }
 
-        }
+        }*/
 
-        @Override
-        public void onClick(View v) {
-            if(v.getId()==backLongClick.getId()){
+    @Override
+    public void onClick(View v) {
+            /*if(v.getId()==backLongClick.getId()){
                 toolbarOptions.setVisibility(View.GONE);
                 toolbar.setVisibility(View.VISIBLE);
 
-            }
-        }
+            }*/
     }
+}

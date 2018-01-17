@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
@@ -25,7 +26,7 @@ public interface cardDoa {
     @Query("SELECT count(*) FROM chat_card_entity WHERE card_id=:cardId")
     int checkCard(int cardId);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCard(ChatCards_Entity chatCards_entity);
 
     @Query("SELECT count(*) FROM chat_card_entity WHERE contact_number_reciever=:phone")
@@ -34,11 +35,11 @@ public interface cardDoa {
     @Query("DELETE FROM chat_card_entity WHERE card_id IN (:cardsList)")
     void deleteCard(List<Integer> cardsList);
 
-    @Query("DELETE FROM chat_card_entity WHERE contact_number_reciever IN (:numbers)")
-    int deleteContactCards(List<String> numbers);
+    @Query("DELETE FROM chat_card_entity WHERE contact_number_reciever =:number")
+    void deleteContactCards(String number);
 
-    @Query("SELECT * FROM chat_card_entity WHERE card_id=:cardId")
-    MutableLiveData<ChatCards_Entity> getCard(int cardID);
+    @Query("SELECT * FROM chat_card_entity WHERE card_id=:cardID")
+    List<ChatCards_Entity> getCard(int cardID);
 
     @Update
     void updateCard(ChatCards_Entity chatCards_entity);

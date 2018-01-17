@@ -42,8 +42,8 @@ public class ChatCards_Entity {
     @ColumnInfo(name="sent_success")
     private boolean sentSuccess;
     public ChatCards_Entity(@NonNull int cardId, String cardTitle, ContactFetch contactFetch,
-                            String sendContact, boolean notesPresent, String notes,
-                            boolean checkListPresent, String checkListData, String location,
+                            String sendContact, String notes,
+                            String location,
                             int color, String time,boolean selected,boolean sentSuccess) {
         this.cardId = cardId;
         this.cardTitle = cardTitle;

@@ -1,8 +1,11 @@
 package com.reminders.location.locatoinreminder.view.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,8 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.reminders.location.locatoinreminder.MyApplication;
 import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
+import com.reminders.location.locatoinreminder.database.AppDatabase;
 import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
 import com.reminders.location.locatoinreminder.executor.ContactCard;
 import com.reminders.location.locatoinreminder.singleton.ToastMessage;
@@ -39,16 +44,16 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
     private Utils utils=new Utils();
     private int colorSelected = Color.LTGRAY;
     private int colorNormal = Color.WHITE;
-    private ContactCard contactCard;
+    //private ContactCard contactCard;
 
     public ContactChatAdapter(Context context, List<ReminderContact> reminderContacts) {
         this.context = context;
         this.reminderContacts = reminderContacts;
-        contactCard= (ContactCard) context;
+        //contactCard= (ContactCard) context;
     }
     public ContactChatAdapter(Context context){
         this.context=context;
-        contactCard= (ContactCard) context;
+        //contactCard= (ContactCard) context;
     }
 
     @Override
@@ -60,24 +65,23 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
         ReminderContact reminderContact=reminderContacts.get(position);
         ReminderContactViewHolder reminderContactViewHolder= (ReminderContactViewHolder) holder;
-       reminderContactViewHolder.name.setText(reminderContact.getName());
-       //Log.v("reminderCount","pos="+position+" count="+reminderContact.getReminderCount());
-        String rem="";
-        if(reminderContact.getReminderCount()==1)
-            rem=" Reminder";
-            else
-            rem=" Reminders";
-       reminderContactViewHolder.cardCount.setText(reminderContact.getReminderCount()+rem);
-       reminderContactViewHolder.initials.setText(utils.getInitial(reminderContact.getName()));
+        reminderContactViewHolder.name.setText(reminderContact.getName());
+        //Log.v("reminderCount","pos="+position+" count="+reminderContact.getReminderCount());
+        String rem=" Reminder";
+        if(reminderContact.getReminderCount()>1)
+            rem=rem+"s";
+
+        reminderContactViewHolder.cardCount.setText(reminderContact.getReminderCount()+rem);
+        reminderContactViewHolder.initials.setText(utils.getInitial(reminderContact.getName()));
         if(reminderContact.isSelection())
             reminderContactViewHolder.status.setVisibility(View.VISIBLE);
         else
             reminderContactViewHolder.status.setVisibility(View.GONE);
-        reminderContactViewHolder.cardView.setCardBackgroundColor(reminderContact.isSelection()?colorSelected:colorNormal);
+        //  reminderContactViewHolder.cardView.setCardBackgroundColor(reminderContact.isSelection()?colorSelected:colorNormal);
         ((ReminderContactViewHolder)holder).contact=reminderContact;
+
 
     }
 
@@ -121,18 +125,39 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View v) {
             if (v.getId() == cardView.getId()) {
-                    Intent intent=new Intent(context, ChatActivity.class);
-                    intent.putExtra(ConstantVar.CHAT_ID,contact.getNumber());
-                    intent.putExtra(ConstantVar.CONTACT_NAME,name.getText().toString());
-                    intent.putExtra(ConstantVar.CLICKFROMCHATCARDS,ConstantVar.FROMCHATCRADS);
-                    context.startActivity(intent);
+                Intent intent=new Intent(context, ChatActivity.class);
+                intent.putExtra(ConstantVar.CHAT_ID,contact.getNumber());
+                intent.putExtra(ConstantVar.CONTACT_NAME,name.getText().toString());
+                intent.putExtra(ConstantVar.CLICKFROMCHATCARDS,ConstantVar.FROMCHATCRADS);
+                context.startActivity(intent);
             }
         }
 
         @Override
         public boolean onLongClick(View v) {
+            final AlertDialog.Builder alert = new AlertDialog.Builder(context);
+            alert.setMessage("Delete Chat with "+contact.getName()+"?");
+            alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // continue with delete
+                    AsyncTask.execute(()->{
+                        AppDatabase appDatabase=((MyApplication)context.getApplicationContext()).getDatabase();
+                        appDatabase.reminderContactDoa().deleteCard(contact.getNumber());
+                        appDatabase.cardDoa().deleteContactCards(contact.getNumber());
+                    });
+                }
+            });
+            alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            alert.show();
+
+
             Log.v("OnLongClick","LongClick");
-            if(contact.isSelection()){
+            /*if(contact.isSelection()){
                 contact.setSelection(false);
                 count--;
                 contactCard.onContactCardSelected(count,contact
@@ -145,7 +170,7 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
                 contactCard.onContactCardSelected(count,contact
                         .getNumber(),getAdapterPosition(),true);
             }
-            cardView.setBackgroundColor(contact.isSelection()?colorSelected:colorNormal);
+            cardView.setBackgroundColor(contact.isSelection()?colorSelected:colorNormal);*/
 
 
 
@@ -153,4 +178,3 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
         }
     }
 }
-

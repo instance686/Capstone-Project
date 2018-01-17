@@ -1,5 +1,7 @@
 package com.reminders.location.locatoinreminder.constants;
 
+import com.reminders.location.locatoinreminder.R;
+
 /**
  * Created by ayush on 25/12/17.
  */
@@ -22,7 +24,7 @@ public interface ConstantVar {
 
 
 
-
+    int[] backgroundColors={R.color.colorMainBackground1,R.color.color1,R.color.color2,R.color.color3,R.color.color4,R.color.color5};
 
     int RC_SIGN_IN = 9001;
     int CONTACT_LOADER=1;

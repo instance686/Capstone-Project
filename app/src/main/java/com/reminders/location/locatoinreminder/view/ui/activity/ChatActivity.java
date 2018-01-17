@@ -129,7 +129,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
                 sharedPreferenceSingleton.saveAs(this,ConstantVar.INSERTION,false);
                 sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATED_NUMBER,chatId);
 
-
             });
             optionsToolbar.setVisibility(View.GONE);
             toolbar.setVisibility(View.VISIBLE);
@@ -164,14 +163,9 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
         intent.putExtra(ConstantVar.CONTACT_NAME,name);
         switch (v.getId()){
             case R.id.send_note:
-                intent.putExtra(ConstantVar.NEW_CHOICE,ConstantVar.NOTES_CLICKED);
+                intent.putExtra(ConstantVar.UPDATE_CARD,false);
                 startActivity(intent);
                 break;
-            case R.id.send_checklist:
-                intent.putExtra(ConstantVar.NEW_CHOICE,ConstantVar.CHECKLIST_CLICKED);
-                startActivity(intent);
-                break;
-
         }
     }
 

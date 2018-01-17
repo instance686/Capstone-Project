@@ -10,7 +10,8 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?selectableItemBackground"
-    card_view:cardElevation="@dimen/dimen_2dp">
+    card_view:cardElevation="@dimen/dimen_2dp"
+    card_view:cardCornerRadius="4dp">
 
 
     <LinearLayout
@@ -27,7 +28,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/semi_bold"
+            android:textStyle="bold"
             tools:text="Title"
+            android:textSize="@dimen/dimen_18sp"
             android:textColor="?android:textColorPrimary"
             />
 
@@ -41,6 +44,7 @@
             android:fontFamily="@font/light"
             android:textStyle="bold"
             android:lineSpacingMultiplier="1.2"
+            android:textSize="13sp"
             android:textColor="?android:textColorPrimary"
             tools:text="Note..."
             />

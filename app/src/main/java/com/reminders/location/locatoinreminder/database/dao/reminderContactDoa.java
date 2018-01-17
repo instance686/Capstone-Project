@@ -39,8 +39,8 @@ public interface reminderContactDoa {
     void updateChatCard(ReminderContact reminderContact);
 
 
-    @Query("DELETE FROM reminder_chat WHERE contact_num IN (:cardsList)")
-    void deleteCard(List<String> cardsList);
+    @Query("DELETE FROM reminder_chat WHERE contact_num =:number")
+    void deleteCard(String number);
 
     @Query("DELETE FROM reminder_chat")
     void deleteAll();

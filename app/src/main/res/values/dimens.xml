@@ -23,6 +23,7 @@
     <dimen name="dimen_150dp">150dp</dimen>
     <dimen name="dimen_200dp">200dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="dimen_26dp">26dp</dimen>
 
 
 </resources>

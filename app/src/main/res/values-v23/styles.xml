@@ -12,6 +12,5 @@
         <item name="android:colorBackground">@color/colorMainBackground1</item>
         <item name="iconDual">@color/textColorPrimary1</item>
         <item name="android:fontFamily">@font/regular</item>
-        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>
