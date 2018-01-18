@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.location.places.GeoDataClient;
@@ -56,6 +57,9 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
     CoordinatorLayout background;
     @BindView(R.id.bottomCard)
     CardView bottomCard;
+    @BindView(R.id.maineView)
+    RelativeLayout mainView;
+
 
     BottomSheetBehavior bottomSheetBehavior;
     DatabaseReference databaseReference;
@@ -182,9 +186,16 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
 
 
     }
-
     public void insertCard(){
         int cardId=(int)System.currentTimeMillis();
+        dataInsertUpdate(cardId);
+    }
+    public void updateCard(){
+        int cardId=getIntent().getIntExtra(ConstantVar.CARD_CLICKED,0);
+        dataInsertUpdate(cardId);
+    }
+
+    public void dataInsertUpdate(int cardId){
         String cardTitle=title.getText().toString().trim();
         ContactFetch contactFetch=new ContactFetch(getIntent().getStringExtra(ConstantVar.CONTACT_NAME),
                 getIntent().getStringExtra(ConstantVar.CHAT_ID));
@@ -192,84 +203,48 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
         if(notes.equalsIgnoreCase(""))
             ToastMessage.showMessageLong(this,"Please enter a note text");
         else {
-            ChatCards_Entity chatCards_entity=
-                    new ChatCards_Entity(cardId,cardTitle,contactFetch,
-                            sharedPreferenceSingleton.getSavedString(this,ConstantVar.CONTACT_SELF_NUMBER)
-                            ,notes,
-                            location,currentColor,time,false,false
-                    );
-            AsyncTask.execute(()->{
-                //insert chat card
-                appDatabase.cardDoa().insertCard(chatCards_entity);
-                //get contact card count
-                int countReminderCard=appDatabase.cardDoa().getContactCardCount(contactFetch.getContact_number());
-
-
-                if(countReminderCard >= 1){
-                    //get reminder card count
-                    int reminderContactCount=appDatabase.reminderContactDoa().chatCardPresent(contactFetch.getContact_number());
-
-                    if(reminderContactCount>0){
-                        setSharedValues(true,false,contactFetch.getContact_number());
-                        //update contact card
-                        appDatabase.reminderContactDoa().updateChatCard(new ReminderContact(contactFetch.getContact_number(),
-                                contactFetch.getContact_name(),countReminderCard,false,true,System.currentTimeMillis()));
-                    }
-                    else {
-                        setSharedValues(false,true,contactFetch.getContact_number());
-                        //insert contact card
-                        appDatabase.reminderContactDoa().inserChatCard(new ReminderContact(contactFetch.getContact_number(),
-                                contactFetch.getContact_name(),countReminderCard,false,true ,System.currentTimeMillis()));
-                    }
-                }
-            });
-
-            finish();
+            updateInsert(cardId,cardTitle,contactFetch,notes,location,currentColor,time,false,false);
         }
     }
-    public void updateCard(){
-        int cardId=getIntent().getIntExtra(ConstantVar.CARD_CLICKED,0);
-        String cardTitle=title.getText().toString().trim();
-        String notes=note.getText().toString().trim();
-        ContactFetch contactFetch=new ContactFetch(getIntent().getStringExtra(ConstantVar.CONTACT_NAME),
-                getIntent().getStringExtra(ConstantVar.CHAT_ID));
-        if(notes.equalsIgnoreCase("")){
-            ToastMessage.showMessageLong(this,"Please enter a note text");
-        }
-        else{
-            ChatCards_Entity chatCards_entity=
-                    new ChatCards_Entity(cardId,cardTitle,contactFetch,
-                            sharedPreferenceSingleton.getSavedString(this,ConstantVar.CONTACT_SELF_NUMBER)
-                            ,notes,
-                            location,currentColor,time,false,false
-                    );
-            AsyncTask.execute(()->{
-                //update chat card
-                appDatabase.cardDoa().updateCard(chatCards_entity);
-                //get contact card count
-                int countReminderCard=appDatabase.cardDoa().getContactCardCount(contactFetch.getContact_number());
 
-                if(countReminderCard >= 1){
-                    //get reminder card count
-                    int reminderContactCount=appDatabase.reminderContactDoa().chatCardPresent(contactFetch.getContact_number());
+    private void updateInsert(int cardId, String cardTitle, ContactFetch contactFetch,
+                              String notes, String location, int currentColor,
+                              String time, boolean selected, boolean sentSuccess) {
+        ChatCards_Entity chatCards_entity=
+                new ChatCards_Entity(cardId,cardTitle,contactFetch,
+                        sharedPreferenceSingleton.getSavedString(this,ConstantVar.CONTACT_SELF_NUMBER)
+                        ,notes,
+                        location,currentColor,time,selected,sentSuccess
+                );
 
-                    if(reminderContactCount>0){
-                        setSharedValues(true,false,contactFetch.getContact_number());
-                        //update contact card
-                        appDatabase.reminderContactDoa().updateChatCard(new ReminderContact(contactFetch.getContact_number(),
-                                contactFetch.getContact_name(),countReminderCard,false,true,System.currentTimeMillis()));
-                    }
-                    else {
-                        setSharedValues(false,true,contactFetch.getContact_number());
-                        //insert contact card
-                        appDatabase.reminderContactDoa().inserChatCard(new ReminderContact(contactFetch.getContact_number(),
-                                contactFetch.getContact_name(),countReminderCard,false,true ,System.currentTimeMillis()));
-                    }
+
+        AsyncTask.execute(()->{
+            //check if insert or update
+            if(!getIntent().getBooleanExtra(ConstantVar.UPDATE_CARD,false))
+                appDatabase.cardDoa().insertCard(chatCards_entity);//insert card
+            else
+            appDatabase.cardDoa().updateCard(chatCards_entity);//update card
+            //get contact card count
+            int countReminderCard=appDatabase.cardDoa().getContactCardCount(contactFetch.getContact_number());
+            if(countReminderCard >= 1){
+                //get reminder card count
+                int reminderContactCount=appDatabase.reminderContactDoa().chatCardPresent(contactFetch.getContact_number());
+                if(reminderContactCount>0){
+                    setSharedValues(true,false,contactFetch.getContact_number());
+                    //update contact card
+                    appDatabase.reminderContactDoa().updateChatCard(new ReminderContact(contactFetch.getContact_number(),
+                            contactFetch.getContact_name(),countReminderCard,false,true,System.currentTimeMillis()));
                 }
-            });
-            finish();
-        }
+                else {
+                    setSharedValues(false,true,contactFetch.getContact_number());
+                    //insert contact card
+                    appDatabase.reminderContactDoa().inserChatCard(new ReminderContact(contactFetch.getContact_number(),
+                            contactFetch.getContact_name(),countReminderCard,false,true ,System.currentTimeMillis()));
+                }
+            }
+        });
 
+        finish();
     }
 
     @Override
@@ -304,6 +279,10 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
                 onBackPressed();
             case R.id.bottomCard:
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                break;
+            case R.id.maineView:
+                Log.v("mainViewClicked","");
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 break;
         }
     }
@@ -359,6 +338,8 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
         sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATED_NUMBER,number);
 
     }
+
+
 
 
 }

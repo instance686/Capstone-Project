@@ -44,4 +44,7 @@ public interface cardDoa {
     @Update
     void updateCard(ChatCards_Entity chatCards_entity);
 
+    @Delete
+    void deleteCard(ChatCards_Entity chatCardsEntity);
+
 }

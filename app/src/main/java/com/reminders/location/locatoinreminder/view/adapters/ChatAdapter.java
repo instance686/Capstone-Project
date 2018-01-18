@@ -3,6 +3,7 @@ package com.reminders.location.locatoinreminder.view.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -61,7 +62,8 @@ public class ChatAdapter extends RecyclerView.Adapter {
         Log.v("DataHolder",chatCards_entity.getNotes());
         cardViewHolder.note.setText(chatCards_entity.getNotes());
         cardViewHolder.coordinates.setText(chatCards_entity.getLocation());
-        cardViewHolder.reminderCard.setBackgroundColor(chatCards_entity.getColor());
+        cardViewHolder.reminderCard.setBackgroundColor(ContextCompat.getColor(c,
+                chatCards_entity.getColor()));
         ((CardViewHolder)cardViewHolder).chatCards_entity=chatCards_entity;
 
 
@@ -107,6 +109,8 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
             Intent intent=new Intent(c, ReminderSet.class);
             intent.putExtra(ConstantVar.CARD_CLICKED,chatCards_entity.getCardId());
+            intent.putExtra(ConstantVar.CHAT_ID,chatCards_entity.getContactFetch().getContact_number());
+            intent.putExtra(ConstantVar.CONTACT_NAME,chatCards_entity.getContactFetch().getContact_name());
             intent.putExtra(ConstantVar.UPDATE_CARD,true);
             c.startActivity(intent);
         }
