@@ -41,10 +41,13 @@ public class ChatCards_Entity {
     private boolean selected;
     @ColumnInfo(name="sent_success")
     private boolean sentSuccess;
+    @ColumnInfo(name = "update_time")
+    private long editMilliseconds;
     public ChatCards_Entity(@NonNull int cardId, String cardTitle, ContactFetch contactFetch,
                             String sendContact, String notes,
                             String location,
-                            int color, String time,boolean selected,boolean sentSuccess) {
+                            int color, String time,boolean selected,boolean sentSuccess,
+                            long editMilliseconds) {
         this.cardId = cardId;
         this.cardTitle = cardTitle;
         this.contactFetch = contactFetch;
@@ -58,7 +61,19 @@ public class ChatCards_Entity {
         this.time = time;
         this.selected=selected;
         this.sentSuccess=sentSuccess;
+        this.editMilliseconds=editMilliseconds;
 
+    }
+
+
+    public ChatCards_Entity(){}
+
+    public long getEditMilliseconds() {
+        return editMilliseconds;
+    }
+
+    public void setEditMilliseconds(long editMilliseconds) {
+        this.editMilliseconds = editMilliseconds;
     }
 
     public String getSendContact() {

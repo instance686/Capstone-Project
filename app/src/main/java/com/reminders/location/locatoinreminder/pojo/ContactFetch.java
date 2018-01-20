@@ -11,6 +11,8 @@ public class ContactFetch {
     @ColumnInfo(name = "contact_number_reciever")
     private String contact_number;
 
+    public ContactFetch(){}
+
     public ContactFetch(String contact_name, String contact_number) {
         this.contact_name = contact_name;
         this.contact_number = contact_number;

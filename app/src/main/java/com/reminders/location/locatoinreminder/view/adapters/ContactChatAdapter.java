@@ -17,12 +17,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.reminders.location.locatoinreminder.MyApplication;
 import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.AppDatabase;
 import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
 import com.reminders.location.locatoinreminder.executor.ContactCard;
+import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
 import com.reminders.location.locatoinreminder.singleton.ToastMessage;
 import com.reminders.location.locatoinreminder.util.Utils;
 import com.reminders.location.locatoinreminder.view.ui.activity.ChatActivity;
@@ -44,11 +51,16 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
     private Utils utils=new Utils();
     private int colorSelected = Color.LTGRAY;
     private int colorNormal = Color.WHITE;
+    private DatabaseReference databaseReference;
+    private AppDatabase appDatabase;
+    private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
+
     //private ContactCard contactCard;
 
     public ContactChatAdapter(Context context, List<ReminderContact> reminderContacts) {
         this.context = context;
         this.reminderContacts = reminderContacts;
+        appDatabase=((MyApplication)context.getApplicationContext()).getDatabase();
         //contactCard= (ContactCard) context;
     }
     public ContactChatAdapter(Context context){
@@ -141,9 +153,8 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
                 public void onClick(DialogInterface dialog, int which) {
                     // continue with delete
                     AsyncTask.execute(()->{
-                        AppDatabase appDatabase=((MyApplication)context.getApplicationContext()).getDatabase();
-                        appDatabase.reminderContactDoa().deleteCard(contact.getNumber());
-                        appDatabase.cardDoa().deleteContactCards(contact.getNumber());
+                        deleteLocally();
+                        //deleteFromServer();
                     });
                 }
             });
@@ -176,5 +187,34 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
 
             return true;
         }
+        public void deleteLocally(){
+            AppDatabase appDatabase=((MyApplication)context.getApplicationContext()).getDatabase();
+            appDatabase.reminderContactDoa().deleteCard(contact.getNumber());
+            appDatabase.cardDoa().deleteContactCards(contact.getNumber());
+        }
+        public void deleteFromServer(){
+            String selfNum=sharedPreferenceSingleton.getSavedString(context,ConstantVar.CONTACT_SELF_NUMBER);
+            databaseReference= FirebaseDatabase.getInstance().getReference("reminders");
+            Log.v("KeyToDel",new Utils().getFullNumber(contact.getNumber())+selfNum);
+
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot post:dataSnapshot.getChildren()){
+                        if(post.getKey().equalsIgnoreCase(contact.getNumber()+selfNum)){
+                            post.getRef().removeValue();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+        }
     }
+
 }

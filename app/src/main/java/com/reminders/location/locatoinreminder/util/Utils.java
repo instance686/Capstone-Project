@@ -9,6 +9,8 @@ import android.net.NetworkInfo;
  */
 
 public class Utils {
+
+
     public String getInitial(String s) {
         int spaceIndex = s.indexOf(' ');
         try {
@@ -19,6 +21,13 @@ public class Utils {
         }
 
         return "" + s.charAt(0);
+    }
+
+    public String getFullNumber(String number){
+        if(number.contains("+91"))
+            return number;
+        else
+            return "+91"+number;
     }
     public static boolean isConnectedToNetwork(Context context){
         ConnectivityManager cm =

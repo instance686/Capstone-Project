@@ -22,6 +22,7 @@ import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.reminders.location.locatoinreminder.MyApplication;
 import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
@@ -87,7 +88,8 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
         super.onCreate(savedInstanceState);
         appDatabase=getMyapp().getDatabase();
         bottomSheetBehavior=BottomSheetBehavior.from(bottomSheet);
-
+        databaseReference= FirebaseDatabase.getInstance().getReference("reminders");
+        databaseReference.keepSynced(true);
          if(!getIntent().getBooleanExtra(ConstantVar.UPDATE_CARD,false)) {
              setCurrentColor(currentColor);
          }
@@ -214,7 +216,7 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
                 new ChatCards_Entity(cardId,cardTitle,contactFetch,
                         sharedPreferenceSingleton.getSavedString(this,ConstantVar.CONTACT_SELF_NUMBER)
                         ,notes,
-                        location,currentColor,time,selected,sentSuccess
+                        location,currentColor,time,selected,sentSuccess,System.currentTimeMillis()
                 );
 
 
@@ -244,7 +246,22 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
             }
         });
 
+        //if(!sharedPreferenceSingleton.getSavedString(this,ConstantVar.CONTACT_SELF_NUMBER).equalsIgnoreCase(contactFetch.getContact_number()))
+        //insertIntoFirebaseDB(cardId,chatCards_entity);
+
         finish();
+    }
+
+    private void insertIntoFirebaseDB(int cardId, ChatCards_Entity chatCards_entity) {
+        String number="";
+        String sendTo=chatCards_entity.getContactFetch().getContact_number();
+        String sendFrom=sharedPreferenceSingleton.getSavedString(this,ConstantVar.CONTACT_SELF_NUMBER);
+        if(sendTo.contains("+91"))
+           number=sendFrom+sendTo;
+        else
+            number=sendFrom+"+91"+sendTo;
+        databaseReference.child(number).child(cardId+"").setValue(chatCards_entity);
+        Log.d("OPERATION","INSERT");
     }
 
     @Override
@@ -332,9 +349,9 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
         bottomCard.setCardBackgroundColor(ContextCompat.getColor(this,colorSelected));
         currentColor=colorSelected;
     }
-    public void setSharedValues(boolean val1,boolean val2,String number){
+     public void setSharedValues(boolean val1,boolean val2,String number){
         sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATION,val1);
-        sharedPreferenceSingleton.saveAs(this,ConstantVar.INSERTION,val2);
+       sharedPreferenceSingleton.saveAs(this,ConstantVar.INSERTION,val2);
         sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATED_NUMBER,number);
 
     }
