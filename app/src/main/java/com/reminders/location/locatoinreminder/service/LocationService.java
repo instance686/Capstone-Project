@@ -143,9 +143,9 @@ public class LocationService extends Service implements LocationListener {
             String[] loc=ce.getLocation().split(" ");
             dest_location.setLatitude(Double.parseDouble(loc[0]));
             dest_location.setLongitude(Double.parseDouble(loc[1]));
-            float distance=location.distanceTo(location);
+            float distance=location.distanceTo(dest_location);
             if(distance<=1000){
-                //TODO-Notify User
+                //TODO-Notify User using notification
             }
         }
 
