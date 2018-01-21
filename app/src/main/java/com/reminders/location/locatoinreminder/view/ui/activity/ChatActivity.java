@@ -67,8 +67,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
     RecyclerView chatMessages;
     @BindView(R.id.send_note)
     TextView send_note;
-    @BindView(R.id.send_checklist)
-    ImageView send_checklist;
     @BindView(R.id.backOnLongClick)
     ImageButton longBackClick;
     @BindView(R.id.cardCounter)
@@ -112,7 +110,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
 
 
         send_note.setOnClickListener(this);
-        send_checklist.setOnClickListener(this);
         backbutton.setOnClickListener((view)->{onBackPressed();});
 
         chatMessages.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));

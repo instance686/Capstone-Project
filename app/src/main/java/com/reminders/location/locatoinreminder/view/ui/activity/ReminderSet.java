@@ -18,6 +18,8 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
@@ -79,7 +81,7 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
     private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
     private ReminderSetActivityViewModel reminderSetActivityViewModel;
     private ChatCards_Entity chatCardsEntity;
-    private String location="ABCD";
+    private String location="";
     private String time="Edited:"+"DUMMY";
 
 
@@ -107,7 +109,7 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
              });
 
          }
-        // builder = new PlacePicker.IntentBuilder();
+        builder = new PlacePicker.IntentBuilder();
 
 
 
@@ -147,7 +149,7 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
 
     }
     public void locationHandling(String location){
-
+        this.location=location;
     }
     public void colorHandling(int color){
         setCurrentColor(color);
@@ -172,9 +174,9 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, this);
-                String toastMsg = String.format("Place: %s", place.getName());
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                Place place = PlacePicker.getPlace(this,data);
+                location=place.getLatLng().latitude+" "+place.getLatLng().longitude+" "+place.getName();
+                Toast.makeText(this, "Location Set To:-"+place.getName(), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -204,6 +206,11 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
         String notes=note.getText().toString().trim();
         if(notes.equalsIgnoreCase(""))
             ToastMessage.showMessageLong(this,"Please enter a note text");
+        else if(location.equalsIgnoreCase("")){
+            if(bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_HIDDEN)
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            ToastMessage.showMessageLong(this,"Please select a location");
+        }
         else {
             updateInsert(cardId,cardTitle,contactFetch,notes,location,currentColor,time,false,false);
         }
@@ -307,13 +314,13 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
     public void bottomSheetButtonClicked(View view){
         switch (view.getId()){
             case R.id.addLocation:
-                /*try {
+                try {
                     startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
                 } catch (GooglePlayServicesRepairableException e) {
                     e.printStackTrace();
                 } catch (GooglePlayServicesNotAvailableException e) {
                     e.printStackTrace();
-                }*/
+                }
                 break;
 
             case R.id.color1:

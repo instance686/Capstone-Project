@@ -29,6 +29,26 @@ public class Utils {
         else
             return "+91"+number;
     }
+
+    public String getCoordinates(String location){
+        String[] latlang=location.split(" ");
+        String loc="";
+        /*if(latlang[0].length()>5) {
+            loc = loc + latlang[0].substring(0, 4) + ",";
+        }
+        else {
+            loc = loc+latlang[0] + ",";
+        }
+        if(latlang[1].length()>5) {
+            loc = loc + latlang[1].substring(0, 4);
+        }else
+        {
+            loc=loc+latlang[1];
+        }*/
+            loc=loc+latlang[2];
+
+            return loc;
+    }
     public static boolean isConnectedToNetwork(Context context){
         ConnectivityManager cm =
                 (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -59,9 +59,8 @@ public class ChatAdapter extends RecyclerView.Adapter {
         ChatCards_Entity chatCards_entity=chatCards_entities.get(position);
         CardViewHolder cardViewHolder= (CardViewHolder) holder;
         cardViewHolder.title.setText(chatCards_entity.getCardTitle());
-        Log.v("DataHolder",chatCards_entity.getNotes());
         cardViewHolder.note.setText(chatCards_entity.getNotes());
-        cardViewHolder.coordinates.setText(chatCards_entity.getLocation());
+        cardViewHolder.coordinates.setText(new Utils().getCoordinates(chatCards_entity.getLocation()));
         cardViewHolder.reminderCard.setBackgroundColor(ContextCompat.getColor(c,
                 chatCards_entity.getColor()));
         ((CardViewHolder)cardViewHolder).chatCards_entity=chatCards_entity;

@@ -150,21 +150,9 @@
                     android:text="Send a note"
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toStartOf="@id/send_checklist"
                     card_view:layout_constraintTop_toTopOf="parent"
                     android:textSize="@dimen/dimen_16sp"/>
 
-                <ImageButton
-                    android:id="@+id/send_checklist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/list_icon"
-                    android:background="@drawable/ripple"
-                    android:layout_marginEnd="@dimen/dimen_16dp"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent"
-                    />
 
             </android.support.constraint.ConstraintLayout>
 

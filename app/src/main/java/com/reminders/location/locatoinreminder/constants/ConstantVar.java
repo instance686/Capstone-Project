@@ -24,6 +24,8 @@ public interface ConstantVar {
 
 
 
+
+
     int[] backgroundColors={R.color.colorMainBackground1,R.color.color1,R.color.color2,R.color.color3,R.color.color4,R.color.color5};
 
     int RC_SIGN_IN = 9001;
