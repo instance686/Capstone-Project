@@ -37,12 +37,12 @@
                     android:id="@+id/contact_select"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="@dimen/dimen_32dp"
+                    android:layout_marginTop="@dimen/dimen_8dp"
                     android:fontFamily="@font/semi_bold"
                     android:text="Select Contact"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/dimen_14sp"
                     app:layout_constraintStart_toEndOf="@+id/back"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,11 +50,11 @@
                     android:id="@+id/contact_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginBottom="@dimen/dimen_8dp"
                     android:fontFamily="@font/semi_bold"
                     android:text=" contacts"
                     android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/dimen_12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/contact_select"
                     app:layout_constraintTop_toBottomOf="@+id/contact_select" />
@@ -135,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/dimen_12dp"
             android:text="@string/invite_button"
             android:textAllCaps="false"
             android:textSize="@dimen/dimen_16sp" />
@@ -158,7 +158,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/contacts"
         android:layout_width="@dimen/dimen_0dp"
-        android:layout_height="512dp"
+        android:layout_height="0dp"
         android:layout_marginTop="?attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

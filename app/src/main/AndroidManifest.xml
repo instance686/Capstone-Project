@@ -38,6 +38,7 @@
             android:name=".view.ui.activity.ContactsActivity"
             android:label="@string/title_activity_contacts"
             android:theme="@style/AppTheme"></activity>
+
         <receiver android:name=".boadCastReciever.GPSLocationReciever">
             <intent-filter>
                 <action android:name="android.location.PROVIDERS_CHANGED" />

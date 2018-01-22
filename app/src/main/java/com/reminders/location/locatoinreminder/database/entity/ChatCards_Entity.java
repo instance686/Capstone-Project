@@ -4,6 +4,9 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.reminders.location.locatoinreminder.pojo.ContactFetch;
@@ -14,7 +17,7 @@ import com.reminders.location.locatoinreminder.pojo.ContactFetch;
 
 
 @Entity(tableName = "chat_card_entity")
-public class ChatCards_Entity {
+public class ChatCards_Entity implements Parcelable {
     @NonNull@PrimaryKey@ColumnInfo(name="card_id")
     private int cardId;
     @ColumnInfo(name = "card_title")
@@ -43,6 +46,20 @@ public class ChatCards_Entity {
     private boolean sentSuccess;
     @ColumnInfo(name = "update_time")
     private long editMilliseconds;
+
+
+
+    public ChatCards_Entity(final Parcel source){
+        cardId=source.readInt();
+        cardTitle=source.readString();
+        contactFetch=source.readParcelable(getClass().getClassLoader());
+        sendContact=source.readString();
+        notes=source.readString();
+        location=source.readString();
+        color=source.readInt();
+        time=source.readString();
+        editMilliseconds=source.readLong();
+    }
     public ChatCards_Entity(@NonNull int cardId, String cardTitle, ContactFetch contactFetch,
                             String sendContact, String notes,
                             String location,
@@ -180,4 +197,36 @@ public class ChatCards_Entity {
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeInt(cardId);
+        dest.writeString(cardTitle);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            dest.writeTypedObject(contactFetch, flags);
+        }
+        dest.writeString(sendContact);
+        dest.writeString(notes);
+        dest.writeString(location);
+        dest.writeInt(color);
+        dest.writeString(time);
+        dest.writeLong(editMilliseconds);
+
+    }
+    public static final Creator CREATOR = new Creator() {
+        public ChatCards_Entity createFromParcel(Parcel in) {
+            return new ChatCards_Entity(in);
+        }
+
+        public ChatCards_Entity[] newArray(int size) {
+            return new ChatCards_Entity[size];
+        }
+    };
 }

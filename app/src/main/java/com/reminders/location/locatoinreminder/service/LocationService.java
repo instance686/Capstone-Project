@@ -13,13 +13,17 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.reminders.location.locatoinreminder.MyApplication;
+import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.AppDatabase;
 import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
+import com.reminders.location.locatoinreminder.executor.ShoutsListUpdate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +48,13 @@ public class LocationService extends Service implements LocationListener {
     LocationManager locationManager;
     AppDatabase databaseReference;
     List<ChatCards_Entity> allDetails=new ArrayList<>();
+    Intent broadcastIntent = new Intent();
+    int locationCounter=1;
+    ShoutsListUpdate shoutsListUpdate;
 
 
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 40;// 40 meters
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 10;
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;// 40 meters
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 5;
 
 
     @Override
@@ -117,7 +124,9 @@ public class LocationService extends Service implements LocationListener {
                     if(location!=null){
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
-                        Log.v("Distance",location.distanceTo(dest_location)+"");
+                        //Log.v("Distance",location.distanceTo(dest_location)+"");
+                        Log.v("FromService","onLocationChanged");
+
 
                     }
                 }
@@ -138,16 +147,28 @@ public class LocationService extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+
+
+
         getList();
-        for(ChatCards_Entity ce:allDetails){
+        broadcastIntent.setAction(ConstantVar.mBroadcastArrayListAction);
+        broadcastIntent.putParcelableArrayListExtra("TEST", (ArrayList<? extends Parcelable>) allDetails);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+
+
+        /*for(ChatCards_Entity ce:allDetails){
             String[] loc=ce.getLocation().split(" ");
             dest_location.setLatitude(Double.parseDouble(loc[0]));
             dest_location.setLongitude(Double.parseDouble(loc[1]));
             float distance=location.distanceTo(dest_location);
+
             if(distance<=1000){
                 //TODO-Notify User using notification
+
             }
-        }
+        }*/
+
+
 
         Log.v("FromService","onLocationChanged");
 

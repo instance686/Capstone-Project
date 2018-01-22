@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/dimen_16dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/ripple"
                 android:tint="#000"
@@ -56,7 +56,7 @@
                     android:layout_marginStart="@dimen/dimen_16dp"
                     android:layout_marginTop="@dimen/dimen_32dp"
                     android:hint="Title"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/dimen_22sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,8 @@
                     android:background="@null"
                     android:textColor="?android:textColorPrimary"
                     android:maxLines="2"
-                    android:maxLength="250"/>
+                    android:maxLength="250"
+                    tools:text="Some Title for the note"/>
                 <EditText
                     android:id="@+id/note"
                     android:layout_width="match_parent"
@@ -73,6 +74,7 @@
                     android:layout_marginStart="@dimen/dimen_16dp"
                     android:layout_marginTop="@dimen/dimen_16dp"
                     android:hint="Note"
+                    tools:text="Some Note"
                     android:textSize="@dimen/dimen_18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -114,6 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Edited :"
+                    android:textSize="@dimen/dimen_14sp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"/>
 

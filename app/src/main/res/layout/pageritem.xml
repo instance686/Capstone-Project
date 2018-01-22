@@ -16,13 +16,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:paddingStart="@dimen/dimen_16dp"
+        android:paddingEnd="@dimen/dimen_16dp">
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="@dimen/dimen_120dp"
+            android:layout_height="@dimen/dimen_120dp"
             app:srcCompat="@drawable/ic_walkthrough1"
             android:layout_gravity="center_horizontal" />
 
@@ -31,10 +31,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="@dimen/dimen_75dp"
             android:textAllCaps="true"
             android:textColor="?android:textColorPrimary"
-            android:textSize="16sp"
+            android:textSize="@dimen/dimen_16sp"
             tools:text="Send reminders to others" />
 
         <TextView
@@ -42,11 +42,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="26dp"
+            android:layout_margin="@dimen/dimen_26dp"
             android:textAlignment="center"
             android:fontFamily="@font/light"
-            android:textColor="?android:textColorSecondary"
-            android:textSize="14sp"
+            android:textSize="@dimen/dimen_14sp"
             android:lineSpacingMultiplier="1.2"
             tools:text="You can send reminders to other people by simply selecting a reminder time,date and reminder note." />
     </LinearLayout>

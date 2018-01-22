@@ -5,8 +5,10 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -65,12 +67,16 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
     TextView chatTitle;
     @BindView(R.id.chat_messages)
     RecyclerView chatMessages;
-    @BindView(R.id.send_note)
-    TextView send_note;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     @BindView(R.id.backOnLongClick)
     ImageButton longBackClick;
     @BindView(R.id.cardCounter)
     TextView counter;
+
+    @BindView(R.id.empty_state)
+    ConstraintLayout empty_state;
+
     SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
     ChatActivityViewModel chatActivityViewModel;
     DatabaseReference databaseReference,r2;
@@ -105,11 +111,11 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
         toolbar.setOnMenuItemClickListener(item->{
             new ChatCardSync(this,appDatabase,databaseReference,chatId,name,selfNum
                     , (ArrayList<ChatCards_Entity>) presentCards).execute();
-                 return true;
+            return true;
         });
 
 
-        send_note.setOnClickListener(this);
+        fab.setOnClickListener(this);
         backbutton.setOnClickListener((view)->{onBackPressed();});
 
         chatMessages.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
@@ -148,6 +154,11 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
         public void onChanged(@Nullable List<ChatCards_Entity> chatCards_entities) {
             presentCards=chatCards_entities;
             chatAdapter.addItem(chatCards_entities);
+            if(chatCards_entities.size()>0) {
+                empty_state.setVisibility(View.GONE);
+            }else {
+                empty_state.setVisibility(View.VISIBLE);
+            }
         }
     };
 
@@ -169,7 +180,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
         intent.putExtra(ConstantVar.CHAT_ID,chatId);
         intent.putExtra(ConstantVar.CONTACT_NAME,name);
         switch (v.getId()){
-            case R.id.send_note:
+            case R.id.fab:
                 intent.putExtra(ConstantVar.UPDATE_CARD,false);
                 startActivity(intent);
                 break;

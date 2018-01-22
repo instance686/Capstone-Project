@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,9 +46,11 @@ import butterknife.Unbinder;
 public class ReminderChat extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.fab)
-     FloatingActionButton floatingActionButton;
+    FloatingActionButton floatingActionButton;
     @BindView(R.id.contactsRem)
     RecyclerView recyclerView;
+    @BindView(R.id.empty_state)
+    ConstraintLayout empty_state;
 
     ReminderChatViewModel reminderChatViewModel;
     ContactChatAdapter contactChatAdapter;
@@ -95,6 +98,11 @@ public class ReminderChat extends Fragment implements View.OnClickListener {
                 Collections.sort(contact_entities,new TimeComparator());
                 contactChatAdapter.addItems(contact_entities);
             }
+            if(contact_entities.size()>0) {
+                empty_state.setVisibility(View.GONE);
+            }else {
+                empty_state.setVisibility(View.VISIBLE);
+            }
         }
     };
 
@@ -106,9 +114,9 @@ public class ReminderChat extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-       if(v.getId()==floatingActionButton.getId()){
-           startActivity(new Intent(getActivity(), ContactsActivity.class));
-       }
+        if(v.getId()==floatingActionButton.getId()){
+            startActivity(new Intent(getActivity(), ContactsActivity.class));
+        }
     }
     public MyApplication getMyapp() {
         return (MyApplication) getActivity().getApplicationContext();

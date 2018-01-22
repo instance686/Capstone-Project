@@ -1,5 +1,6 @@
 package com.reminders.location.locatoinreminder.view.ui.activity;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -30,6 +31,7 @@ import com.reminders.location.locatoinreminder.view.adapters.ViewPagerAdapter;
 import com.reminders.location.locatoinreminder.view.BaseModel.BaseActivity;
 import com.reminders.location.locatoinreminder.view.ui.fragments.ReminderChat;
 import com.reminders.location.locatoinreminder.viewmodel.ReminderChatViewModel;
+import com.reminders.location.locatoinreminder.viewmodel.ShoutsFragmentViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +57,7 @@ public class MainActivity extends BaseActivity implements TaskRunning, View.OnCl
 
     private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
     private FirebaseAuth mAuth;
+    private ShoutsFragmentViewModel shoutsFragmentViewModel;
 
 
     @Override
@@ -74,6 +77,8 @@ public class MainActivity extends BaseActivity implements TaskRunning, View.OnCl
                 return true;
             }
         });
+        shoutsFragmentViewModel= ViewModelProviders.of(this).get(ShoutsFragmentViewModel.class);
+
 
 
         /*toolbarOptions.inflateMenu(R.menu.mainactivity_options);

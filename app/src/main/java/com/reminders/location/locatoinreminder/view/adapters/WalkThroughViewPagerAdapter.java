@@ -25,14 +25,14 @@ public class WalkThroughViewPagerAdapter extends PagerAdapter {
 
     private WalkthroughActivityViewModel walkthroughActivityViewModel;
     final Observer<Integer> imageSrcObserver=(@Nullable Integer integer)->{
-            displayImageSrc(integer);
+        displayImageSrc(integer);
 
     };
     final Observer<String> headingObserver=(@Nullable String s)->{
-            displayHeading(s);
+        displayHeading(s);
     };
     final Observer<String> subHeadingObserver=(@Nullable String s)->{
-            displaySubHeading(s);
+        displaySubHeading(s);
     };
 
     LifecycleOwner lifecycleOwner;
@@ -42,7 +42,7 @@ public class WalkThroughViewPagerAdapter extends PagerAdapter {
     TextView subheading;
 
     public WalkThroughViewPagerAdapter(LifecycleOwner lifecycleOwner,
-            LayoutInflater layoutInflater, WalkthroughActivityViewModel walkthroughActivityViewModel){
+                                       LayoutInflater layoutInflater, WalkthroughActivityViewModel walkthroughActivityViewModel){
         this.layoutInflater=layoutInflater;
         this.walkthroughActivityViewModel=walkthroughActivityViewModel;
         this.lifecycleOwner=lifecycleOwner;
@@ -73,18 +73,18 @@ public class WalkThroughViewPagerAdapter extends PagerAdapter {
         switch (position) {
             case 0:
                 walkthroughActivityViewModel.getImageSource().setValue(R.drawable.ic_walkthrough1);
-                walkthroughActivityViewModel.getHeading().setValue("A");
-                walkthroughActivityViewModel.getSubHeading().setValue("");
+                walkthroughActivityViewModel.getHeading().setValue("Send Location Tasks");
+                walkthroughActivityViewModel.getSubHeading().setValue("You can add,edit and send reminders related to a particular location to your family and friends");
                 break;
             case 1:
                 walkthroughActivityViewModel.getImageSource().setValue(R.drawable.ic_walkthrough2);
-                walkthroughActivityViewModel.getHeading().setValue("B");
-                walkthroughActivityViewModel.getSubHeading().setValue("");
+                walkthroughActivityViewModel.getHeading().setValue("Save reminder for yourself");
+                walkthroughActivityViewModel.getSubHeading().setValue("Add a reminder for yourself as well just by selecting your name in the contact list.");
                 break;
             case 2:
                 walkthroughActivityViewModel.getImageSource().setValue(R.drawable.ic_walkthrough3);
-                walkthroughActivityViewModel.getHeading().setValue("C");
-                walkthroughActivityViewModel.getSubHeading().setValue("");
+                walkthroughActivityViewModel.getHeading().setValue("Find your friends");
+                walkthroughActivityViewModel.getSubHeading().setValue("Allow LocationReminder to access your contacts so you can find your friends faster.");
                 break;
         }
         container.addView(view);

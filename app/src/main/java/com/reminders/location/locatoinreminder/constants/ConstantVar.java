@@ -22,6 +22,8 @@ public interface ConstantVar {
     String INSERTION_CARD="INSERTION_CARD";
     String DELETION_CARD="DELETION_CARD";
 
+    String mBroadcastArrayListAction = "com.truiton.broadcast.arraylist";
+
 
 
 

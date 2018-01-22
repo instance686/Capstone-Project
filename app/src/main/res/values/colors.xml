@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3f51b5</color>
-    <color name="colorPrimaryDark">#002984</color>
-    <color name="colorPrimaryLight">#757de8</color>
-<!--
-    <color name="colorAccent">#FF4081</color>
--->
-    <color name="colorAccent">#ff5252</color>
-    <color name="colorAccentDark">#c50e29</color>
+    <color name="colorPrimary">#34495e</color>
+    <color name="colorPrimaryDark">#2c3e50</color>
+    <!--
+        <color name="colorAccent">#FF4081</color>
+    -->
+    <color name="colorAccent">#FF9E80</color>
+    <color name="colorAccentDark">#FF6E40</color>
     <color name="colorAccentLight">#ff867f</color>
     <color name="tan_background">#FFF7DA</color>
 
@@ -23,7 +22,7 @@
     <color name="color5">#B2EBF2</color>
     <color name="lineColor">#E0E0E0E0</color>
 
-  <color name="contactBackground">#f5f5f5</color>
-  <color name="white">#FFFFFF</color>
+    <color name="contactBackground">#f5f5f5</color>
+    <color name="white">#FFFFFF</color>
     <color name="greyBackground">#EEEEEE</color>
 </resources>
