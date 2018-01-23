@@ -28,6 +28,7 @@ import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.AppDatabase;
 import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
+import com.reminders.location.locatoinreminder.executor.CURDTasks;
 import com.reminders.location.locatoinreminder.executor.ContactCard;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
 import com.reminders.location.locatoinreminder.singleton.ToastMessage;
@@ -188,9 +189,11 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
             return true;
         }
         public void deleteLocally(){
-            AppDatabase appDatabase=((MyApplication)context.getApplicationContext()).getDatabase();
+
+            new CURDTasks(((MyApplication)context.getApplicationContext()).getDatabase(),ConstantVar.DELETECONTACT,contact.getNumber()).execute();
+           /* AppDatabase appDatabase=((MyApplication)context.getApplicationContext()).getDatabase();
             appDatabase.reminderContactDoa().deleteCard(contact.getNumber());
-            appDatabase.cardDoa().deleteContactCards(contact.getNumber());
+            appDatabase.cardDoa().deleteContactCards(contact.getNumber());*/
         }
         public void deleteFromServer(){
             String selfNum=sharedPreferenceSingleton.getSavedString(context,ConstantVar.CONTACT_SELF_NUMBER);

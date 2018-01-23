@@ -34,6 +34,13 @@ public interface ConstantVar {
     int CONTACT_LOADER=1;
     int NOTES_CLICKED=0;
     int CHECKLIST_CLICKED=1;
+    int INSERTCHAT=0;
+    int UPDATECHAT=1;
+    int DELETECHAT=2;
+    int INSERTCONTACT=3;
+    int UPDATECONACT=4;
+    int DELETECONTACT=5;
+
     String NEW_CHOICE="NEW CHOICE";
     String NOTES_BUTTON="Notesbutton";
     String CHECKLIST_BUTTON="Checklistbutton";
@@ -46,6 +53,7 @@ public interface ConstantVar {
     String UPDATED_NUMBER ="UPDATED_NUMBER" ;
     String UPDATION ="UPDATION" ;
     String INSERTION ="INSERTION" ;
+    String DELETION="DELETION";
     String CARD_CLICKED ="CARD_CLICKED" ;
     String UPDATE_CARD ="UPDATE_CARD" ;
 }

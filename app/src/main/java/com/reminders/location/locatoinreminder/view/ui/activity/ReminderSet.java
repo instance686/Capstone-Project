@@ -31,6 +31,7 @@ import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.AppDatabase;
 import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
 import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
+import com.reminders.location.locatoinreminder.executor.CURDTasks;
 import com.reminders.location.locatoinreminder.executor.ChecklistItemClicked;
 import com.reminders.location.locatoinreminder.pojo.ContactFetch;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
@@ -225,9 +226,12 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
                         ,notes,
                         location,currentColor,time,selected,sentSuccess,System.currentTimeMillis()
                 );
+        if(!getIntent().getBooleanExtra(ConstantVar.UPDATE_CARD,false))
+            new CURDTasks(appDatabase,ConstantVar.INSERTCHAT,chatCards_entity,this).execute();
+        else
+            new CURDTasks(appDatabase,ConstantVar.UPDATECHAT,chatCards_entity,this).execute();
 
-
-        AsyncTask.execute(()->{
+        /*AsyncTask.execute(()->{
             //check if insert or update
             if(!getIntent().getBooleanExtra(ConstantVar.UPDATE_CARD,false))
                 appDatabase.cardDoa().insertCard(chatCards_entity);//insert card
@@ -251,7 +255,7 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
                             contactFetch.getContact_name(),countReminderCard,false,true ,System.currentTimeMillis()));
                 }
             }
-        });
+        });*/
 
         //if(!sharedPreferenceSingleton.getSavedString(this,ConstantVar.CONTACT_SELF_NUMBER).equalsIgnoreCase(contactFetch.getContact_number()))
         //insertIntoFirebaseDB(cardId,chatCards_entity);

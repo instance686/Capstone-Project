@@ -34,6 +34,7 @@ import com.reminders.location.locatoinreminder.database.AppDatabase;
 import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
 import com.reminders.location.locatoinreminder.database.entity.Contact_Entity;
 import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
+import com.reminders.location.locatoinreminder.executor.CURDTasks;
 import com.reminders.location.locatoinreminder.executor.CardsSelected;
 import com.reminders.location.locatoinreminder.executor.ChatCardSync;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
@@ -221,15 +222,16 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
 
     }
     public void deleteLocally(){
-        appDatabase.cardDoa().deleteCard(cardIds);
+
+        new CURDTasks(appDatabase,ConstantVar.DELETECHAT,this,cardIds,chatId,name).execute();
+
+       /* appDatabase.cardDoa().deleteCard(cardIds);
         int countReminderCard=appDatabase.cardDoa().getContactCardCount(chatId);
         ReminderContact reminderContact=new ReminderContact(chatId,
                 name,countReminderCard,false,true,System.currentTimeMillis() );
 
-        appDatabase.reminderContactDoa().updateChatCard(reminderContact);
-        sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATION,true);
-        sharedPreferenceSingleton.saveAs(this,ConstantVar.INSERTION,false);
-        sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATED_NUMBER,chatId);
+        appDatabase.reminderContactDoa().updateChatCard(reminderContact);*/
+
     }
     public void deleteFromServer(){
         r2=FirebaseDatabase.getInstance().getReference("reminders").child(new Utils().getFullNumber(chatId)+selfNum);
