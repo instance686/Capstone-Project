@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -39,13 +40,14 @@ import com.reminders.location.locatoinreminder.singleton.ToastMessage;
 import com.reminders.location.locatoinreminder.view.BaseModel.BaseActivity;
 import com.reminders.location.locatoinreminder.viewmodel.ReminderSetActivityViewModel;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import butterknife.BindView;
 
 public class ReminderSet extends BaseActivity implements View.OnClickListener,ChecklistItemClicked
-        // ,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener
-        //,ResultCallback<Status>
+
 {
     @BindView(R.id.appBar)
     AppBarLayout appBarLayout;
@@ -63,6 +65,9 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
     CardView bottomCard;
     @BindView(R.id.maineView)
     RelativeLayout mainView;
+    @BindView(R.id.time)
+    TextView editedTime;
+
 
 
     BottomSheetBehavior bottomSheetBehavior;
@@ -73,7 +78,6 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
 
     int currentColor=R.color.colorMainBackground1;
 
-    //GoogleApiClient mGoogleApiClient;
     protected GeoDataClient mGeoDataClient;
 
     int PLACE_PICKER_REQUEST = 1;
@@ -84,6 +88,8 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
     private ChatCards_Entity chatCardsEntity;
     private String location="";
     private String time="Edited:"+"DUMMY";
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm,dd-MM-yyyy ");
+
 
 
     @Override
@@ -112,15 +118,6 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
          }
         builder = new PlacePicker.IntentBuilder();
 
-
-
-        /*mGoogleApiClient = new GoogleApiClient
-                .Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(this, this)
-                .build();
-*/
     }
 
 
@@ -156,20 +153,18 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
         setCurrentColor(color);
     }
     public void editedTimeHandling(String editedTime){
-
+            this.editedTime.setText(editedTime);
     }
     @Override
     protected void onStart() {
         super.onStart();
-        // mGoogleApiClient.connect();
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        /*if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }*/
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -224,56 +219,17 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
                 new ChatCards_Entity(cardId,cardTitle,contactFetch,
                         sharedPreferenceSingleton.getSavedString(this,ConstantVar.CONTACT_SELF_NUMBER)
                         ,notes,
-                        location,currentColor,time,selected,sentSuccess,System.currentTimeMillis()
+                        location,currentColor,getCurrentTime(),selected,sentSuccess,System.currentTimeMillis()
                 );
         if(!getIntent().getBooleanExtra(ConstantVar.UPDATE_CARD,false))
             new CURDTasks(appDatabase,ConstantVar.INSERTCHAT,chatCards_entity,this).execute();
         else
             new CURDTasks(appDatabase,ConstantVar.UPDATECHAT,chatCards_entity,this).execute();
 
-        /*AsyncTask.execute(()->{
-            //check if insert or update
-            if(!getIntent().getBooleanExtra(ConstantVar.UPDATE_CARD,false))
-                appDatabase.cardDoa().insertCard(chatCards_entity);//insert card
-            else
-            appDatabase.cardDoa().updateCard(chatCards_entity);//update card
-            //get contact card count
-            int countReminderCard=appDatabase.cardDoa().getContactCardCount(contactFetch.getContact_number());
-            if(countReminderCard >= 1){
-                //get reminder card count
-                int reminderContactCount=appDatabase.reminderContactDoa().chatCardPresent(contactFetch.getContact_number());
-                if(reminderContactCount>0){
-                    setSharedValues(true,false,contactFetch.getContact_number());
-                    //update contact card
-                    appDatabase.reminderContactDoa().updateChatCard(new ReminderContact(contactFetch.getContact_number(),
-                            contactFetch.getContact_name(),countReminderCard,false,true,System.currentTimeMillis()));
-                }
-                else {
-                    setSharedValues(false,true,contactFetch.getContact_number());
-                    //insert contact card
-                    appDatabase.reminderContactDoa().inserChatCard(new ReminderContact(contactFetch.getContact_number(),
-                            contactFetch.getContact_name(),countReminderCard,false,true ,System.currentTimeMillis()));
-                }
-            }
-        });*/
-
-        //if(!sharedPreferenceSingleton.getSavedString(this,ConstantVar.CONTACT_SELF_NUMBER).equalsIgnoreCase(contactFetch.getContact_number()))
-        //insertIntoFirebaseDB(cardId,chatCards_entity);
-
         finish();
     }
 
-    private void insertIntoFirebaseDB(int cardId, ChatCards_Entity chatCards_entity) {
-        String number="";
-        String sendTo=chatCards_entity.getContactFetch().getContact_number();
-        String sendFrom=sharedPreferenceSingleton.getSavedString(this,ConstantVar.CONTACT_SELF_NUMBER);
-        if(sendTo.contains("+91"))
-           number=sendFrom+sendTo;
-        else
-            number=sendFrom+"+91"+sendTo;
-        databaseReference.child(number).child(cardId+"").setValue(chatCards_entity);
-        Log.d("OPERATION","INSERT");
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -365,6 +321,11 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
        sharedPreferenceSingleton.saveAs(this,ConstantVar.INSERTION,val2);
         sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATED_NUMBER,number);
 
+    }
+
+    String getCurrentTime(){
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        return "Edited: "+sdf.format(timestamp)+"";
     }
 
 

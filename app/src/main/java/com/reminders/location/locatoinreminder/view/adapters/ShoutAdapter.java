@@ -85,13 +85,11 @@ public class ShoutAdapter extends RecyclerView.Adapter {
         Button coordinates;
         @BindView(R.id.sender)
         Button sender;
-        @BindView(R.id.completed)
-        Button completed;
+
 
         public ShoutsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-            completed.setOnClickListener(this);
         }
 
 
