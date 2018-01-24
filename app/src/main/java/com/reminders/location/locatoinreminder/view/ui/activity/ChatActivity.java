@@ -138,11 +138,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
 
     public void deleteCards(){
         if(cardIds.size()>0){
-            AsyncTask.execute(()->{
-                deleteLocally();
-                //deleteFromServer();
-
-            });
+            deleteLocally();
             optionsToolbar.setVisibility(View.GONE);
             toolbar.setVisibility(View.VISIBLE);
         }
@@ -222,36 +218,8 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,C
 
     }
     public void deleteLocally(){
-
         new CURDTasks(appDatabase,ConstantVar.DELETECHAT,this,cardIds,chatId,name).execute();
-
-       /* appDatabase.cardDoa().deleteCard(cardIds);
-        int countReminderCard=appDatabase.cardDoa().getContactCardCount(chatId);
-        ReminderContact reminderContact=new ReminderContact(chatId,
-                name,countReminderCard,false,true,System.currentTimeMillis() );
-
-        appDatabase.reminderContactDoa().updateChatCard(reminderContact);*/
-
     }
-    public void deleteFromServer(){
-        r2=FirebaseDatabase.getInstance().getReference("reminders").child(new Utils().getFullNumber(chatId)+selfNum);
 
-        r2.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot post:dataSnapshot.getChildren()){
-                    if(cardIds.contains(Integer.parseInt(post.getKey()))){
-                        post.getRef().removeValue();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 
 }

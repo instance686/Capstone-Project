@@ -85,7 +85,7 @@
             android:drawablePadding="@dimen/dimen_8dp"
             android:drawableStart="@drawable/location_icon"
             android:textAllCaps="false"
-            android:textColor="#9e9e9e"
+            android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/dimen_16sp"
             card_view:layout_constraintStart_toStartOf="@+id/note"
             card_view:layout_constraintTop_toBottomOf="@+id/note"
@@ -100,12 +100,12 @@
             android:drawablePadding="@dimen/dimen_8dp"
             android:drawableStart="@drawable/ic_person"
             android:textAllCaps="false"
-            android:textColor="#9e9e9e"
+            android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/dimen_16sp"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="@+id/note"
             card_view:layout_constraintTop_toBottomOf="@+id/location"
-            tools:text="Naimish Srivastava" />
+            tools:text="Ayush Srivastava" />
 
 
     </android.support.constraint.ConstraintLayout>

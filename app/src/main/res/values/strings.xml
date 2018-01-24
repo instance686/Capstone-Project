@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LocatoinReminder</string>
+    <string name="app_name">LocationReminder</string>
     <string name="give_permission">Give Permissions</string>
     <string name="your_name">Your Name</string>
     <string name="permission_rational">Contacts access needed to show your App contacts</string>

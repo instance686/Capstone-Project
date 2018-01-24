@@ -52,7 +52,9 @@ public class ChatCards_Entity implements Parcelable {
     public ChatCards_Entity(final Parcel source){
         cardId=source.readInt();
         cardTitle=source.readString();
-        contactFetch=source.readParcelable(getClass().getClassLoader());
+        //contactFetch=source.readParcelable(getClass().getClassLoader());
+        contactFetch.setContact_number(source.readString());
+        contactFetch.setContact_name(source.readString());
         sendContact=source.readString();
         notes=source.readString();
         location=source.readString();
@@ -209,9 +211,11 @@ public class ChatCards_Entity implements Parcelable {
 
         dest.writeInt(cardId);
         dest.writeString(cardTitle);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             dest.writeTypedObject(contactFetch, flags);
-        }
+        }*/
+        dest.writeString(contactFetch.getContact_number());
+        dest.writeString(contactFetch.getContact_name());
         dest.writeString(sendContact);
         dest.writeString(notes);
         dest.writeString(location);

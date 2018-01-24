@@ -109,7 +109,7 @@
                         android:textAlignment="center"
                         android:textSize="18sp"
                         android:textColor="?iconDual"
-                        tools:text="Naimish Srivastava" />
+                        tools:text="Ayush Srivastava" />
 
                     <TextView
                         android:id="@+id/phone"

@@ -190,7 +190,7 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
         }
         public void deleteLocally(){
 
-            new CURDTasks(((MyApplication)context.getApplicationContext()).getDatabase(),ConstantVar.DELETECONTACT,contact.getNumber()).execute();
+            new CURDTasks(((MyApplication)context.getApplicationContext()).getDatabase(),ConstantVar.DELETECONTACT,contact.getNumber(),context).execute();
            /* AppDatabase appDatabase=((MyApplication)context.getApplicationContext()).getDatabase();
             appDatabase.reminderContactDoa().deleteCard(contact.getNumber());
             appDatabase.cardDoa().deleteContactCards(contact.getNumber());*/

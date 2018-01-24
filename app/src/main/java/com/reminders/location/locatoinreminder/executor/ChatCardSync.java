@@ -48,12 +48,7 @@ public class ChatCardSync extends AsyncTask<Void,Void,Void> {
         this.sendTo=sender;
         this.sendToName=sendToName;
         this.sendFrom=reciever;
-        /*if (sender.contains("+91"))
-            phone=sender+reciever;
-        else
-            phone="+91"+sender+reciever;
-*/
-        phone=new Utils().getFullNumber(sender)+reciever;
+         phone=new Utils().getFullNumber(sender)+reciever;
     }
     @Override
     protected Void doInBackground(Void... voids) {

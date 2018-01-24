@@ -1,17 +1,25 @@
 package com.reminders.location.locatoinreminder.view.BaseModel;
 
+import android.Manifest;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleActivity;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
+import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.constants.ConstantLog;
+import com.reminders.location.locatoinreminder.view.ui.activity.WalkthroughActivity;
 
 import butterknife.ButterKnife;
 
@@ -22,6 +30,9 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity implements LifecycleOwner{
 
     private LifecycleRegistry mLifecycleRegistry;
+    String[] permissionsRequired={Manifest.permission.ACCESS_FINE_LOCATION};
+    private static final int REQUEST_PERMISSION = 0;
+
 
 
     @Override
@@ -87,4 +98,5 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
     }
 
     protected abstract int getLayoutResourceId();
+
 }

@@ -1,0 +1,61 @@
+package com.reminders.location.locatoinreminder.executor;
+
+import android.content.Context;
+import android.location.Location;
+import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
+
+import com.reminders.location.locatoinreminder.database.AppDatabase;
+import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by ayush on 23/1/18.
+ */
+
+public class GetShoutsList extends AsyncTask<Void,Void,Void> {
+
+    Context context;
+    AppDatabase appDatabase;
+    Location current=new Location("");
+    Location destination=new Location("");;
+    List<ChatCards_Entity> chatCardsEntities;
+    LocationUpdateList locationUpdateList;
+
+    public GetShoutsList(Context context, AppDatabase appDatabase, Location location,LocationUpdateList locationUpdateList) {
+        this.context = context;
+        this.appDatabase = appDatabase;
+        this.current = location;
+        destination=new Location("");
+        chatCardsEntities=new ArrayList<>();
+        this.locationUpdateList=locationUpdateList;
+        chatCardsEntities=new ArrayList<>();
+    }
+
+    @Override
+    protected Void doInBackground(Void... voids) {
+        Log.v("FromShouts","BackgroundStarted");
+        List<ChatCards_Entity> cards=appDatabase.cardDoa().getCardsForLocation();
+        if(!cards.isEmpty()) {
+            for (ChatCards_Entity ce : cards) {
+                String[] loc = ce.getLocation().split(" ");
+                destination.setLatitude(Double.parseDouble(loc[0]));
+                destination.setLongitude(Double.parseDouble(loc[1]));
+                float distance = current.distanceTo(destination);
+                // if(distance<=2500)
+                    chatCardsEntities.add(ce);
+            }
+        }
+        Log.v("FromShouts","BackgroundFinished");
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        locationUpdateList.locationList(chatCardsEntities);
+    }
+}

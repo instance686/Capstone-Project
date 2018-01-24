@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
+import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
+
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -40,6 +43,8 @@ public class SharedPreferenceSingleton {
         editor.apply();
     }
 
+
+
     public int getSavedInt(Context c, String name) {
         SharedPreferences sp = c.getSharedPreferences(ConstantVar.APPNAME, MODE_PRIVATE);
         return sp.getInt(name, 0);
@@ -50,6 +55,7 @@ public class SharedPreferenceSingleton {
         return sp.getBoolean(name, false);
     }
 
+
     public long getSavedLong(Context c, String name) {
         SharedPreferences sp = c.getSharedPreferences(ConstantVar.APPNAME, MODE_PRIVATE);
         return sp.getLong(name, 0);
@@ -59,4 +65,6 @@ public class SharedPreferenceSingleton {
         SharedPreferences sp = c.getSharedPreferences(ConstantVar.APPNAME, MODE_PRIVATE);
         return sp.getString(name, null);
     }
+
+
 }

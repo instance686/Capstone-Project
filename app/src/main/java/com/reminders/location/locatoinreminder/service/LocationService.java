@@ -2,28 +2,41 @@ package com.reminders.location.locatoinreminder.service;
 
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.reminders.location.locatoinreminder.MyApplication;
+import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.AppDatabase;
 import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
 import com.reminders.location.locatoinreminder.executor.ShoutsListUpdate;
+import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
+import com.reminders.location.locatoinreminder.util.NotificationUtils;
+import com.reminders.location.locatoinreminder.view.ui.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +64,8 @@ public class LocationService extends Service implements LocationListener {
     Intent broadcastIntent = new Intent();
     int locationCounter=1;
     ShoutsListUpdate shoutsListUpdate;
+        private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
+
 
 
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;// 40 meters
@@ -147,26 +162,33 @@ public class LocationService extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-
-
-
         getList();
-        broadcastIntent.setAction(ConstantVar.mBroadcastArrayListAction);
-        broadcastIntent.putParcelableArrayListExtra("TEST", (ArrayList<? extends Parcelable>) allDetails);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
-
-
-        /*for(ChatCards_Entity ce:allDetails){
-            String[] loc=ce.getLocation().split(" ");
-            dest_location.setLatitude(Double.parseDouble(loc[0]));
-            dest_location.setLongitude(Double.parseDouble(loc[1]));
-            float distance=location.distanceTo(dest_location);
-
-            if(distance<=1000){
-                //TODO-Notify User using notification
-
+        List<ChatCards_Entity> chatCardsEntities=new ArrayList<>();
+        if(!allDetails.isEmpty()) {
+            if (!chatCardsEntities.isEmpty())
+                chatCardsEntities.clear();
+            for (ChatCards_Entity ce : allDetails) {
+                String[] loc = ce.getLocation().split(" ");
+                dest_location.setLatitude(Double.parseDouble(loc[0]));
+                dest_location.setLongitude(Double.parseDouble(loc[1]));
+                float distance = location.distanceTo(dest_location);
+                Log.v("FromServiceDis", distance + "");
+                //if(distance<=2500)
+                chatCardsEntities.add(ce);
             }
-        }*/
+        }
+        if(appInForeGround()){
+            if(!chatCardsEntities.isEmpty()) {
+                broadcastIntent.setAction(ConstantVar.mBroadcastArrayListAction);
+              //  broadcastIntent.putExtra(ConstantVar.CURRENT_LATITUDE,location.getLatitude());
+               // broadcastIntent.putExtra(ConstantVar.CURRENT_LONGITUDE,location.getLongitude());
+                broadcastIntent.putParcelableArrayListExtra("TEST", (ArrayList<? extends Parcelable>) chatCardsEntities);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+            }
+        }
+        else
+            if(!chatCardsEntities.isEmpty())
+                sendNotification();
 
 
 
@@ -195,5 +217,54 @@ public class LocationService extends Service implements LocationListener {
 
     public void getList(){
         allDetails=databaseReference.cardDoa().getCardsForLocation();
+    }
+
+
+    public boolean appInForeGround(){
+        ActivityManager am = (ActivityManager) this
+                .getSystemService(ACTIVITY_SERVICE);
+
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+
+        ComponentName componentInfo = taskInfo.get(0).topActivity;
+        if (componentInfo.getPackageName().equalsIgnoreCase("com.reminders.location.locatoinreminder")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void sendNotification() {
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        if (Build.VERSION.SDK_INT >= 26) {
+            NotificationUtils mNotificationUtils = new NotificationUtils(this,0);
+            Notification.Builder nb = mNotificationUtils.
+                    getChannelNotification(largeIcon,allDetails);
+            mNotificationUtils.getManager().notify(0, nb.build());
+        } else {
+
+            Intent i = new Intent(this, MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putParcelableArrayListExtra("TEST", (ArrayList<? extends Parcelable>) allDetails);
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 2, i, PendingIntent.FLAG_ONE_SHOT);
+            mBuilder.setContentIntent(resultPendingIntent);
+            mBuilder.setPriority(Notification.PRIORITY_HIGH);
+            mBuilder.setGroupSummary(true);
+            mBuilder.setAutoCancel(true);
+            mBuilder.setContentTitle("You have reminders near by");
+            mBuilder.setContentText("Touch to view them");
+            mBuilder.setOngoing(false);
+            mBuilder.setSound(defaultSoundUri);
+            mBuilder.setSmallIcon(R.drawable.ic_notification);
+            mBuilder.setLargeIcon(largeIcon);
+            mBuilder.setVibrate(new long[]{100, 100});
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            if (mNotificationManager != null) {
+                mNotificationManager.notify(0, mBuilder.build());
+            }
+        }
     }
 }

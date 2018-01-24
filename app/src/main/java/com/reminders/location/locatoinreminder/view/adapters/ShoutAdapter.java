@@ -26,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by naimish on 22/1/18.
+ * Created by ayush on 22/1/18.
  */
 
 public class ShoutAdapter extends RecyclerView.Adapter {
@@ -56,7 +56,7 @@ public class ShoutAdapter extends RecyclerView.Adapter {
         cardViewHolder.title.setText(chatCards_entity.getCardTitle());
         cardViewHolder.note.setText(chatCards_entity.getNotes());
         cardViewHolder.coordinates.setText(new Utils().getCoordinates(chatCards_entity.getLocation()));
-        cardViewHolder.sender.setText(chatCards_entity.getSendContact());
+        cardViewHolder.sender.setText(chatCards_entity.getContactFetch().getContact_name());
         cardViewHolder.shoutCard.setBackgroundColor(ContextCompat.getColor(context,
                 chatCards_entity.getColor()));
         cardViewHolder.chatCards_entity=chatCards_entity;

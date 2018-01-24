@@ -54,7 +54,7 @@ public class WalkthroughActivity extends BaseActivity  {
 
     private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
     private static final int REQUEST_PERMISSION = 0;
-    String[] permissionsRequired = new String[]{Manifest.permission.READ_CONTACTS};
+    String[] permissionsRequired = new String[]{Manifest.permission.READ_CONTACTS,Manifest.permission.ACCESS_FINE_LOCATION};
     @BindView(R.id.cardView)
     CardView name_card;
     @BindView(R.id.edit_name)
@@ -121,7 +121,7 @@ public class WalkthroughActivity extends BaseActivity  {
         if (currentAPIVersion < android.os.Build.VERSION_CODES.M) {
             start.setText(ConstantVar.VERIFY_PHN);
         }
-}
+    }
     public void buttonClicked(View view) {      //Step 1
         if (Utils.isConnectedToNetwork(this)) {
             if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
@@ -134,26 +134,34 @@ public class WalkthroughActivity extends BaseActivity  {
     }
 
     public void checkPermission() {
-
-        if (ContextCompat.checkSelfPermission(this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])) {
-                Snackbar.make(findViewById(android.R.id.content),
-                        R.string.permission_rational,
-                        Snackbar.LENGTH_INDEFINITE).setAction("ENABLE",
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ActivityCompat.requestPermissions(WalkthroughActivity.this,
-                                        permissionsRequired,
-                                        REQUEST_PERMISSION);
-                            }
-                        }).show();
+        if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])
+                        || ContextCompat.checkSelfPermission(this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                    Snackbar.make(findViewById(android.R.id.content),
+                            R.string.permission_rational,
+                            Snackbar.LENGTH_INDEFINITE).setAction("ENABLE",
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ActivityCompat.requestPermissions(WalkthroughActivity.this,
+                                            permissionsRequired,
+                                            REQUEST_PERMISSION);
+                                }
+                            }).show();
+                } else {
+                    ActivityCompat.requestPermissions(this, permissionsRequired, REQUEST_PERMISSION);
+                }
             } else {
-                ActivityCompat.requestPermissions(this, permissionsRequired, REQUEST_PERMISSION);
+                startVerification();
             }
-        } else {
+
+        }else {
             startVerification();
         }
+
 
 
     }
@@ -161,7 +169,7 @@ public class WalkthroughActivity extends BaseActivity  {
     public void onRequestPermissionsResult(int requestCode, @NonNull final String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_PERMISSION:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     startVerification();
                 } else {
                     Snackbar.make(viewPager, R.string.permission_rational,
@@ -203,7 +211,7 @@ public class WalkthroughActivity extends BaseActivity  {
             // Successfully signed in
             if (resultCode == ResultCodes.OK) {
                 currentUser = mAuth.getCurrentUser();
-               // FirebaseMessaging.getInstance().subscribeToTopic(currentUser.getUid());
+                // FirebaseMessaging.getInstance().subscribeToTopic(currentUser.getUid());
                 if (currentUser.getDisplayName() == null)
                     viewCardView();
                 else
@@ -268,24 +276,24 @@ public class WalkthroughActivity extends BaseActivity  {
         //User user = new User(currentUser.getDisplayName(), currentUser.getPhoneNumber());
         final boolean[] userRegistered = new boolean[1];
         databaseReference.child(currentUser.getUid())
-                        .addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                User u=dataSnapshot.getValue(User.class);
-                                if(u==null) {
-                                    userRegistered[0] = false;
-                                }
-                                else {
-                                    userRegistered[0] = true;
-                                }
-                                }
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User u=dataSnapshot.getValue(User.class);
+                        if(u==null) {
+                            userRegistered[0] = false;
+                        }
+                        else {
+                            userRegistered[0] = true;
+                        }
+                    }
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                Toast.makeText(WalkthroughActivity.this,"Failed to read user data",Toast.LENGTH_LONG).show();
-                                userRegistered[0]=false;
-                            }
-                        });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(WalkthroughActivity.this,"Failed to read user data",Toast.LENGTH_LONG).show();
+                        userRegistered[0]=false;
+                    }
+                });
         return userRegistered[0];
     }
     public void insertUserOnDatabase(){

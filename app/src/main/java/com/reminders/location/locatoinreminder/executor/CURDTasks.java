@@ -1,12 +1,15 @@
 package com.reminders.location.locatoinreminder.executor;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
+import com.reminders.location.locatoinreminder.constants.ReminderConstants;
 import com.reminders.location.locatoinreminder.database.AppDatabase;
 import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
 import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
+import com.reminders.location.locatoinreminder.service.ServerService;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
 
 import java.util.ArrayList;
@@ -27,10 +30,12 @@ public class CURDTasks extends AsyncTask<Void,Void,Void> {
     private String name;
     private String chatID;
 
-    public CURDTasks(AppDatabase appDatabase,int choice,String chatID){
+
+    public CURDTasks(AppDatabase appDatabase,int choice,String chatID,Context context){
         this.appDatabase=appDatabase;
         this.chatID=chatID;
         this.choice=choice;
+        this.context=context;
     }
 
     public CURDTasks(AppDatabase appDatabase, int choice, ChatCards_Entity chatCardsEntity, Context context) {
@@ -73,28 +78,7 @@ public class CURDTasks extends AsyncTask<Void,Void,Void> {
                 break;
 
         }
-       /* if(choice== ConstantVar.UPDATECHAT || choice== ConstantVar.INSERTCHAT){
-            if(choice==ConstantVar.UPDATECHAT)
-                appDatabase.cardDoa().updateCard(chatCardsEntity);//update card
-            else if(choice==ConstantVar.INSERTCHAT)
-                appDatabase.cardDoa().insertCard(chatCardsEntity);//insert card
 
-
-            int countReminderCard=appDatabase.cardDoa().getContactCardCount(chatCardsEntity.getContactFetch()
-                    .getContact_number());
-            if(countReminderCard >= 1) {
-                setSharedValues(true,false,chatCardsEntity.getContactFetch()
-                        .getContact_number());
-                appDatabase.reminderContactDoa().updateChatCard(new ReminderContact(chatCardsEntity.getContactFetch().getContact_number(),
-                        chatCardsEntity.getContactFetch().getContact_name(),countReminderCard,false,true,System.currentTimeMillis()));
-            }
-            else {
-                setSharedValues(false,true,chatCardsEntity.getContactFetch()
-                        .getContact_number());                //insert contact card
-                appDatabase.reminderContactDoa().inserChatCard(new ReminderContact(chatCardsEntity.getContactFetch().getContact_number(),
-                        chatCardsEntity.getContactFetch().getContact_name(),countReminderCard,false,true,System.currentTimeMillis()));
-            }
-            }*/
         return null;
     }
 
@@ -102,6 +86,44 @@ public class CURDTasks extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
+        Intent serviceIntent=new Intent(context,ServerService.class);
+        serviceIntent.putExtra(ConstantVar.INTENT_SERVICE_CHOICE,choice);
+        switch (choice){
+            case ConstantVar.INSERTCHAT:
+                serviceIntent.putExtra(ReminderConstants.CARD_ID,chatCardsEntity.getCardId());
+                serviceIntent.putExtra(ReminderConstants.CARD_TITLE,chatCardsEntity.getCardTitle());
+                serviceIntent.putExtra(ReminderConstants.SENDTO_NUMBER,chatCardsEntity.getContactFetch().getContact_number());
+                serviceIntent.putExtra(ReminderConstants.SENDTO_NAME,chatCardsEntity.getContactFetch().getContact_name());
+                serviceIntent.putExtra(ReminderConstants.SENDFROM_NUMBER,chatCardsEntity.getSendContact());
+                serviceIntent.putExtra(ReminderConstants.NOTES_DATA,chatCardsEntity.getNotes());
+                serviceIntent.putExtra(ReminderConstants.LOCATION,chatCardsEntity.getLocation());
+                serviceIntent.putExtra(ReminderConstants.COLOR,chatCardsEntity.getColor());
+                serviceIntent.putExtra(ReminderConstants.TIME,chatCardsEntity.getTime());
+                serviceIntent.putExtra(ReminderConstants.EDIT_TIME,chatCardsEntity.getEditMilliseconds());
+                break;
+            case ConstantVar.UPDATECHAT:
+                serviceIntent.putExtra(ReminderConstants.CARD_ID,chatCardsEntity.getCardId());
+                serviceIntent.putExtra(ReminderConstants.CARD_TITLE,chatCardsEntity.getCardTitle());
+                serviceIntent.putExtra(ReminderConstants.SENDTO_NUMBER,chatCardsEntity.getContactFetch().getContact_number());
+                serviceIntent.putExtra(ReminderConstants.SENDTO_NAME,chatCardsEntity.getContactFetch().getContact_name());
+                serviceIntent.putExtra(ReminderConstants.SENDFROM_NUMBER,chatCardsEntity.getSendContact());
+                serviceIntent.putExtra(ReminderConstants.NOTES_DATA,chatCardsEntity.getNotes());
+                serviceIntent.putExtra(ReminderConstants.LOCATION,chatCardsEntity.getLocation());
+                serviceIntent.putExtra(ReminderConstants.COLOR,chatCardsEntity.getColor());
+                serviceIntent.putExtra(ReminderConstants.TIME,chatCardsEntity.getTime());
+                serviceIntent.putExtra(ReminderConstants.EDIT_TIME,chatCardsEntity.getEditMilliseconds());
+                break;
+            case ConstantVar.DELETECHAT:
+                serviceIntent.putExtra(ReminderConstants.SENDTO_NUMBER,chatID);
+                serviceIntent.putExtra(ReminderConstants.SENDFROM_NUMBER,sharedPreferenceSingleton.getSavedString(context,ConstantVar.CONTACT_SELF_NUMBER));
+                serviceIntent.putIntegerArrayListExtra(ConstantVar.CARD_IDS_DELETION, (ArrayList<Integer>) cardIDs);
+                break;
+            case ConstantVar.DELETECONTACT:
+                serviceIntent.putExtra(ReminderConstants.SENDFROM_NUMBER,sharedPreferenceSingleton.getSavedString(context,ConstantVar.CONTACT_SELF_NUMBER));
+                serviceIntent.putExtra(ReminderConstants.SENDTO_NUMBER,chatID);
+                break;
+        }
+        context.startService(serviceIntent);
     }
 
     void insertReminder(){

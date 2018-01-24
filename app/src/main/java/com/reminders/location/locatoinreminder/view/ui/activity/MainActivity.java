@@ -107,23 +107,6 @@ public class MainActivity extends BaseActivity implements TaskRunning, View.OnCl
 
     }
 
-        /*public void deleteCards(){
-        if(numbers.size()>0){
-            AsyncTask.execute(()->{
-                //appDatabase.reminderContactDoa().deleteCard(numbers);
-              *//*  int count=appDatabase.cardDoa().deleteContactCards(numbers);
-                Log.v("RowsDelted",""+count);
-*//*            });
-
-            toolbarOptions.setVisibility(View.GONE);
-            toolbar.setVisibility(View.VISIBLE);
-
-        }
-        else
-            Toast.makeText(MainActivity.this,"Select Cards for Deletion",Toast.LENGTH_SHORT).show();
-
-        }*/
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -135,6 +118,15 @@ public class MainActivity extends BaseActivity implements TaskRunning, View.OnCl
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(getIntent().getBooleanExtra(ConstantVar.FROM_NOTIFICATION,false)) {
+           // viewPager.setCurrentItem(1);
+           // shoutsFragmentViewModel.getShoutsData().setValue(getIntent().getParcelableArrayListExtra("TEST"));
+
+        }
+    }
 
     public MyApplication getMyapp() {
         return (MyApplication) getApplicationContext();
@@ -153,27 +145,6 @@ public class MainActivity extends BaseActivity implements TaskRunning, View.OnCl
     }
 
 
-       /* @Override
-        public void onContactCardSelected(int count, String number, int position, boolean selected) {
-            ToastMessage.showMessageShort(this,"Count="+count+",Position="+position);
-            if(count>0){
-                toolbar.setVisibility(View.GONE);
-//                cardCounter.setText(count);
-                toolbarOptions.setVisibility(View.VISIBLE);
-            }
-            else {
-                toolbarOptions.setVisibility(View.GONE);
-                toolbar.setVisibility(View.VISIBLE);
-            }
-
-            if(selected)
-                numbers.add(number);
-            else {
-                int index=number.indexOf(number);
-                numbers.remove(index);
-            }
-
-        }*/
 
     @Override
     public void onClick(View v) {

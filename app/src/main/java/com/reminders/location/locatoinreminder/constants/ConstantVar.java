@@ -41,6 +41,8 @@ public interface ConstantVar {
     int UPDATECONACT=4;
     int DELETECONTACT=5;
 
+    String FROM_NOTIFICATION="FROM_NOTIFICATION";
+
     String NEW_CHOICE="NEW CHOICE";
     String NOTES_BUTTON="Notesbutton";
     String CHECKLIST_BUTTON="Checklistbutton";
@@ -56,4 +58,8 @@ public interface ConstantVar {
     String DELETION="DELETION";
     String CARD_CLICKED ="CARD_CLICKED" ;
     String UPDATE_CARD ="UPDATE_CARD" ;
+    String INTENT_SERVICE_CHOICE="INTENT_SERVICE_CHOICE";
+    String CARD_IDS_DELETION="CARD_ID_FOR_DELETION";
+    String CURRENT_LATITUDE="CURRENT_LATITUDE";
+    String CURRENT_LONGITUDE="CURRENT_LONGITUDE";
 }
