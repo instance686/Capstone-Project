@@ -80,6 +80,9 @@ public class ShoutsFragment extends Fragment implements LocationListener{
         @Override
         public void onReceive(Context context, Intent intent) {
             if(!intent.getParcelableArrayListExtra("TEST").isEmpty())
+                currentLocation.setLatitude(intent.getDoubleExtra(ConstantVar.CURRENT_LATITUDE,0));
+                currentLocation.setLongitude(intent.getDoubleExtra(ConstantVar.CURRENT_LONGITUDE,0));
+                Log.v("FROMSHOUTSRec",currentLocation.getLatitude()+" "+currentLocation.getLongitude());
             shoutsFragmentViewModel.getShoutsData().setValue(
                     intent.getParcelableArrayListExtra("TEST")
             );
@@ -117,7 +120,7 @@ public class ShoutsFragment extends Fragment implements LocationListener{
     Observer<List<ChatCards_Entity>> observer=new Observer<List<ChatCards_Entity>>() {
         @Override
         public void onChanged(@Nullable List<ChatCards_Entity> chatCards_entities) {
-            //Collections.sort(chatCards_entities,new DistanceComparator());
+            Collections.sort(chatCards_entities,new DistanceComparator(currentLocation));
             shoutAdapter.addItems(chatCards_entities);
         }
     };
@@ -172,6 +175,7 @@ public class ShoutsFragment extends Fragment implements LocationListener{
     public void getShoutsList(Location location){
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(localBroadCast);
         Log.v("FromShouts","GetLocationList");
+        currentLocation=location;
         new GetShoutsList(getActivity(),appDatabase,location, locationUpdateList).execute();
 
 

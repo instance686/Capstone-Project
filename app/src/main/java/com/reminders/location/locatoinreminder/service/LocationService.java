@@ -173,15 +173,15 @@ public class LocationService extends Service implements LocationListener {
                 dest_location.setLongitude(Double.parseDouble(loc[1]));
                 float distance = location.distanceTo(dest_location);
                 Log.v("FromServiceDis", distance + "");
-                //if(distance<=2500)
+                //if(distance<=2500)//TODO uncomment this
                 chatCardsEntities.add(ce);
             }
         }
         if(appInForeGround()){
             if(!chatCardsEntities.isEmpty()) {
                 broadcastIntent.setAction(ConstantVar.mBroadcastArrayListAction);
-              //  broadcastIntent.putExtra(ConstantVar.CURRENT_LATITUDE,location.getLatitude());
-               // broadcastIntent.putExtra(ConstantVar.CURRENT_LONGITUDE,location.getLongitude());
+                broadcastIntent.putExtra(ConstantVar.CURRENT_LATITUDE,location.getLatitude());
+                broadcastIntent.putExtra(ConstantVar.CURRENT_LONGITUDE,location.getLongitude());
                 broadcastIntent.putParcelableArrayListExtra("TEST", (ArrayList<? extends Parcelable>) chatCardsEntities);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
             }

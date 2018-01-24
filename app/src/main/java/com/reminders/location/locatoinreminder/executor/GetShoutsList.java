@@ -45,7 +45,7 @@ public class GetShoutsList extends AsyncTask<Void,Void,Void> {
                 destination.setLatitude(Double.parseDouble(loc[0]));
                 destination.setLongitude(Double.parseDouble(loc[1]));
                 float distance = current.distanceTo(destination);
-                // if(distance<=2500)
+                // if(distance<=2500)//TODO uncomment this
                     chatCardsEntities.add(ce);
             }
         }
