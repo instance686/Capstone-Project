@@ -11,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -32,13 +31,9 @@ import com.reminders.location.locatoinreminder.constants.ConstantLog;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.AppDatabase;
 import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
-import com.reminders.location.locatoinreminder.database.entity.Contact_Entity;
 import com.reminders.location.locatoinreminder.executor.DistanceComparator;
 import com.reminders.location.locatoinreminder.executor.GetShoutsList;
 import com.reminders.location.locatoinreminder.executor.LocationUpdateList;
-import com.reminders.location.locatoinreminder.executor.MainToShouts;
-import com.reminders.location.locatoinreminder.pojo.ContactFetch;
-import com.reminders.location.locatoinreminder.pojo.ShoutsData;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
 import com.reminders.location.locatoinreminder.singleton.ToastMessage;
 import com.reminders.location.locatoinreminder.view.adapters.ShoutAdapter;
@@ -51,7 +46,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -128,10 +122,6 @@ public class ShoutsFragment extends Fragment implements LocationListener{
         recyclerView.setAdapter(shoutAdapter);
         shoutsFragmentViewModel.getShoutsData().observe(getActivity(),observer);
 
-        if(sharedPreferenceSingleton.getSavedBoolean(getActivity(),"FROMCLICK")){
-            sharedPreferenceSingleton.saveAs(getActivity(),"FROMCLICK",false);
-        }
-
         Log.v("LIFECYCLE","ONCREATEVIEWFRAGMENT");
         return view;
     }
@@ -162,7 +152,6 @@ public class ShoutsFragment extends Fragment implements LocationListener{
         super.onPause();
     }
     public void refresh(){
-        Location location;
         locationManager = (LocationManager)getContext().getSystemService(LOCATION_SERVICE);
         boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -183,8 +172,9 @@ public class ShoutsFragment extends Fragment implements LocationListener{
                     0,
                     0, this);
             if(locationManager!=null){
-                location=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                getShoutsList(location);
+                currentLocation=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//                Log.v("FromShouts",currentLocation.getLatitude()+" "+currentLocation.getLongitude());
+                getShoutsList(currentLocation);
             }
         }
 
@@ -195,7 +185,7 @@ public class ShoutsFragment extends Fragment implements LocationListener{
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(localBroadCast);
         Log.v("FromShouts","GetLocationList");
         currentLocation=location;
-        new GetShoutsList(getActivity(),appDatabase,location, locationUpdateList).execute();
+        new GetShoutsList(getActivity(),appDatabase,currentLocation, locationUpdateList).execute();
 
 
     }
@@ -221,7 +211,7 @@ public class ShoutsFragment extends Fragment implements LocationListener{
 
     @Override
     public void onLocationChanged(Location location) {
-       // getShoutsList(location);
+        // getShoutsList(location);
         Log.v("FromShouts","onLocationChanged");
 
     }

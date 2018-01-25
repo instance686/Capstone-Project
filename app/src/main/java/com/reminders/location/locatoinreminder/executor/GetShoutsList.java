@@ -37,7 +37,7 @@ public class GetShoutsList extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        Log.v("FromShouts","BackgroundStarted");
+       // Log.v("FromShouts",current.getLatitude()+" "+current.getLongitude());
         List<ChatCards_Entity> cards=appDatabase.cardDoa().getCardsForLocation();
         if(!cards.isEmpty()) {
             for (ChatCards_Entity ce : cards) {
@@ -45,7 +45,7 @@ public class GetShoutsList extends AsyncTask<Void,Void,Void> {
                 destination.setLatitude(Double.parseDouble(loc[0]));
                 destination.setLongitude(Double.parseDouble(loc[1]));
                 float distance = current.distanceTo(destination);
-                // if(distance<=2500)//TODO uncomment this
+                if(distance<=1000)
                     chatCardsEntities.add(ce);
             }
         }

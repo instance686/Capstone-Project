@@ -17,9 +17,11 @@
     <string name="save_reminder">Save Reminder</string>
 
 
-    <string name="api_key">AIzaSyD-FDu_a6rWksybPthkJPKkNGvxANKT59o</string>
+    <string name="api_key">AIzaSyDGkPSymSmcZ3IqghdJSQ8ttbTfM0TocBc</string>
     <string name="title_activity_contacts">ContactsActivity</string>
     <string name="log_out">Log Out</string>
     <string name="titlehint">Title</string>
     <string name="refresh_chat">Refresh Chat</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

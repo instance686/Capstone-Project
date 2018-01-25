@@ -82,8 +82,8 @@ public class LocationService extends Service implements LocationListener {
 
 
     //TODO change time and distamnce over here
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;// 40 meters
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 5;
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 500;// 40 meters
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60*2;
 
 
     @Override
@@ -187,7 +187,7 @@ public class LocationService extends Service implements LocationListener {
                 dest_location.setLongitude(Double.parseDouble(loc[1]));
                 float distance = location.distanceTo(dest_location);
                 Log.v("FromServiceDis", distance + "");
-                //if(distance<=2500)//TODO uncomment this
+                if(distance<=1000)
                 chatCardsEntities.add(ce);
             }
         }
