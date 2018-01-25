@@ -36,8 +36,10 @@ import com.reminders.location.locatoinreminder.database.entity.Contact_Entity;
 import com.reminders.location.locatoinreminder.executor.DistanceComparator;
 import com.reminders.location.locatoinreminder.executor.GetShoutsList;
 import com.reminders.location.locatoinreminder.executor.LocationUpdateList;
+import com.reminders.location.locatoinreminder.executor.MainToShouts;
 import com.reminders.location.locatoinreminder.pojo.ContactFetch;
 import com.reminders.location.locatoinreminder.pojo.ShoutsData;
+import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
 import com.reminders.location.locatoinreminder.singleton.ToastMessage;
 import com.reminders.location.locatoinreminder.view.adapters.ShoutAdapter;
 import com.reminders.location.locatoinreminder.view.ui.activity.MainActivity;
@@ -71,6 +73,7 @@ public class ShoutsFragment extends Fragment implements LocationListener{
 
 
     private ShoutsFragmentViewModel shoutsFragmentViewModel;
+    private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
 
     private AppDatabase appDatabase;
     private ShoutAdapter shoutAdapter;
@@ -79,18 +82,30 @@ public class ShoutsFragment extends Fragment implements LocationListener{
     private BroadcastReceiver localBroadCast=new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(!intent.getParcelableArrayListExtra("TEST").isEmpty())
-                currentLocation.setLatitude(intent.getDoubleExtra(ConstantVar.CURRENT_LATITUDE,0));
-                currentLocation.setLongitude(intent.getDoubleExtra(ConstantVar.CURRENT_LONGITUDE,0));
-                Log.v("FROMSHOUTSRec",currentLocation.getLatitude()+" "+currentLocation.getLongitude());
-            shoutsFragmentViewModel.getShoutsData().setValue(
-                    intent.getParcelableArrayListExtra("TEST")
-            );
+            Log.v("OnRecieveAction",intent.getAction());
+            if (intent.getAction().equalsIgnoreCase(ConstantVar.mBroadcastArrayListAction)) {
+                if (!intent.getParcelableArrayListExtra("TEST").isEmpty())
+                    currentLocation.setLatitude(intent.getDoubleExtra(ConstantVar.CURRENT_LATITUDE, 0));
+                currentLocation.setLongitude(intent.getDoubleExtra(ConstantVar.CURRENT_LONGITUDE, 0));
+                Log.v("FROMSHOUTSRec", currentLocation.getLatitude() + " " + currentLocation.getLongitude());
+                shoutsFragmentViewModel.getShoutsData().setValue(
+                        intent.getParcelableArrayListExtra("TEST")
+                );
+            }
+            else if(intent.getAction().equalsIgnoreCase(ConstantVar.fromActivityToFragment)){
+                Log.v("fromActivity","recieverfromActivity");
+            }
         }
     };
 
 
     public ShoutsFragment() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
     }
 
     @Override
@@ -111,9 +126,13 @@ public class ShoutsFragment extends Fragment implements LocationListener{
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         shoutAdapter=new ShoutAdapter(getActivity(), new ArrayList<>());
         recyclerView.setAdapter(shoutAdapter);
-
         shoutsFragmentViewModel.getShoutsData().observe(getActivity(),observer);
 
+        if(sharedPreferenceSingleton.getSavedBoolean(getActivity(),"FROMCLICK")){
+            sharedPreferenceSingleton.saveAs(getActivity(),"FROMCLICK",false);
+        }
+
+        Log.v("LIFECYCLE","ONCREATEVIEWFRAGMENT");
         return view;
     }
 
@@ -217,10 +236,11 @@ public class ShoutsFragment extends Fragment implements LocationListener{
 
     }
 
+
+
     @Override
     public void onProviderDisabled(String provider) {
 
     }
-
 
 }

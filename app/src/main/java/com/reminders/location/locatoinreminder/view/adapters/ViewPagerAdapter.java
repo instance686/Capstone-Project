@@ -45,4 +45,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             return ConstantVar.SHOUT;
 
     }
+
+
 }

@@ -28,6 +28,9 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.reminders.location.locatoinreminder.MyApplication;
 import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
@@ -38,8 +41,19 @@ import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSinglet
 import com.reminders.location.locatoinreminder.util.NotificationUtils;
 import com.reminders.location.locatoinreminder.view.ui.activity.MainActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ayush on 21/1/18.
@@ -67,7 +81,7 @@ public class LocationService extends Service implements LocationListener {
         private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
 
 
-
+    //TODO change time and distamnce over here
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;// 40 meters
     private static final long MIN_TIME_BW_UPDATES = 1000 * 5;
 
@@ -186,11 +200,16 @@ public class LocationService extends Service implements LocationListener {
                 LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
             }
         }
-        else
-            if(!chatCardsEntities.isEmpty())
-                sendNotification();
-
-
+        else {
+            if (!chatCardsEntities.isEmpty()) {
+                long currentSeconds=(System.currentTimeMillis()/1000);
+                long lastNoififySeconds=sharedPreferenceSingleton.getSavedLong(this,ConstantVar.LAST_NOTIFICATION_TIME)/1000;
+                Log.v("FromService","Time diff="+(currentSeconds-lastNoififySeconds));
+                if((currentSeconds-lastNoififySeconds)>30) {
+                    sendNotification(location);
+                }
+            }
+        }
 
         Log.v("FromService","onLocationChanged");
 
@@ -234,7 +253,8 @@ public class LocationService extends Service implements LocationListener {
         }
     }
 
-    private void sendNotification() {
+    private void sendNotification(Location location) {
+        sharedPreferenceSingleton.saveAs(this,ConstantVar.LAST_NOTIFICATION_TIME,System.currentTimeMillis());
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
         if (Build.VERSION.SDK_INT >= 26) {
             NotificationUtils mNotificationUtils = new NotificationUtils(this,0);
@@ -245,7 +265,9 @@ public class LocationService extends Service implements LocationListener {
 
             Intent i = new Intent(this, MainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putParcelableArrayListExtra("TEST", (ArrayList<? extends Parcelable>) allDetails);
+            i.putExtra(ConstantVar.CURRENT_LATITUDE,location.getLatitude());
+            i.putExtra(ConstantVar.CURRENT_LONGITUDE,location.getLongitude());
+            i.putExtra(ConstantVar.FROM_NOTIFICATION,true);
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 2, i, PendingIntent.FLAG_ONE_SHOT);
@@ -267,4 +289,6 @@ public class LocationService extends Service implements LocationListener {
             }
         }
     }
+
+
 }

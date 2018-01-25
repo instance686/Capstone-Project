@@ -23,6 +23,7 @@ public interface ConstantVar {
     String DELETION_CARD="DELETION_CARD";
 
     String mBroadcastArrayListAction = "com.truiton.broadcast.arraylist";
+    String fromActivityToFragment="com.location.broadcast.arraylist";
 
 
 
@@ -62,4 +63,6 @@ public interface ConstantVar {
     String CARD_IDS_DELETION="CARD_ID_FOR_DELETION";
     String CURRENT_LATITUDE="CURRENT_LATITUDE";
     String CURRENT_LONGITUDE="CURRENT_LONGITUDE";
+    String LAST_NOTIFICATION_TIME="LAST_NOTIFICATION_TIME";
+    String NOTIFICATION_REMINDERS="NOTIFICATION_REMINDERS";
 }

@@ -45,6 +45,8 @@ public class SharedPreferenceSingleton {
 
 
 
+
+
     public int getSavedInt(Context c, String name) {
         SharedPreferences sp = c.getSharedPreferences(ConstantVar.APPNAME, MODE_PRIVATE);
         return sp.getInt(name, 0);
