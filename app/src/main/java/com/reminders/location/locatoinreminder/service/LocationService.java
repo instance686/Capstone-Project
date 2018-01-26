@@ -3,6 +3,7 @@ package com.reminders.location.locatoinreminder.service;
 
 import android.Manifest;
 import android.app.ActivityManager;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,6 +11,7 @@ import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +24,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcelable;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
@@ -60,7 +63,6 @@ import java.util.Map;
  */
 
 public class LocationService extends Service implements LocationListener {
-    private Context context;
     boolean isGPSEnabled = false;
     boolean isNetworkEnabled = false;
     boolean canGetLocation = false;
@@ -80,11 +82,9 @@ public class LocationService extends Service implements LocationListener {
     ShoutsListUpdate shoutsListUpdate;
         private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
 
-
     //TODO change time and distamnce over here
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 500;// 40 meters
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60*2;
-
 
     @Override
     public void onCreate() {
@@ -95,6 +95,7 @@ public class LocationService extends Service implements LocationListener {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         if(databaseReference==null){
             databaseReference=getMyapp().getDatabase();
         }
@@ -105,6 +106,8 @@ public class LocationService extends Service implements LocationListener {
         dest_location.setLatitude(28.4401501);
         dest_location.setLatitude(77.065132);
         mylocation = getLocation(this);
+
+
 
         Log.v("FromService","onStartCommand");
         return START_STICKY;
@@ -289,6 +292,4 @@ public class LocationService extends Service implements LocationListener {
             }
         }
     }
-
-
 }
