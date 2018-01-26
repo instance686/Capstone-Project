@@ -1,11 +1,17 @@
 package com.reminders.location.locatoinreminder;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
+import com.reminders.location.locatoinreminder.pojo.ListData;
+import com.reminders.location.locatoinreminder.view.adapters.ListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,26 +22,28 @@ import java.util.List;
 
 public class WidgetDataProvider  implements RemoteViewsService.RemoteViewsFactory {
 
-    Context context;
-    Intent intent;
-    List<ChatCards_Entity> list=new ArrayList<>();
+    private static final String TAG = "WidgetDataProvider";
 
-    private void init(){
-        list.clear();
-    }
-    public WidgetDataProvider(Context context,Intent intent) {
-        this.context=context;
-        this.intent=intent;
+    List<ListData> mCollection = new ArrayList<>();
+    Context mContext = null;
+    private int appWidgetId;
+    String data="";
+    public WidgetDataProvider(Context context, Intent intent) {
+        mContext = context;
+        appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                AppWidgetManager.INVALID_APPWIDGET_ID);
+        data=intent.getStringExtra(ConstantVar.REMINDER_DATA);
+        initData(data);
     }
 
     @Override
     public void onCreate() {
-        init();
+        initData(data);
     }
 
     @Override
     public void onDataSetChanged() {
-        init();
+        initData(data);
     }
 
     @Override
@@ -45,12 +53,19 @@ public class WidgetDataProvider  implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public int getCount() {
-        return list.size();
+        if(mCollection!=null)
+        return mCollection.size();
+        else
+            return 0;
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
-        return null;
+        RemoteViews view = new RemoteViews(mContext.getPackageName(),
+               R.layout.widget_rows);
+        view.setTextViewText(R.id.title, mCollection.get(position).getTitle());
+        view.setTextViewText(R.id.note,mCollection.get(position).getNote());
+        return view;
     }
 
     @Override
@@ -60,7 +75,7 @@ public class WidgetDataProvider  implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public int getViewTypeCount() {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -71,5 +86,9 @@ public class WidgetDataProvider  implements RemoteViewsService.RemoteViewsFactor
     @Override
     public boolean hasStableIds() {
         return true;
+    }
+
+    private void initData(String s) {
+        mCollection=new Gson().fromJson(s,new TypeToken<List<ListData>>(){}.getType());
     }
 }

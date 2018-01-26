@@ -18,6 +18,7 @@
 
 
     <string name="api_key">AIzaSyDGkPSymSmcZ3IqghdJSQ8ttbTfM0TocBc</string>
+    <string name="api_key_debug">AIzaSyD-FDu_a6rWksybPthkJPKkNGvxANKT59o</string>
     <string name="title_activity_contacts">ContactsActivity</string>
     <string name="log_out">Log Out</string>
     <string name="titlehint">Title</string>

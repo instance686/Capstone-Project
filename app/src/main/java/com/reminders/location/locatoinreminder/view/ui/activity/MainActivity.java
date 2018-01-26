@@ -1,7 +1,11 @@
 package com.reminders.location.locatoinreminder.view.ui.activity;
 
+import android.app.LoaderManager;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -14,6 +18,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.reminders.location.locatoinreminder.MyApplication;
+import com.reminders.location.locatoinreminder.MyContentProvider;
 import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.AppDatabase;
@@ -30,7 +35,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener{
     @BindView(R.id.maintoolbar)
     Toolbar toolbar;
     @BindView(R.id.toolbarDelOptions)
@@ -79,6 +84,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(MainActivity.this, getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
 
 
     }
@@ -130,4 +136,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     };
 
 
+    /*@Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        Log.v("Loader","OnCreateLoader");
+        return new CursorLoader(MainActivity.this,
+                MyContentProvider.URI_CHATENTITY,null,null,null,null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        Log.v("Loader","OnLoadFinished");
+
+        if(data.moveToFirst()){
+            do{
+                Log.v("Loader", data.getInt(data.getColumnIndex(data.getColumnName(0)))+"");
+            }
+            while(data.moveToNext());
+        }
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        Log.v("Loader","OnLoadReset");
+
+    }*/
 }

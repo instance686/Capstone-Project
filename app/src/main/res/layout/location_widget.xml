@@ -25,23 +25,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/app_name"
         android:layout_marginTop="@dimen/dimen_1dp">
-        <ImageButton
+        <Button
             android:id="@+id/location"
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_50dp"
             android:background="#FFFFFF"
-            app:srcCompat="@drawable/location_icon"
+            android:textColor="#000000"
+            android:text="REFRESH"
+            android:gravity="center"
             android:layout_weight=".5"
             />
-        <ImageButton
-            android:id="@+id/refresh"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_50dp"
-            android:background="#FFFFFF"
-            app:srcCompat="@drawable/refresh_icon"
-            android:tint="#000"
-            android:layout_weight=".5"
-            android:layout_marginStart="@dimen/dimen_1dp"/>
     </LinearLayout>
 
     <ListView
@@ -58,6 +51,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:textSize="@dimen/dimen_18sp"
+        android:visibility="gone"
         android:textColor="?android:textColorPrimary"/>
 
 

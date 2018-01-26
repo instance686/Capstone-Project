@@ -24,7 +24,11 @@ public interface ConstantVar {
 
     String mBroadcastArrayListAction = "com.truiton.broadcast.arraylist";
     String fromActivityToFragment="com.location.broadcast.arraylist";
+    String APPWIDGET_ID="APPWIDGET_ID";
+    String REMINDER_DATA="REMINDER_DATA";
+    String WIDGET_IDS="WIDGET_IDS";
 
+    String WIDGET_BUTTON_CLICKED="com.reminders.location.locatoinreminder.REFRESH_BUTTON";
 
 
 

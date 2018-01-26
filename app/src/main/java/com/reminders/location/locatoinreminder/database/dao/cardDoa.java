@@ -8,6 +8,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
+import android.database.Cursor;
 
 import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
 
@@ -46,6 +47,9 @@ public interface cardDoa {
 
     @Update
     void updateCard(ChatCards_Entity chatCards_entity);
+
+    @Query("SELECT * FROM chat_card_entity")
+     Cursor getAllCards();
 
     @Delete
     void deleteCard(ChatCards_Entity chatCardsEntity);
