@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#9e9e9e"
-            android:text="No reminders near current location"
+            android:text="No reminders nearby,Swipe Down To Refresh "
             android:textSize="@dimen/dimen_14sp"
             android:layout_marginTop="@dimen/dimen_4dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -57,7 +57,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/im1" />
     </android.support.constraint.ConstraintLayout>
-    0
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="0dp"
         android:layout_height="0dp"

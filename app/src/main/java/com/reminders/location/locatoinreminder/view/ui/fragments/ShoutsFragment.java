@@ -78,17 +78,23 @@ public class ShoutsFragment extends Fragment implements LocationListener{
         public void onReceive(Context context, Intent intent) {
             Log.v("OnRecieveAction",intent.getAction());
             if (intent.getAction().equalsIgnoreCase(ConstantVar.mBroadcastArrayListAction)) {
-                if (!intent.getParcelableArrayListExtra("TEST").isEmpty())
+                if (!intent.getParcelableArrayListExtra("TEST").isEmpty()) {
+                    empty_state.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
                     currentLocation.setLatitude(intent.getDoubleExtra(ConstantVar.CURRENT_LATITUDE, 0));
-                currentLocation.setLongitude(intent.getDoubleExtra(ConstantVar.CURRENT_LONGITUDE, 0));
-                Log.v("FROMSHOUTSRec", currentLocation.getLatitude() + " " + currentLocation.getLongitude());
-                shoutsFragmentViewModel.getShoutsData().setValue(
-                        intent.getParcelableArrayListExtra("TEST")
-                );
+                    currentLocation.setLongitude(intent.getDoubleExtra(ConstantVar.CURRENT_LONGITUDE, 0));
+                    Log.v("FROMSHOUTSRec", currentLocation.getLatitude() + " " + currentLocation.getLongitude());
+                    shoutsFragmentViewModel.getShoutsData().setValue(
+                            intent.getParcelableArrayListExtra("TEST")
+                    );
+                }
+                else
+                {
+                    recyclerView.setVisibility(View.GONE);
+                    empty_state.setVisibility(View.VISIBLE);
+                }
             }
-            else if(intent.getAction().equalsIgnoreCase(ConstantVar.fromActivityToFragment)){
-                Log.v("fromActivity","recieverfromActivity");
-            }
+
         }
     };
 
@@ -122,6 +128,8 @@ public class ShoutsFragment extends Fragment implements LocationListener{
         recyclerView.setAdapter(shoutAdapter);
         shoutsFragmentViewModel.getShoutsData().observe(getActivity(),observer);
 
+        recyclerView.setVisibility(View.GONE);
+        empty_state.setVisibility(View.VISIBLE);
         Log.v("LIFECYCLE","ONCREATEVIEWFRAGMENT");
         return view;
     }
@@ -193,11 +201,16 @@ public class ShoutsFragment extends Fragment implements LocationListener{
         @Override
         public void locationList(List<ChatCards_Entity> chatCardsEntityList) {
             Log.v("FromShouts","OnTaskComplete");
-            if(!chatCardsEntityList.isEmpty())
+            if(!chatCardsEntityList.isEmpty()) {
+                empty_state.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
                 shoutsFragmentViewModel.getShoutsData().setValue(chatCardsEntityList);
-            else
-                ToastMessage.showMessageLong(getActivity(),"No reminders for near by area!");
-
+            }
+            else {
+                recyclerView.setVisibility(View.GONE);
+                empty_state.setVisibility(View.VISIBLE);
+                ToastMessage.showMessageLong(getActivity(), "No reminders for near by area!");
+            }
             swipeRefreshLayout.setRefreshing(false);
             LocalBroadcastManager.getInstance(getActivity()).registerReceiver(localBroadCast,mIntentFilter);
 
