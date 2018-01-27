@@ -72,7 +72,7 @@ public class ContactSync extends AsyncTask<Void, Void, Void> {
 
     private void getContacts() {
         Uri CONTENT_URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-        String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY + ConstantVar.COLLATE_LOCALIZED_ASC;
+        String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY +" "+ConstantVar.COLLATE_LOCALIZED_ASC;
         final String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY,
                 ContactsContract.CommonDataKinds.Phone.NUMBER

@@ -104,4 +104,8 @@ public interface ConstantVar {
     String USERS="users";
     String COLLATE_LOCALIZED_ASC="COLLATE LOCALIZED ASC";
 
+   String BROADCAST_ACTION = "android.location.PROVIDERS_CHANGED";
+
+
+
 }
