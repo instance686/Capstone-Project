@@ -42,7 +42,7 @@
             android:label="@string/title_activity_contacts"
             android:theme="@style/AppTheme" />
 
-        <receiver android:name=".boadCastReciever.GPSLocationReciever">
+        <receiver android:name=".boadcastreciever.GPSLocationReciever">
             <intent-filter>
                 <action android:name="android.location.PROVIDERS_CHANGED" />
 
@@ -53,11 +53,12 @@
         <service android:name=".service.LocationService" />
         <service android:name=".service.ServerService" />
 
-        <receiver android:name=".LocationWidget"
+        <receiver
+            android:name=".LocationWidget"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.reminders.location.locatoinreminder.REFRESH_BUTTON"/>
+                <action android:name="com.reminders.location.locatoinreminder.REFRESH_BUTTON" />
             </intent-filter>
 
             <meta-data
@@ -73,7 +74,7 @@
             android:name=".MyContentProvider"
             android:authorities="com.reminders.location.locatoinreminder.contentprovider"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>

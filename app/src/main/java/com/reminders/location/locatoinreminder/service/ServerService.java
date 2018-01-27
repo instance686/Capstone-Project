@@ -12,7 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.constants.ReminderConstants;
-import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
+import com.reminders.location.locatoinreminder.database.entity.ChatCardsEntity;
 import com.reminders.location.locatoinreminder.pojo.ContactFetch;
 import com.reminders.location.locatoinreminder.util.Utils;
 
@@ -24,75 +24,74 @@ import java.util.List;
 
 public class ServerService extends IntentService {
     DatabaseReference databaseReference;
-    public ServerService(){
-        super("ServerService");
+
+    public ServerService() {
+        super(ConstantVar.INTENT_SERVICE_NAME);
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent i) {
-        Log.v("INTENTSERVICE","FROMINTENTSERVICE");
-        databaseReference= FirebaseDatabase.getInstance().getReference("reminders");
+        databaseReference = FirebaseDatabase.getInstance().getReference(ConstantVar.REMINDERS);
         databaseReference.keepSynced(true);
-        switch (getInt(i,ConstantVar.INTENT_SERVICE_CHOICE)){
+        switch (getInt(i, ConstantVar.INTENT_SERVICE_CHOICE)) {
             case ConstantVar.INSERTCHAT:
-               insertIntoFireBaseDB(getInt(i, ReminderConstants.CARD_ID),
-                       getString(i,ReminderConstants.CARD_TITLE),
-                       getString(i,ReminderConstants.SENDTO_NUMBER),
-                       getString(i,ReminderConstants.SENDFROM_NUMBER),
-                       getString(i,ReminderConstants.SENDFROM_NUMBER),
-                       getString(i,ReminderConstants.NOTES_DATA),
-                       getString(i,ReminderConstants.LOCATION),
-                       getInt(i,ReminderConstants.COLOR),
-                       getString(i,ReminderConstants.TIME),
-                       getLong(i,ReminderConstants.EDIT_TIME)
-                       );
-            break;
+                insertIntoFireBaseDB(getInt(i, ReminderConstants.CARD_ID),
+                        getString(i, ReminderConstants.CARD_TITLE),
+                        getString(i, ReminderConstants.SENDTO_NUMBER),
+                        getString(i, ReminderConstants.SENDFROM_NUMBER),
+                        getString(i, ReminderConstants.SENDFROM_NUMBER),
+                        getString(i, ReminderConstants.NOTES_DATA),
+                        getString(i, ReminderConstants.LOCATION),
+                        getInt(i, ReminderConstants.COLOR),
+                        getString(i, ReminderConstants.TIME),
+                        getLong(i, ReminderConstants.EDIT_TIME)
+                );
+                break;
             case ConstantVar.UPDATECHAT:
                 insertIntoFireBaseDB(getInt(i, ReminderConstants.CARD_ID),
-                        getString(i,ReminderConstants.CARD_TITLE),
-                        getString(i,ReminderConstants.SENDTO_NUMBER),
-                        getString(i,ReminderConstants.SENDFROM_NUMBER),
-                        getString(i,ReminderConstants.SENDFROM_NUMBER),
-                        getString(i,ReminderConstants.NOTES_DATA),
-                        getString(i,ReminderConstants.LOCATION),
-                        getInt(i,ReminderConstants.COLOR),
-                        getString(i,ReminderConstants.TIME),
-                        getLong(i,ReminderConstants.EDIT_TIME)
+                        getString(i, ReminderConstants.CARD_TITLE),
+                        getString(i, ReminderConstants.SENDTO_NUMBER),
+                        getString(i, ReminderConstants.SENDFROM_NUMBER),
+                        getString(i, ReminderConstants.SENDFROM_NUMBER),
+                        getString(i, ReminderConstants.NOTES_DATA),
+                        getString(i, ReminderConstants.LOCATION),
+                        getInt(i, ReminderConstants.COLOR),
+                        getString(i, ReminderConstants.TIME),
+                        getLong(i, ReminderConstants.EDIT_TIME)
                 );
-            break;
+                break;
             case ConstantVar.DELETECHAT:
                 deleteChatCards(
-                        getIntList(i,ConstantVar.CARD_IDS_DELETION),
-                        getString(i,ReminderConstants.SENDFROM_NUMBER),
-                        getString(i,ReminderConstants.SENDTO_NUMBER)
+                        getIntList(i, ConstantVar.CARD_IDS_DELETION),
+                        getString(i, ReminderConstants.SENDFROM_NUMBER),
+                        getString(i, ReminderConstants.SENDTO_NUMBER)
                 );
-            break;
+                break;
             case ConstantVar.DELETECONTACT:
                 deleteWholeChat(
-                        getString(i,ReminderConstants.SENDFROM_NUMBER),
-                        getString(i,ReminderConstants.SENDTO_NUMBER)
+                        getString(i, ReminderConstants.SENDFROM_NUMBER),
+                        getString(i, ReminderConstants.SENDTO_NUMBER)
                 );
-            break;
+                break;
         }
 
 
     }
 
-    void insertIntoFireBaseDB(int cardID,String cardTitle,String sendToNum,String sendToName,String sendFromNum,String notesData,String location,int color,String time,long editTime){
-        ContactFetch contactFetch=new ContactFetch(sendToNum,sendToName);
-        databaseReference.child(serverChatID1(sendFromNum,sendToNum)).child(cardID+"").setValue(getChatEntitity(cardID,cardTitle,contactFetch,sendFromNum,notesData,location,color,time,editTime));
-        Log.d("OPERATION","INSERT/UPDATION");
+    void insertIntoFireBaseDB(int cardID, String cardTitle, String sendToNum, String sendToName, String sendFromNum, String notesData, String location, int color, String time, long editTime) {
+        ContactFetch contactFetch = new ContactFetch(sendToNum, sendToName);
+        databaseReference.child(serverChatID1(sendFromNum, sendToNum)).child(cardID + "").setValue(getChatEntitity(cardID, cardTitle, contactFetch, sendFromNum, notesData, location, color, time, editTime));
 
     }
 
 
-    void  deleteChatCards(List<Integer> cardIds,String sendFrom,String sendTo){
-        DatabaseReference r2=FirebaseDatabase.getInstance().getReference("reminders").child(serverChatID2(sendTo,sendFrom));
+    void deleteChatCards(List<Integer> cardIds, String sendFrom, String sendTo) {
+        DatabaseReference r2 = FirebaseDatabase.getInstance().getReference(ConstantVar.REMINDERS).child(serverChatID2(sendTo, sendFrom));
         r2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot post:dataSnapshot.getChildren()){
-                    if(cardIds.contains(Integer.parseInt(post.getKey()))){
+                for (DataSnapshot post : dataSnapshot.getChildren()) {
+                    if (cardIds.contains(Integer.parseInt(post.getKey()))) {
                         post.getRef().removeValue();
                     }
                 }
@@ -105,13 +104,13 @@ public class ServerService extends IntentService {
         });
     }
 
-    public void deleteWholeChat(String sendFrom,String sendTo){
+    public void deleteWholeChat(String sendFrom, String sendTo) {
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot post:dataSnapshot.getChildren()){
-                    if(post.getKey().equalsIgnoreCase(serverChatID2(sendTo,sendFrom))){
+                for (DataSnapshot post : dataSnapshot.getChildren()) {
+                    if (post.getKey().equalsIgnoreCase(serverChatID2(sendTo, sendFrom))) {
                         post.getRef().removeValue();
                     }
                 }
@@ -125,27 +124,32 @@ public class ServerService extends IntentService {
 
     }
 
-    ChatCards_Entity getChatEntitity(int cardID,String cardTitle,ContactFetch contactFetch,String sendFromNum,String notesData,String location,int color,String time,long editTime){
-        return new ChatCards_Entity(cardID,cardTitle,contactFetch,sendFromNum,notesData,location,color,time,false,false,editTime);
+    ChatCardsEntity getChatEntitity(int cardID, String cardTitle, ContactFetch contactFetch, String sendFromNum, String notesData, String location, int color, String time, long editTime) {
+        return new ChatCardsEntity(cardID, cardTitle, contactFetch, sendFromNum, notesData, location, color, time, false, false, editTime);
     }
 
-    String getString(Intent intent,String key){
+    String getString(Intent intent, String key) {
         return intent.getStringExtra(key);
     }
-    int getInt(Intent intent,String key){
-        return intent.getIntExtra(key,0);
+
+    int getInt(Intent intent, String key) {
+        return intent.getIntExtra(key, 0);
     }
-    long getLong(Intent intent,String key){
-        return intent.getLongExtra(key,0);
+
+    long getLong(Intent intent, String key) {
+        return intent.getLongExtra(key, 0);
     }
-    List<Integer> getIntList(Intent intent,String key){
+
+    List<Integer> getIntList(Intent intent, String key) {
         return intent.getIntegerArrayListExtra(key);
     }
-    String serverChatID1(String s1,String s2){
-        return s1+new Utils().getFullNumber(s2);
+
+    String serverChatID1(String s1, String s2) {
+        return s1 + new Utils().getFullNumber(s2);
     }
-    String serverChatID2(String s1,String s2){
-        return new Utils().getFullNumber(s1)+s2;
+
+    String serverChatID2(String s1, String s2) {
+        return new Utils().getFullNumber(s1) + s2;
     }
 
 }

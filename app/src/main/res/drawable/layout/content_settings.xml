@@ -1,11 +1,11 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.ui.fragment.Settings"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".view.ui.fragment.Settings">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,9 +22,9 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackgroundBorderless"
+            card_view:cardBackgroundColor="?android:colorBackground"
             card_view:cardCornerRadius="2dp"
-            card_view:cardElevation="0dp"
-            card_view:cardBackgroundColor="?android:colorBackground">
+            card_view:cardElevation="0dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -45,8 +45,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="26dp"
                     android:layout_toEndOf="@+id/setting_method_image"
-                    android:text="@string/select_wake_method"
                     android:fontFamily="@font/regular"
+                    android:text="@string/select_wake_method"
                     android:textColor="?android:textColorPrimary"
                     android:textSize="15sp" />
 
@@ -63,9 +63,9 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackgroundBorderless"
+            card_view:cardBackgroundColor="?android:colorBackground"
             card_view:cardCornerRadius="2dp"
-            card_view:cardElevation="0dp"
-            card_view:cardBackgroundColor="?android:colorBackground">
+            card_view:cardElevation="0dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -77,32 +77,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="16dp"
-                    app:srcCompat="@drawable/ic_music"
-                    android:textSize="15sp"
                     android:layout_centerVertical="true"
-                    />
+                    android:layout_marginStart="16dp"
+                    android:textSize="15sp"
+                    app:srcCompat="@drawable/ic_music" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
+                    android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginStart="28dp"
                     android:layout_toEndOf="@id/setting_volume_image"
-                    android:orientation="vertical"
-                    android:layout_centerVertical="true">
+                    android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Alarm Volume : 7"
-                        android:textColor="?android:textColorPrimary"/>
+                        android:textColor="?android:textColorPrimary" />
+
                     <android.support.v7.widget.AppCompatSeekBar
                         style="@style/Widget.AppCompat.SeekBar.Discrete"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:max="7"
-                        android:text="@string/support_developement"
-                        android:layout_marginTop="8dp"/>
+                        android:text="@string/support_developement" />
                 </LinearLayout>
 
 
@@ -118,9 +119,9 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackgroundBorderless"
+            card_view:cardBackgroundColor="?android:colorBackground"
             card_view:cardCornerRadius="2dp"
-            card_view:cardElevation="0dp"
-            card_view:cardBackgroundColor="?android:colorBackground">
+            card_view:cardElevation="0dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -138,13 +139,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/support_developement"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="15sp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="24dp"
+                    android:layout_toEndOf="@id/setting_support_image"
                     android:fontFamily="@font/regular"
-                    android:layout_toEndOf="@id/setting_support_image" />
+                    android:text="@string/support_developement"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="15sp" />
 
             </RelativeLayout>
 
@@ -198,9 +199,9 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackgroundBorderless"
+            card_view:cardBackgroundColor="?android:colorBackground"
             card_view:cardCornerRadius="2dp"
-            card_view:cardElevation="0dp"
-            card_view:cardBackgroundColor="?android:colorBackground">
+            card_view:cardElevation="0dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -218,13 +219,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/privacy_policy"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="15sp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="24dp"
+                    android:layout_toEndOf="@id/setting_privacy_image"
                     android:fontFamily="@font/regular"
-                    android:layout_toEndOf="@id/setting_privacy_image" />
+                    android:text="@string/privacy_policy"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="15sp" />
 
             </RelativeLayout>
 
@@ -238,9 +239,9 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackgroundBorderless"
+            card_view:cardBackgroundColor="?android:colorBackground"
             card_view:cardCornerRadius="2dp"
-            card_view:cardElevation="0dp"
-            card_view:cardBackgroundColor="?android:colorBackground">
+            card_view:cardElevation="0dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -258,13 +259,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/rate_with_5_stars"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="15sp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="24dp"
+                    android:layout_toEndOf="@id/setting_rate_image"
                     android:fontFamily="@font/regular"
-                    android:layout_toEndOf="@id/setting_rate_image" />
+                    android:text="@string/rate_with_5_stars"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="15sp" />
 
             </RelativeLayout>
 
@@ -278,9 +279,9 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackgroundBorderless"
+            card_view:cardBackgroundColor="?android:colorBackground"
             card_view:cardCornerRadius="2dp"
-            card_view:cardElevation="0dp"
-            card_view:cardBackgroundColor="?android:colorBackground">
+            card_view:cardElevation="0dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -298,13 +299,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/invite_your_friends"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/regular"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="24dp"
-                    android:layout_toEndOf="@id/setting_share_image" />
+                    android:layout_toEndOf="@id/setting_share_image"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/invite_your_friends"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="15sp" />
 
             </RelativeLayout>
 

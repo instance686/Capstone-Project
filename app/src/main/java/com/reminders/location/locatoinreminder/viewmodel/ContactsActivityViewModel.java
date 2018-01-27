@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.reminders.location.locatoinreminder.database.AppDatabase;
-import com.reminders.location.locatoinreminder.database.entity.Contact_Entity;
+import com.reminders.location.locatoinreminder.database.entity.ContactEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +15,15 @@ import java.util.List;
 
 public class ContactsActivityViewModel extends ViewModel {
 
-    private LiveData<List<Contact_Entity>> contactList;
-    public LiveData<List<Contact_Entity>> getContactList(AppDatabase appDatabase) {
+    private LiveData<List<ContactEntity>> contactList;
+
+    public LiveData<List<ContactEntity>> getContactList(AppDatabase appDatabase) {
         contactList = appDatabase.contactDao().getAll();
         return contactList;
     }
 
-    public ArrayList<Contact_Entity> getContacts() {
-        return (ArrayList<Contact_Entity>) contactList.getValue();
+    public ArrayList<ContactEntity> getContacts() {
+        return (ArrayList<ContactEntity>) contactList.getValue();
     }
 
 }

@@ -9,9 +9,7 @@ import android.widget.RemoteViewsService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
-import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
 import com.reminders.location.locatoinreminder.pojo.ListData;
-import com.reminders.location.locatoinreminder.view.adapters.ListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,19 +18,20 @@ import java.util.List;
  * Created by ayush on 26/1/18.
  */
 
-public class WidgetDataProvider  implements RemoteViewsService.RemoteViewsFactory {
+public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory {
 
     private static final String TAG = "WidgetDataProvider";
 
     List<ListData> mCollection = new ArrayList<>();
     Context mContext = null;
+    String data = "";
     private int appWidgetId;
-    String data="";
+
     public WidgetDataProvider(Context context, Intent intent) {
         mContext = context;
         appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
-        data=intent.getStringExtra(ConstantVar.REMINDER_DATA);
+        data = intent.getStringExtra(ConstantVar.REMINDER_DATA);
         initData(data);
     }
 
@@ -53,8 +52,8 @@ public class WidgetDataProvider  implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public int getCount() {
-        if(mCollection!=null)
-        return mCollection.size();
+        if (mCollection != null)
+            return mCollection.size();
         else
             return 0;
     }
@@ -62,9 +61,9 @@ public class WidgetDataProvider  implements RemoteViewsService.RemoteViewsFactor
     @Override
     public RemoteViews getViewAt(int position) {
         RemoteViews view = new RemoteViews(mContext.getPackageName(),
-               R.layout.widget_rows);
+                R.layout.widget_rows);
         view.setTextViewText(R.id.title, mCollection.get(position).getTitle());
-        view.setTextViewText(R.id.note,mCollection.get(position).getNote());
+        view.setTextViewText(R.id.note, mCollection.get(position).getNote());
         return view;
     }
 
@@ -89,6 +88,7 @@ public class WidgetDataProvider  implements RemoteViewsService.RemoteViewsFactor
     }
 
     private void initData(String s) {
-        mCollection=new Gson().fromJson(s,new TypeToken<List<ListData>>(){}.getType());
+        mCollection = new Gson().fromJson(s, new TypeToken<List<ListData>>() {
+        }.getType());
     }
 }

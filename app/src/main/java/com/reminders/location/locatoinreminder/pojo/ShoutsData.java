@@ -4,13 +4,13 @@ package com.reminders.location.locatoinreminder.pojo;
  * Created by ayush on 23/1/18.
  */
 
-public class ShoutsData  {
+public class ShoutsData {
 
     String title;
     String noteText;
     String location;
     String senderName;
-    boolean isDone=false;
+    boolean isDone = false;
 
     public String getTitle() {
         return title;

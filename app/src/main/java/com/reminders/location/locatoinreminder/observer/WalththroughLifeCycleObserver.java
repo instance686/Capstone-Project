@@ -15,8 +15,10 @@ import com.reminders.location.locatoinreminder.view.ui.activity.WalkthroughActiv
 public class WalththroughLifeCycleObserver implements LifecycleObserver {
     private static final String LOG_TAG = WalkthroughActivity.class.getSimpleName();
 
-    public WalththroughLifeCycleObserver(){}
-    WalththroughLifeCycleObserver(Context context,Lifecycle lifecycle){
+    public WalththroughLifeCycleObserver() {
+    }
+
+    WalththroughLifeCycleObserver(Context context, Lifecycle lifecycle) {
 
     }
 
@@ -34,11 +36,11 @@ public class WalththroughLifeCycleObserver implements LifecycleObserver {
     public void onResume() {
         Log.d(LOG_TAG, "resumed observing lifecycle.");
     }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     public void onPause() {
         Log.d(LOG_TAG, "paused observing lifecycle.");
     }
-
 
 
 }

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
     <android.support.v7.widget.CardView
         android:id="@+id/contact_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="4dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?selectableItemBackgroundBorderless"
         card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="0dp"
         card_view:cardElevation="0dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="4dp"
         card_view:layout_constraintBottom_toBottomOf="parent"
         card_view:layout_constraintEnd_toEndOf="parent"
         card_view:layout_constraintTop_toTopOf="parent">
@@ -32,61 +32,65 @@
                 android:layout_width="@dimen/dimen_50dp"
                 android:layout_height="@dimen/dimen_50dp"
                 android:layout_margin="8dp"
+                android:src="@color/colorAccent"
+                android:transitionName="pic"
+                app:civ_border_color="#e0e0e0"
+                app:civ_border_width="2dp"
+                android:contentDescription="@string/name_initials"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:src="@color/colorAccent"
-                app:civ_border_width="2dp"
-                app:civ_border_color="#e0e0e0"
-                android:transitionName="pic"
                 tools:ignore="UnusedAttribute" />
 
             <TextView
                 android:id="@+id/initials"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_8dp"
-                tools:text="NS"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:layout_marginEnd="@dimen/dimen_8dp"
                 android:fontFamily="@font/semi_bold"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/dimen_16sp"
+                android:transitionName="initials"
                 app:layout_constraintBottom_toBottomOf="@id/pic"
                 app:layout_constraintEnd_toEndOf="@id/pic"
                 app:layout_constraintStart_toStartOf="@id/pic"
                 app:layout_constraintTop_toTopOf="@id/pic"
-                android:transitionName="initials"
-                tools:ignore="UnusedAttribute" />
+                tools:ignore="UnusedAttribute"
+                tools:text="NS" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/pic"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="@dimen/dimen_12dp"
                 android:layout_marginTop="8dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/pic"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Ayush Srivastava"
                     android:fontFamily="@font/regular"
-                    android:textStyle="bold"
+                    android:textColor="?android:textColorPrimary"
                     android:textSize="@dimen/dimen_16sp"
-                    android:textColor="?android:textColorPrimary" />
+                    android:textStyle="bold"
+                    tools:text="Ayush Srivastava" />
 
                 <TextView
                     android:id="@+id/phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="8081775811"
-                    android:fontFamily="@font/regular"
                     android:layout_marginTop="4dp"
+                    android:fontFamily="@font/regular"
+                    android:textColor="@color/textColorPrimary1"
                     android:textSize="@dimen/dimen_14sp"
-                    android:textColor="@color/textColorPrimary1" />
+                    tools:text="8081775811" />
             </LinearLayout>
 
 
@@ -94,10 +98,11 @@
                 android:id="@+id/selected_state"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
+                android:contentDescription="@string/selected_state"
+                android:background="@drawable/selected"
                 app:layout_constraintBottom_toBottomOf="@id/pic"
                 app:layout_constraintEnd_toEndOf="@id/pic"
-                app:srcCompat="@drawable/ic_selected"
-                android:background="@drawable/selected" />
+                app:srcCompat="@drawable/ic_selected" />
 
 
         </android.support.constraint.ConstraintLayout>

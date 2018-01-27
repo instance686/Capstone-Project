@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,17 +15,19 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/contact_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            >
+            android:layout_height="?attr/actionBarSize">
+
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <ImageButton
                     android:id="@+id/back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="8dp"
+                    android:contentDescription="@string/back_key_pressed"
                     android:background="@drawable/ripple"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +41,7 @@
                     android:layout_marginStart="@dimen/dimen_32dp"
                     android:layout_marginTop="@dimen/dimen_8dp"
                     android:fontFamily="@font/semi_bold"
-                    android:text="Select Contact"
+                    android:text="@string/select_con"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dimen_14sp"
                     app:layout_constraintStart_toEndOf="@+id/back"
@@ -52,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dimen_8dp"
                     android:fontFamily="@font/semi_bold"
-                    android:text=" contacts"
+                    android:text="@string/contacts"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dimen_12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -99,8 +100,8 @@
         android:id="@+id/empty_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,6 +114,7 @@
             android:layout_marginEnd="@dimen/dimen_8dp"
             android:layout_marginStart="@dimen/dimen_8dp"
             android:layout_marginTop="@dimen/dimen_8dp"
+            android:contentDescription="@string/no_contact_image"
             app:layout_constraintVertical_chainStyle="spread"
             app:srcCompat="@drawable/ic_walkthrough3" />
 
@@ -123,9 +125,9 @@
             android:layout_marginEnd="@dimen/dimen_8dp"
             android:layout_marginStart="@dimen/dimen_8dp"
             android:layout_marginTop="@dimen/dimen_8dp"
-            android:textColor="?android:textColorPrimary"
             android:fontFamily="@font/light"
             android:text="@string/invite"
+            android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/dimen_18sp"
             android:textStyle="bold" />
 
@@ -146,11 +148,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/dimen_16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
         android:clickable="true"
         android:focusable="true"
         app:elevation="@dimen/dimen_6dp"
         app:fabSize="normal"
+        android:contentDescription="@string/button_done"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_check" />

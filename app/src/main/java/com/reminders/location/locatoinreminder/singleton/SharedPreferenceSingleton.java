@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
-import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
-
-import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 

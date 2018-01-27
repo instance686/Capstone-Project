@@ -10,28 +10,28 @@
         android:id="@+id/empty_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
         app:layout_constraintVertical_bias="0.4">
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/fui_done_check_mark"
+            android:layout_gravity="center"
             android:tint="@color/colorAccent"
-            android:layout_gravity="center" />
+            app:srcCompat="@drawable/fui_done_check_mark" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="All Completed"
             android:layout_gravity="center"
-            android:fontFamily="@font/regular"
-            android:textColor="?android:textColorSecondary"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/regular"
+            android:text="All Completed"
+            android:textColor="?android:textColorSecondary"
             android:textSize="15sp" />
     </LinearLayout>
 

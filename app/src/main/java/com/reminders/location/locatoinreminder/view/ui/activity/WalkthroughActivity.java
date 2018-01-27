@@ -4,14 +4,15 @@ import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
@@ -37,12 +38,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.reminders.location.locatoinreminder.R;
-import com.reminders.location.locatoinreminder.pojo.User;
-import com.reminders.location.locatoinreminder.view.adapters.WalkThroughViewPagerAdapter;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
+import com.reminders.location.locatoinreminder.pojo.User;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
 import com.reminders.location.locatoinreminder.util.Utils;
 import com.reminders.location.locatoinreminder.view.BaseModel.BaseActivity;
+import com.reminders.location.locatoinreminder.view.adapters.WalkThroughViewPagerAdapter;
 import com.reminders.location.locatoinreminder.viewmodel.WalkthroughActivityViewModel;
 
 import java.io.FileNotFoundException;
@@ -50,11 +51,10 @@ import java.util.Collections;
 
 import butterknife.BindView;
 
-public class WalkthroughActivity extends BaseActivity  {
+public class WalkthroughActivity extends BaseActivity {
 
-    private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
     private static final int REQUEST_PERMISSION = 0;
-    String[] permissionsRequired = new String[]{Manifest.permission.READ_CONTACTS,Manifest.permission.ACCESS_FINE_LOCATION};
+    String[] permissionsRequired = new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION};
     @BindView(R.id.cardView)
     CardView name_card;
     @BindView(R.id.edit_name)
@@ -63,18 +63,18 @@ public class WalkthroughActivity extends BaseActivity  {
     ImageView initial_background;
     @BindView(R.id.initials)
     TextView initials;
-    private int[] buttons = {R.id.b1, R.id.b2, R.id.b3};
     @BindView(R.id.viewpager)
     ViewPager viewPager;
     @BindView(R.id.start)
     Button start;
-    private int currentAPIVersion;
     @BindView(R.id.next)
     FloatingActionButton next;
+    private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
+    private int[] buttons = {R.id.b1, R.id.b2, R.id.b3};
+    private int currentAPIVersion;
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
-
 
     private WalkthroughActivityViewModel walkthroughActivityViewModel;
 
@@ -85,12 +85,12 @@ public class WalkthroughActivity extends BaseActivity  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        walkthroughActivityViewModel= ViewModelProviders.of(this).get(WalkthroughActivityViewModel.class);
+        walkthroughActivityViewModel = ViewModelProviders.of(this).get(WalkthroughActivityViewModel.class);
 
         findViewById(buttons[0]).setSelected(true);
-        databaseReference=FirebaseDatabase.getInstance().getReference("users");
+        databaseReference = FirebaseDatabase.getInstance().getReference(ConstantVar.USERS);
 
-        viewPager.setAdapter(new WalkThroughViewPagerAdapter(this,getLayoutInflater(),walkthroughActivityViewModel));
+        viewPager.setAdapter(new WalkThroughViewPagerAdapter(this, getLayoutInflater(), walkthroughActivityViewModel));
         viewPager.setOffscreenPageLimit(2);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -122,6 +122,7 @@ public class WalkthroughActivity extends BaseActivity  {
             start.setText(ConstantVar.VERIFY_PHN);
         }
     }
+
     public void buttonClicked(View view) {      //Step 1
         if (Utils.isConnectedToNetwork(this)) {
             if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
@@ -130,7 +131,7 @@ public class WalkthroughActivity extends BaseActivity  {
                 startVerification();
             }
         } else
-            Snackbar.make(viewPager, "Not connected to the internet", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(viewPager, getResources().getString(R.string.no_net_connect), Snackbar.LENGTH_SHORT).show();
     }
 
     public void checkPermission() {
@@ -142,7 +143,7 @@ public class WalkthroughActivity extends BaseActivity  {
                         ) {
                     Snackbar.make(findViewById(android.R.id.content),
                             R.string.permission_rational,
-                            Snackbar.LENGTH_INDEFINITE).setAction("ENABLE",
+                            Snackbar.LENGTH_INDEFINITE).setAction(getResources().getString(R.string.enable),
                             new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -158,13 +159,13 @@ public class WalkthroughActivity extends BaseActivity  {
                 startVerification();
             }
 
-        }else {
+        } else {
             startVerification();
         }
 
 
-
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull final String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -186,6 +187,7 @@ public class WalkthroughActivity extends BaseActivity  {
                 break;
         }
     }
+
     public void startVerification() {
 
 
@@ -222,19 +224,17 @@ public class WalkthroughActivity extends BaseActivity  {
                 // Sign in failed
                 if (response == null) {
                     // User pressed back button
-                    Toast.makeText(this, "Login Canceled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.login_canceled), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (response.getErrorCode() == ErrorCodes.NO_NETWORK) {
-                    Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.no_net_connect), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
-                    Log.e("Login", "Unknown Error");
                     return;
                 }
             }
-            Log.e("Login", "Unknown sign in response");
         }
     }
 
@@ -245,7 +245,7 @@ public class WalkthroughActivity extends BaseActivity  {
 
     public void doneAll(final View view) {
         if (editText.getText().toString().equalsIgnoreCase("")) {
-            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.enter_name), Toast.LENGTH_SHORT).show();
         } else {
             final String Name = editText.getText().toString();
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
@@ -266,56 +266,55 @@ public class WalkthroughActivity extends BaseActivity  {
 
         }
     }
+
     private void loginUserOnServer() {
-        boolean checkUser=checkUserInDatabase();
-        if(!checkUser)
+        boolean checkUser = checkUserInDatabase();
+        if (!checkUser)
             insertUserOnDatabase();
         gotoMain();
     }
-    public boolean checkUserInDatabase(){
+
+    public boolean checkUserInDatabase() {
         //User user = new User(currentUser.getDisplayName(), currentUser.getPhoneNumber());
         final boolean[] userRegistered = new boolean[1];
         databaseReference.child(currentUser.getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        User u=dataSnapshot.getValue(User.class);
-                        if(u==null) {
+                        User u = dataSnapshot.getValue(User.class);
+                        if (u == null) {
                             userRegistered[0] = false;
-                        }
-                        else {
+                        } else {
                             userRegistered[0] = true;
                         }
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Toast.makeText(WalkthroughActivity.this,"Failed to read user data",Toast.LENGTH_LONG).show();
-                        userRegistered[0]=false;
+                        Toast.makeText(WalkthroughActivity.this, getResources().getString(R.string.failed_to_read), Toast.LENGTH_LONG).show();
+                        userRegistered[0] = false;
                     }
                 });
         return userRegistered[0];
     }
-    public void insertUserOnDatabase(){
-        User user=new User(currentUser.getDisplayName(),currentUser.getPhoneNumber());
+
+    public void insertUserOnDatabase() {
+        User user = new User(currentUser.getDisplayName(), currentUser.getPhoneNumber());
         databaseReference.child(currentUser.getUid()).setValue(user);
 
 
-
     }
-
 
 
     public void gotoMain() {
         editText.clearFocus();
-        sharedPreferenceSingleton.saveAs(this,ConstantVar.CONSTANT_SELF_NAME,currentUser.getDisplayName());
-        sharedPreferenceSingleton.saveAs(this,ConstantVar.CONTACT_SELF_NUMBER,currentUser.getPhoneNumber());
-        sharedPreferenceSingleton.saveAs(this,ConstantVar.LOGGED, true);
+        sharedPreferenceSingleton.saveAs(this, ConstantVar.CONSTANT_SELF_NAME, currentUser.getDisplayName());
+        sharedPreferenceSingleton.saveAs(this, ConstantVar.CONTACT_SELF_NUMBER, currentUser.getPhoneNumber());
+        sharedPreferenceSingleton.saveAs(this, ConstantVar.LOGGED, true);
         startActivity(new Intent(this, MainActivity.class));
         overridePendingTransition(R.anim.view_enter, R.anim.view_exit);
         finish();
     }
-
 
 
     public void nextPage(View view) {

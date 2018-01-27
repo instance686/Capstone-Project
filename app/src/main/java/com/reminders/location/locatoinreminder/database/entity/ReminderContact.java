@@ -10,29 +10,31 @@ import android.support.annotation.NonNull;
  */
 @Entity(tableName = "reminder_chat")
 public class ReminderContact {
-    @NonNull@PrimaryKey@ColumnInfo(name="contact_num")
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name = "contact_num")
     String number;
-    @ColumnInfo(name="contact_name")
+    @ColumnInfo(name = "contact_name")
     String name;
-    @ColumnInfo(name="reminder_count")
+    @ColumnInfo(name = "reminder_count")
     int reminderCount;
-    @ColumnInfo(name="contact_selection")
-    boolean selection=false;
-    @ColumnInfo(name="card_visibilty")
-    boolean cardVisibility=false;
-    @ColumnInfo(name="current_milliseconds")
+    @ColumnInfo(name = "contact_selection")
+    boolean selection = false;
+    @ColumnInfo(name = "card_visibilty")
+    boolean cardVisibility = false;
+    @ColumnInfo(name = "current_milliseconds")
     long curentTimeinMilliseconds;
 
 
     public ReminderContact(@NonNull String number, String name,
-                           int reminderCount, boolean selection,boolean cardVisibility,
+                           int reminderCount, boolean selection, boolean cardVisibility,
                            long curentTimeinMilliseconds) {
         this.number = number;
         this.name = name;
         this.reminderCount = reminderCount;
         this.selection = selection;
-        this.cardVisibility=cardVisibility;
-        this.curentTimeinMilliseconds=curentTimeinMilliseconds;
+        this.cardVisibility = cardVisibility;
+        this.curentTimeinMilliseconds = curentTimeinMilliseconds;
     }
 
     public long getCurentTimeinMilliseconds() {

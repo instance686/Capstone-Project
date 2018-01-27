@@ -12,8 +12,6 @@ public class MyApplication extends MultiDexApplication {
     private String UID;
 
 
-
-
     @Override
     public void onCreate() {
         super.onCreate();

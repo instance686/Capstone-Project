@@ -5,24 +5,20 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import com.reminders.location.locatoinreminder.database.dao.cardDoa;
-import com.reminders.location.locatoinreminder.database.dao.contactDoa;
-import com.reminders.location.locatoinreminder.database.dao.reminderContactDoa;
-import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
-import com.reminders.location.locatoinreminder.database.entity.Contact_Entity;
+import com.reminders.location.locatoinreminder.database.dao.CardDoa;
+import com.reminders.location.locatoinreminder.database.dao.ContactDoa;
+import com.reminders.location.locatoinreminder.database.dao.ReminderContactDoa;
+import com.reminders.location.locatoinreminder.database.entity.ChatCardsEntity;
+import com.reminders.location.locatoinreminder.database.entity.ContactEntity;
 import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
 
 /**
  * Created by ayush on 25/12/17.
  */
-@Database(entities = {Contact_Entity.class, ChatCards_Entity.class, ReminderContact.class}, version = 1)
+@Database(entities = {ContactEntity.class, ChatCardsEntity.class, ReminderContact.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract contactDoa contactDao();
-    public abstract cardDoa cardDoa();
-    public abstract reminderContactDoa reminderContactDoa();
-
+    public static final String DATABASE_NAME = "My_DB";
     private static AppDatabase sInstance;
-    public static final String DATABASE_NAME="My_DB";
 
     public static AppDatabase getInstance(final Context context) {
         if (sInstance == null) {
@@ -35,19 +31,23 @@ public abstract class AppDatabase extends RoomDatabase {
         return sInstance;
     }
 
-
     /**
      * Build the database. {@link Builder#build()} only sets up the database configuration and
      * creates a new instance of the database.
      * The SQLite database is only created when it's accessed for the first time.
      */
-    private static AppDatabase buildDatabase(final Context appContext)
-                                             {
+    private static AppDatabase buildDatabase(final Context appContext) {
         return Room.databaseBuilder(appContext, AppDatabase.class, DATABASE_NAME)
                 .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build();
     }
+
+    public abstract ContactDoa contactDao();
+
+    public abstract CardDoa cardDoa();
+
+    public abstract ReminderContactDoa reminderContactDoa();
 
 
 }

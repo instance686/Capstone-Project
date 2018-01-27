@@ -11,6 +11,17 @@ import android.net.NetworkInfo;
 public class Utils {
 
 
+    public static boolean isConnectedToNetwork(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        return isConnected;
+    }
+
     public String getInitial(String s) {
         int spaceIndex = s.indexOf(' ');
         try {
@@ -23,16 +34,16 @@ public class Utils {
         return "" + s.charAt(0);
     }
 
-    public String getFullNumber(String number){
-        if(number.contains("+91"))
+    public String getFullNumber(String number) {
+        if (number.contains("+91"))
             return number;
         else
-            return "+91"+number;
+            return "+91" + number;
     }
 
-    public String getCoordinates(String location){
-        String[] latlang=location.split(" ");
-        String loc="";
+    public String getCoordinates(String location) {
+        String[] latlang = location.split(" ");
+        String loc = "";
         /*if(latlang[0].length()>5) {
             loc = loc + latlang[0].substring(0, 4) + ",";
         }
@@ -45,18 +56,8 @@ public class Utils {
         {
             loc=loc+latlang[1];
         }*/
-            loc=loc+latlang[2];
+        loc = loc + latlang[2];
 
-            return loc;
-    }
-    public static boolean isConnectedToNetwork(Context context){
-        ConnectivityManager cm =
-                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-
-        return isConnected;
+        return loc;
     }
 }

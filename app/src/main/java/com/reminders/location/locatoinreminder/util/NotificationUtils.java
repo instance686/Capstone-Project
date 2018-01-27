@@ -13,8 +13,7 @@ import android.os.Build;
 import android.os.Parcelable;
 import android.support.annotation.RequiresApi;
 
-import com.reminders.location.locatoinreminder.R;
-import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
+import com.reminders.location.locatoinreminder.database.entity.ChatCardsEntity;
 import com.reminders.location.locatoinreminder.view.ui.activity.MainActivity;
 
 import java.util.ArrayList;
@@ -26,18 +25,17 @@ import java.util.List;
 
 public class NotificationUtils extends ContextWrapper {
 
-    private NotificationManager mManager;
     public static final String ANDROID_CHANNEL_ID = "Reminders";
     public static final String ANDROID_CHANNEL_NAME = "Reminder Recieved";
-
     public static final String ANDROID_CHANNEL_ID1 = "Reminder Trigger";
     public static final String ANDROID_CHANNEL_NAME1 = "Reminder Triggered";
+    private NotificationManager mManager;
 
     public NotificationUtils(Context base, int choice) {
         super(base);
-        if(choice==0){
+        if (choice == 0) {
             createChannel1();
-        }else {
+        } else {
             createChannel2();
         }
 
@@ -83,8 +81,8 @@ public class NotificationUtils extends ContextWrapper {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Notification.Builder getChannelNotification(Bitmap largeIcon,List<ChatCards_Entity> allDetails) {
-        Intent i = new Intent(this,MainActivity.class);
+    public Notification.Builder getChannelNotification(Bitmap largeIcon, List<ChatCardsEntity> allDetails) {
+        Intent i = new Intent(this, MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.putParcelableArrayListExtra("TEST", (ArrayList<? extends Parcelable>) allDetails);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 2, i, PendingIntent.FLAG_ONE_SHOT);

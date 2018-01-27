@@ -7,12 +7,12 @@ import android.arch.lifecycle.ViewModel;
  * Created by ayush on 26/12/17.
  */
 
-public class WalkthroughActivityViewModel extends ViewModel{
+public class WalkthroughActivityViewModel extends ViewModel {
 
 
-    private MutableLiveData<Integer> imageSource=new MutableLiveData<>();
-    private MutableLiveData<String> heading=new MutableLiveData<>();
-    private MutableLiveData<String> subHeading=new MutableLiveData<>();
+    private MutableLiveData<Integer> imageSource = new MutableLiveData<>();
+    private MutableLiveData<String> heading = new MutableLiveData<>();
+    private MutableLiveData<String> subHeading = new MutableLiveData<>();
 
 
     public MutableLiveData<Integer> getImageSource() {
@@ -23,7 +23,7 @@ public class WalkthroughActivityViewModel extends ViewModel{
         return subHeading;
     }
 
-    public MutableLiveData<String> getHeading(){
+    public MutableLiveData<String> getHeading() {
         return heading;
     }
 

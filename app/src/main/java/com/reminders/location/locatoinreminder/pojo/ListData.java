@@ -5,7 +5,7 @@ package com.reminders.location.locatoinreminder.pojo;
  */
 
 public class ListData {
-int cardId;
+    int cardId;
     String title;
     String note;
     String senderName;

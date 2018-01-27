@@ -1,6 +1,6 @@
 package com.reminders.location.locatoinreminder.executor;
 
-import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
+import com.reminders.location.locatoinreminder.database.entity.ChatCardsEntity;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface ShoutsListUpdate {
 
-public void shoutListUpdate(List<ChatCards_Entity> chatCardsEntities);
+    public void shoutListUpdate(List<ChatCardsEntity> chatCardsEntities);
 }

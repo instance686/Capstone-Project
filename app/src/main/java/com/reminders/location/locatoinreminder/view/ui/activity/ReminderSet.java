@@ -1,13 +1,10 @@
 package com.reminders.location.locatoinreminder.view.ui.activity;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetBehavior;
-import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -30,8 +27,7 @@ import com.reminders.location.locatoinreminder.MyApplication;
 import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.AppDatabase;
-import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
-import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
+import com.reminders.location.locatoinreminder.database.entity.ChatCardsEntity;
 import com.reminders.location.locatoinreminder.executor.CURDTasks;
 import com.reminders.location.locatoinreminder.executor.ChecklistItemClicked;
 import com.reminders.location.locatoinreminder.pojo.ContactFetch;
@@ -46,9 +42,11 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class ReminderSet extends BaseActivity implements View.OnClickListener,ChecklistItemClicked
+public class ReminderSet extends BaseActivity implements View.OnClickListener, ChecklistItemClicked
 
 {
+    private static final SimpleDateFormat sdf = new SimpleDateFormat(ConstantVar.EDITTIME_FORMAT);
+    protected GeoDataClient mGeoDataClient;
     @BindView(R.id.appBar)
     AppBarLayout appBarLayout;
     @BindView(R.id.title)
@@ -67,94 +65,82 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
     RelativeLayout mainView;
     @BindView(R.id.time)
     TextView editedTime;
-
-
-
     BottomSheetBehavior bottomSheetBehavior;
     DatabaseReference databaseReference;
     AppDatabase appDatabase;
-    boolean bottomSheetShowing=false;
-    boolean insertionFinished=true;
-
-    int currentColor=R.color.colorMainBackground1;
-
-    protected GeoDataClient mGeoDataClient;
-
+    boolean bottomSheetShowing = false;
+    boolean insertionFinished = true;
+    int currentColor = R.color.colorMainBackground1;
     int PLACE_PICKER_REQUEST = 1;
     PlacePicker.IntentBuilder builder;
-
     private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
     private ReminderSetActivityViewModel reminderSetActivityViewModel;
-    private ChatCards_Entity chatCardsEntity;
-    private String location="";
-    private String time="Edited:"+"DUMMY";
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm,dd-MM-yyyy ");
-
-
+    private ChatCardsEntity chatCardsEntity;
+    private String location = "";
+    private String time = ConstantVar.EDITED + "DUMMY";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        appDatabase=getMyapp().getDatabase();
-        bottomSheetBehavior=BottomSheetBehavior.from(bottomSheet);
-        databaseReference= FirebaseDatabase.getInstance().getReference("reminders");
+        appDatabase = getMyapp().getDatabase();
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        databaseReference = FirebaseDatabase.getInstance().getReference(ConstantVar.REMINDERS);
         databaseReference.keepSynced(true);
-         if(!getIntent().getBooleanExtra(ConstantVar.UPDATE_CARD,false)) {
-             setCurrentColor(currentColor);
-         }
-         else
-         {
-             AsyncTask.execute(()->{
-                 List<ChatCards_Entity> chatCardsEntities=appDatabase.cardDoa().getCard(getIntent().getIntExtra(ConstantVar.CARD_CLICKED,0));
-                 chatCardsEntity=chatCardsEntities.get(0);
-                 titleHandling(chatCardsEntity.getCardTitle());
-                 notesHandling(true,chatCardsEntity.getNotes());
-                 checkListHandling(chatCardsEntity.isCheckListPresent(),chatCardsEntity.getCheckListData());
-                 locationHandling(chatCardsEntity.getLocation());
-                 colorHandling(chatCardsEntity.getColor());
-                 editedTimeHandling(chatCardsEntity.getTime());
-             });
+        if (!getIntent().getBooleanExtra(ConstantVar.UPDATE_CARD, false)) {
+            setCurrentColor(currentColor);
+        } else {
+            AsyncTask.execute(() -> {
+                List<ChatCardsEntity> chatCardsEntities = appDatabase.cardDoa().getCard(getIntent().getIntExtra(ConstantVar.CARD_CLICKED, 0));
+                chatCardsEntity = chatCardsEntities.get(0);
+                titleHandling(chatCardsEntity.getCardTitle());
+                notesHandling(true, chatCardsEntity.getNotes());
+                checkListHandling(chatCardsEntity.isCheckListPresent(), chatCardsEntity.getCheckListData());
+                locationHandling(chatCardsEntity.getLocation());
+                colorHandling(chatCardsEntity.getColor());
+                editedTimeHandling(chatCardsEntity.getTime());
+            });
 
-         }
+        }
         builder = new PlacePicker.IntentBuilder();
 
     }
 
 
-    public void titleHandling(String titleText){
-        if(!(titleText==null) || !titleText.trim().equalsIgnoreCase("")){
+    public void titleHandling(String titleText) {
+        if (!(titleText == null) || !titleText.trim().equalsIgnoreCase("")) {
             title.setText(titleText);
-        }
-        else {
+        } else {
             title.setHint(getResources().getString(R.string.titlehint));
         }
     }
 
-    public void notesHandling(boolean notesPresent,String notesdata){
-        Log.v("NotesPresernt",""+notesPresent);
-        if(notesPresent){
-            Log.v("NotesData",notesdata);
-            if(!(notesdata==null) || !notesdata.trim().equalsIgnoreCase("")){
+    public void notesHandling(boolean notesPresent, String notesdata) {
+        if (notesPresent) {
+            if (!(notesdata == null) || !notesdata.trim().equalsIgnoreCase("")) {
                 note.setText(notesdata);
-            }
-            else {
+            } else {
                 note.setHint(getResources().getString(R.string.note_hint));
             }
         }
 
     }
-    public void checkListHandling(boolean checkListPresent,String checkListData){
+
+    public void checkListHandling(boolean checkListPresent, String checkListData) {
 
     }
-    public void locationHandling(String location){
-        this.location=location;
+
+    public void locationHandling(String location) {
+        this.location = location;
     }
-    public void colorHandling(int color){
+
+    public void colorHandling(int color) {
         setCurrentColor(color);
     }
-    public void editedTimeHandling(String editedTime){
-            this.editedTime.setText(editedTime);
+
+    public void editedTimeHandling(String editedTime) {
+        this.editedTime.setText(editedTime);
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -170,73 +156,73 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(this,data);
-                location=place.getLatLng().latitude+" "+place.getLatLng().longitude+" "+place.getName();
-                Toast.makeText(this, "Location Set To:-"+place.getName(), Toast.LENGTH_LONG).show();
+                Place place = PlacePicker.getPlace(this, data);
+                location = place.getLatLng().latitude + " " + place.getLatLng().longitude + " " + place.getName();
+                Toast.makeText(this, ConstantVar.LOCATION_SET_TO + place.getName(), Toast.LENGTH_LONG).show();
             }
         }
     }
 
-    private void saveNote(){
+    private void saveNote() {
 
-        if(!getIntent().getBooleanExtra(ConstantVar.UPDATE_CARD,false))
+        if (!getIntent().getBooleanExtra(ConstantVar.UPDATE_CARD, false))
             insertCard();
         else
             updateCard();
 
 
     }
-    public void insertCard(){
-        int cardId=(int)System.currentTimeMillis();
-        dataInsertUpdate(cardId);
-    }
-    public void updateCard(){
-        int cardId=getIntent().getIntExtra(ConstantVar.CARD_CLICKED,0);
+
+    public void insertCard() {
+        int cardId = (int) System.currentTimeMillis();
         dataInsertUpdate(cardId);
     }
 
-    public void dataInsertUpdate(int cardId){
-        String cardTitle=title.getText().toString().trim();
-        ContactFetch contactFetch=new ContactFetch(getIntent().getStringExtra(ConstantVar.CONTACT_NAME),
+    public void updateCard() {
+        int cardId = getIntent().getIntExtra(ConstantVar.CARD_CLICKED, 0);
+        dataInsertUpdate(cardId);
+    }
+
+    public void dataInsertUpdate(int cardId) {
+        String cardTitle = title.getText().toString().trim();
+        ContactFetch contactFetch = new ContactFetch(getIntent().getStringExtra(ConstantVar.CONTACT_NAME),
                 getIntent().getStringExtra(ConstantVar.CHAT_ID));
-        String notes=note.getText().toString().trim();
-        if(notes.equalsIgnoreCase(""))
-            ToastMessage.showMessageLong(this,"Please enter a note text");
-        else if(location.equalsIgnoreCase("")){
-            if(bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_HIDDEN)
+        String notes = note.getText().toString().trim();
+        if (notes.equalsIgnoreCase(""))
+            ToastMessage.showMessageLong(this, ConstantVar.ENTER_NOTE_TEXT);
+        else if (location.equalsIgnoreCase("")) {
+            if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN)
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            ToastMessage.showMessageLong(this,"Please select a location");
-        }
-        else {
-            updateInsert(cardId,cardTitle,contactFetch,notes,location,currentColor,time,false,false);
+            ToastMessage.showMessageLong(this, ConstantVar.ENTER_LOCATION);
+        } else {
+            updateInsert(cardId, cardTitle, contactFetch, notes, location, currentColor, time, false, false);
         }
     }
 
     private void updateInsert(int cardId, String cardTitle, ContactFetch contactFetch,
                               String notes, String location, int currentColor,
                               String time, boolean selected, boolean sentSuccess) {
-        ChatCards_Entity chatCards_entity=
-                new ChatCards_Entity(cardId,cardTitle,contactFetch,
-                        sharedPreferenceSingleton.getSavedString(this,ConstantVar.CONTACT_SELF_NUMBER)
-                        ,notes,
-                        location,currentColor,getCurrentTime(),selected,sentSuccess,System.currentTimeMillis()
+        ChatCardsEntity chatCards_entity =
+                new ChatCardsEntity(cardId, cardTitle, contactFetch,
+                        sharedPreferenceSingleton.getSavedString(this, ConstantVar.CONTACT_SELF_NUMBER)
+                        , notes,
+                        location, currentColor, getCurrentTime(), selected, sentSuccess, System.currentTimeMillis()
                 );
-        if(!getIntent().getBooleanExtra(ConstantVar.UPDATE_CARD,false))
-            new CURDTasks(appDatabase,ConstantVar.INSERTCHAT,chatCards_entity,this).execute();
+        if (!getIntent().getBooleanExtra(ConstantVar.UPDATE_CARD, false))
+            new CURDTasks(appDatabase, ConstantVar.INSERTCHAT, chatCards_entity, this).execute();
         else
-            new CURDTasks(appDatabase,ConstantVar.UPDATECHAT,chatCards_entity,this).execute();
+            new CURDTasks(appDatabase, ConstantVar.UPDATECHAT, chatCards_entity, this).execute();
 
         finish();
     }
 
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED){
+        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        }else {
+        } else {
             finish();
         }
     }
@@ -252,7 +238,7 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.addExtra:
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 break;
@@ -265,14 +251,13 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 break;
             case R.id.maineView:
-                Log.v("mainViewClicked","");
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 break;
         }
     }
 
-    public void bottomSheetButtonClicked(View view){
-        switch (view.getId()){
+    public void bottomSheetButtonClicked(View view) {
+        switch (view.getId()) {
             case R.id.addLocation:
                 try {
                     startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
@@ -306,29 +291,28 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener,Ch
 
     @Override
     public void itemClicked() {
-        if(bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED)
+        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
-    public void setCurrentColor(int colorSelected){
-        background.setBackgroundColor(ContextCompat.getColor(this,colorSelected));
-        appBarLayout.setBackgroundColor(ContextCompat.getColor(this,colorSelected));
-        bottomCard.setCardBackgroundColor(ContextCompat.getColor(this,colorSelected));
-        currentColor=colorSelected;
+    public void setCurrentColor(int colorSelected) {
+        background.setBackgroundColor(ContextCompat.getColor(this, colorSelected));
+        appBarLayout.setBackgroundColor(ContextCompat.getColor(this, colorSelected));
+        bottomCard.setCardBackgroundColor(ContextCompat.getColor(this, colorSelected));
+        currentColor = colorSelected;
     }
-     public void setSharedValues(boolean val1,boolean val2,String number){
-        sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATION,val1);
-       sharedPreferenceSingleton.saveAs(this,ConstantVar.INSERTION,val2);
-        sharedPreferenceSingleton.saveAs(this,ConstantVar.UPDATED_NUMBER,number);
+
+    public void setSharedValues(boolean val1, boolean val2, String number) {
+        sharedPreferenceSingleton.saveAs(this, ConstantVar.UPDATION, val1);
+        sharedPreferenceSingleton.saveAs(this, ConstantVar.INSERTION, val2);
+        sharedPreferenceSingleton.saveAs(this, ConstantVar.UPDATED_NUMBER, number);
 
     }
 
-    String getCurrentTime(){
+    String getCurrentTime() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        return "Edited: "+sdf.format(timestamp)+"";
+        return ConstantVar.EDITED + sdf.format(timestamp) + "";
     }
-
-
 
 
 }

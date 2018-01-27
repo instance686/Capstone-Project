@@ -5,15 +5,15 @@
     android:id="@+id/contact_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginEnd="2dp"
+    android:layout_marginStart="2dp"
+    android:layout_marginTop="4dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?selectableItemBackgroundBorderless"
     card_view:cardBackgroundColor="?colorPrimary"
     card_view:cardCornerRadius="0dp"
     card_view:cardElevation="0dp"
-    android:layout_marginEnd="2dp"
-    android:layout_marginStart="2dp"
-    android:layout_marginTop="4dp"
     card_view:layout_constraintBottom_toBottomOf="parent"
     card_view:layout_constraintEnd_toEndOf="parent"
     card_view:layout_constraintStart_toEndOf="@id/pic"
@@ -30,14 +30,14 @@
             android:layout_height="50dp"
             android:layout_margin="8dp"
             android:layout_marginBottom="8dp"
+            android:src="@color/colorAccent"
+            android:transitionName="pic"
+            app:civ_border_color="#e0e0e0"
+            app:civ_border_width="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/default_user"
-            android:src="@color/colorAccent"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#e0e0e0"
-            android:transitionName="pic"
             tools:ignore="UnusedAttribute" />
 
         <TextView
@@ -48,45 +48,45 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            tools:text="NS"
             android:fontFamily="@font/semi_bold"
             android:textColor="@android:color/white"
             android:textSize="16sp"
+            android:transitionName="initials"
             app:layout_constraintBottom_toBottomOf="@+id/pic"
             app:layout_constraintEnd_toEndOf="@+id/pic"
             app:layout_constraintStart_toStartOf="@+id/pic"
             app:layout_constraintTop_toTopOf="@+id/pic"
-            android:transitionName="initials"
-            tools:ignore="UnusedAttribute" />
+            tools:ignore="UnusedAttribute"
+            tools:text="NS" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/pic"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/pic"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Ayush Srivastava"
                 android:fontFamily="@font/regular"
+                android:textColor="?android:textColorPrimary"
                 android:textStyle="bold"
-                android:textColor="?android:textColorPrimary" />
+                tools:text="Ayush Srivastava" />
 
             <TextView
                 android:id="@+id/phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="+918272478273"
-                android:fontFamily="@font/regular"
                 android:layout_marginTop="4dp"
-                android:textColor="?android:textColorSecondary" />
+                android:fontFamily="@font/regular"
+                android:textColor="?android:textColorSecondary"
+                tools:text="+918272478273" />
         </LinearLayout>
 
 
@@ -94,10 +94,10 @@
             android:id="@+id/selected_state"
             android:layout_width="22dp"
             android:layout_height="22dp"
+            android:background="@drawable/selected"
             app:layout_constraintBottom_toBottomOf="@+id/pic"
             app:layout_constraintEnd_toEndOf="@+id/pic"
-            app:srcCompat="@drawable/ic_selected"
-            android:background="@drawable/selected" />
+            app:srcCompat="@drawable/ic_selected" />
 
 
     </android.support.constraint.ConstraintLayout>

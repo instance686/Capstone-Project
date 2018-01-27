@@ -1,7 +1,5 @@
 package com.reminders.location.locatoinreminder;
 
-import android.arch.lifecycle.MediatorLiveData;
-
 import com.reminders.location.locatoinreminder.database.AppDatabase;
 
 
@@ -14,7 +12,7 @@ public class DataRepository {
 
     private final AppDatabase mDatabase;
 
-   // private MediatorLiveData<List<ProductEntity>> mObservableProducts;
+    // private MediatorLiveData<List<ProductEntity>> mObservableProducts;
 
     private DataRepository(final AppDatabase database) {
         mDatabase = database;

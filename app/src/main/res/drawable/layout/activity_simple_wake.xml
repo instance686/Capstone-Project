@@ -10,19 +10,19 @@
         android:id="@+id/view"
         android:layout_width="0dp"
         android:layout_height="250dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginStart="64dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?selectableItemBackgroundBorderless"
-        card_view:cardBackgroundColor="?iconDual"
-        card_view:cardCornerRadius="8dp"
-        card_view:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
-        app:layout_constraintVertical_bias="0.3">
+        app:layout_constraintVertical_bias="0.3"
+        card_view:cardBackgroundColor="?iconDual"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardElevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,9 +37,9 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:textSize="60sp"
                 android:fontFamily="@font/light"
                 android:textColor="@android:color/white"
+                android:textSize="60sp"
                 tools:text="07:30" />
         </LinearLayout>
 
@@ -65,14 +65,14 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/border_background"
+        android:onClick="snoozeAlarm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toEndOf="@+id/stop"
         app:layout_constraintTop_toBottomOf="@+id/view"
-        app:srcCompat="@drawable/ic_snooze"
-        android:background="@drawable/border_background"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        android:onClick="snoozeAlarm" />
+        app:srcCompat="@drawable/ic_snooze" />
 
     <ImageButton
         android:id="@+id/stop"
@@ -82,12 +82,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/border_background"
+        android:onClick="stopAlarm"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/snooze"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view"
-        app:layout_constraintEnd_toStartOf="@id/snooze"
-        app:srcCompat="@drawable/ic_sound_off"
-        android:onClick="stopAlarm" />
+        app:srcCompat="@drawable/ic_sound_off" />
 
     <TextView
         android:id="@+id/textView8"
@@ -115,22 +115,22 @@
         android:id="@+id/hidden"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="?iconDual"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="?iconDual"
-        android:visibility="invisible">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:text="@string/alarm_stopped"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:textSize="36sp"
-            android:fontFamily="@font/light" />
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/light"
+            android:text="@string/alarm_stopped"
+            android:textColor="@android:color/white"
+            android:textSize="36sp" />
     </RelativeLayout>
 
 

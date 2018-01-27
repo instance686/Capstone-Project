@@ -15,7 +15,7 @@ import java.util.List;
  * Created by ayush on 12/1/18.
  */
 @Dao
-public interface reminderContactDoa {
+public interface ReminderContactDoa {
     @Query("SELECT * FROM reminder_chat")
     LiveData<List<ReminderContact>> getCurrentChats();
 

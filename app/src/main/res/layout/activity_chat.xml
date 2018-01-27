@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/background"
-    android:background="@color/greyBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/greyBackground"
     android:fitsSystemWindows="true"
     tools:context=".view.ui.activity.ChatActivity">
 
@@ -30,6 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="8dp"
+                    android:contentDescription="@string/back_key_pressed"
                     android:background="@drawable/ripple"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +41,11 @@
                     android:id="@+id/profile_pic"
                     android:layout_width="@dimen/dimen_40dp"
                     android:layout_height="0dp"
-                    android:layout_margin="@dimen/dimen_8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="@dimen/dimen_8dp"
+                    android:layout_marginEnd="@dimen/dimen_8dp"
+                    android:contentDescription="@string/name_initials"
                     android:src="@color/colorAccent"
                     app:civ_border_color="#e0e0e0"
                     app:civ_border_width="1dp"
@@ -52,7 +57,10 @@
                     android:id="@+id/initials"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="@dimen/dimen_8dp"
+                    android:layout_marginEnd="@dimen/dimen_8dp"
                     android:fontFamily="@font/semi_bold"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/dimen_16sp"
@@ -76,6 +84,7 @@
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.Toolbar>
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_options"
             android:layout_width="match_parent"
@@ -89,16 +98,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
+                android:contentDescription="@string/back_button_onlongclick"
                 android:background="@drawable/ripple"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_back" />
+
             <TextView
                 android:id="@+id/cardCounter"
                 android:layout_width="@dimen/dimen_40dp"
                 android:layout_height="0dp"
-                android:layout_margin="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:layout_marginEnd="@dimen/dimen_8dp"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/backOnLongClick"
@@ -119,6 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#f5f5f5" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/chat_messages"
             android:layout_width="match_parent"
@@ -131,16 +146,19 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_edit"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/fab_margin"/>
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/add_new_rem"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="@dimen/dimen_16dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            app:srcCompat="@drawable/ic_edit" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/empty_state"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/im1"
@@ -148,6 +166,7 @@
                 android:layout_height="@dimen/dimen_120dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/empty_chat"
+                android:contentDescription="@string/empty_chat_image"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -158,10 +177,10 @@
                 android:id="@+id/text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#9e9e9e"
-                android:text="No recent reminders found"
-                android:textSize="@dimen/dimen_14sp"
                 android:layout_marginTop="@dimen/dimen_8dp"
+                android:text="@string/no_recent_rem"
+                android:textColor="#9e9e9e"
+                android:textSize="@dimen/dimen_14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/im1" />

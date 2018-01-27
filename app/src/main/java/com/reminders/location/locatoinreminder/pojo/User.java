@@ -14,7 +14,7 @@ public class User {
     public User() {
     }
 
-    public User(String Name,String Phone) {
+    public User(String Name, String Phone) {
         super();
         this.Name = Name;
         this.Phone = Phone;

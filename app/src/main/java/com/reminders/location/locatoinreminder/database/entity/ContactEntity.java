@@ -9,16 +9,18 @@ import android.support.annotation.NonNull;
  * Created by ayush on 31/12/17.
  */
 @Entity
-public class Contact_Entity {
-    @NonNull@PrimaryKey@ColumnInfo(name="contact_number")
+public class ContactEntity {
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name = "contact_number")
     private String number;
-    @ColumnInfo(name="contact_name")
+    @ColumnInfo(name = "contact_name")
     private String name;
-    @ColumnInfo(name="contact_selection")
-    private boolean selection=false;
+    @ColumnInfo(name = "contact_selection")
+    private boolean selection = false;
 
 
-    public Contact_Entity(String number, @NonNull String name, boolean selection) {
+    public ContactEntity(String number, @NonNull String name, boolean selection) {
         this.number = number;
         this.name = name;
         this.selection = selection;

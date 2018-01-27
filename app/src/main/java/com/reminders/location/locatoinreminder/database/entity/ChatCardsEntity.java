@@ -4,7 +4,6 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -17,8 +16,19 @@ import com.reminders.location.locatoinreminder.pojo.ContactFetch;
 
 
 @Entity(tableName = "chat_card_entity")
-public class ChatCards_Entity implements Parcelable {
-    @NonNull@PrimaryKey@ColumnInfo(name="card_id")
+public class ChatCardsEntity implements Parcelable {
+    public static final Creator CREATOR = new Creator() {
+        public ChatCardsEntity createFromParcel(Parcel in) {
+            return new ChatCardsEntity(in);
+        }
+
+        public ChatCardsEntity[] newArray(int size) {
+            return new ChatCardsEntity[size];
+        }
+    };
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name = "card_id")
     private int cardId;
     @ColumnInfo(name = "card_title")
     private String cardTitle;
@@ -32,45 +42,45 @@ public class ChatCards_Entity implements Parcelable {
     private String notes;
     @ColumnInfo(name = "check_notes")
     private boolean checkListPresent;
-    @ColumnInfo(name="check_list_data")
+    @ColumnInfo(name = "check_list_data")
     private String checkListData;
     @ColumnInfo(name = "location")
     private String location;
     @ColumnInfo(name = "color_code")
     private int color;
-    @ColumnInfo(name="edited_time")
+    @ColumnInfo(name = "edited_time")
     private String time;
     @ColumnInfo(name = "selected_card")
     private boolean selected;
-    @ColumnInfo(name="sent_success")
+    @ColumnInfo(name = "sent_success")
     private boolean sentSuccess;
     @ColumnInfo(name = "update_time")
     private long editMilliseconds;
 
-
-
-    public ChatCards_Entity(final Parcel source){
-        cardId=source.readInt();
-        cardTitle=source.readString();
+    public ChatCardsEntity(final Parcel source) {
+        cardId = source.readInt();
+        cardTitle = source.readString();
         //contactFetch=source.readParcelable(getClass().getClassLoader());
         contactFetch.setContact_number(source.readString());
         contactFetch.setContact_name(source.readString());
-        sendContact=source.readString();
-        notes=source.readString();
-        location=source.readString();
-        color=source.readInt();
-        time=source.readString();
-        editMilliseconds=source.readLong();
+        sendContact = source.readString();
+        notes = source.readString();
+        location = source.readString();
+        color = source.readInt();
+        time = source.readString();
+        editMilliseconds = source.readLong();
     }
-    public ChatCards_Entity(@NonNull int cardId, String cardTitle, ContactFetch contactFetch,
-                            String sendContact, String notes,
-                            String location,
-                            int color, String time,boolean selected,boolean sentSuccess,
-                            long editMilliseconds) {
+
+
+    public ChatCardsEntity(@NonNull int cardId, String cardTitle, ContactFetch contactFetch,
+                           String sendContact, String notes,
+                           String location,
+                           int color, String time, boolean selected, boolean sentSuccess,
+                           long editMilliseconds) {
         this.cardId = cardId;
         this.cardTitle = cardTitle;
         this.contactFetch = contactFetch;
-        this.sendContact=sendContact;
+        this.sendContact = sendContact;
         this.notesPresent = notesPresent;
         this.notes = notes;
         this.checkListPresent = checkListPresent;
@@ -78,14 +88,14 @@ public class ChatCards_Entity implements Parcelable {
         this.location = location;
         this.color = color;
         this.time = time;
-        this.selected=selected;
-        this.sentSuccess=sentSuccess;
-        this.editMilliseconds=editMilliseconds;
+        this.selected = selected;
+        this.sentSuccess = sentSuccess;
+        this.editMilliseconds = editMilliseconds;
 
     }
 
-
-    public ChatCards_Entity(){}
+    public ChatCardsEntity() {
+    }
 
     public long getEditMilliseconds() {
         return editMilliseconds;
@@ -200,7 +210,6 @@ public class ChatCards_Entity implements Parcelable {
         this.selected = selected;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -224,13 +233,4 @@ public class ChatCards_Entity implements Parcelable {
         dest.writeLong(editMilliseconds);
 
     }
-    public static final Creator CREATOR = new Creator() {
-        public ChatCards_Entity createFromParcel(Parcel in) {
-            return new ChatCards_Entity(in);
-        }
-
-        public ChatCards_Entity[] newArray(int size) {
-            return new ChatCards_Entity[size];
-        }
-    };
 }

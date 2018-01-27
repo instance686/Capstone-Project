@@ -6,8 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?selectableItemBackgroundBorderless"
-    android:background="?colorPrimary">
+    android:background="?colorPrimary"
+    android:foreground="?selectableItemBackgroundBorderless">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/bell"
@@ -29,14 +29,14 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        tools:text="NS"
         android:fontFamily="@font/semi_bold"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/bell"
         app:layout_constraintEnd_toEndOf="@+id/bell"
         app:layout_constraintStart_toStartOf="@+id/bell"
-        app:layout_constraintTop_toTopOf="@+id/bell" />
+        app:layout_constraintTop_toTopOf="@+id/bell"
+        tools:text="NS" />
 
     <TextView
         android:id="@+id/name"
@@ -45,13 +45,13 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/bell"
         app:layout_constraintStart_toEndOf="@+id/bell"
         app:layout_constraintTop_toTopOf="@+id/bell"
-        tools:text="Ayush Srivastava"
-        android:textSize="16sp"
-        android:textColor="?android:textColorPrimary" />
+        tools:text="Ayush Srivastava" />
 
     <TextView
         android:id="@+id/note_hint"
@@ -71,14 +71,14 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="16dp"
-        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
-        android:textColor="?android:textColorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/light"
         android:lineSpacingMultiplier="1.5"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/note_hint"
         app:layout_constraintTop_toBottomOf="@+id/note_hint"
-        android:textSize="15sp"
-        android:fontFamily="@font/light"/>
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam" />
 
     <TextView
         android:id="@+id/time_hint"

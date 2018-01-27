@@ -1,58 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#EEEEEE">
+    android:background="#EEEEEE"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/app_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="@dimen/dimen_18sp"
         android:layout_alignParentTop="true"
-        android:textAlignment="center"
         android:background="#FFFFFF"
         android:fontFamily="@font/lobster"
-        android:padding="@dimen/dimen_12dp"/>
+        android:padding="@dimen/dimen_12dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="@dimen/dimen_18sp" />
+
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/app_name"
         android:layout_marginTop="@dimen/dimen_1dp">
+
         <Button
             android:id="@+id/location"
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_50dp"
-            android:background="#FFFFFF"
-            android:textColor="#000000"
-            android:text="REFRESH"
-            android:gravity="center"
             android:layout_weight=".5"
-            />
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:text="@string/refresh"
+            android:textColor="#000000" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll"/>
+        android:layout_below="@+id/ll" />
 
     <TextView
         android:id="@+id/empty_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No reminders in this area"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:text="@string/no_rem_nearby"
+        android:textColor="?android:textColorPrimary"
         android:textSize="@dimen/dimen_18sp"
-        android:visibility="gone"
-        android:textColor="?android:textColorPrimary"/>
+        android:visibility="gone" />
 
 
 </RelativeLayout>

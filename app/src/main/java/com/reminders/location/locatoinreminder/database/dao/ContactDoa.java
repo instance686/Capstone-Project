@@ -5,8 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.reminders.location.locatoinreminder.database.entity.Contact_Entity;
-import com.reminders.location.locatoinreminder.pojo.ContactFetch;
+import com.reminders.location.locatoinreminder.database.entity.ContactEntity;
 
 import java.util.List;
 
@@ -15,15 +14,15 @@ import java.util.List;
  */
 
 @Dao
-public interface contactDoa {
+public interface ContactDoa {
 
-    @Query("SELECT * FROM contact_entity")
-    LiveData<List<Contact_Entity>> getAll();
+    @Query("SELECT * FROM ContactEntity")
+    LiveData<List<ContactEntity>> getAll();
 
     @Insert
-    void insertFeed(List<Contact_Entity> contact_entities);
+    void insertFeed(List<ContactEntity> contact_entities);
 
-    @Query("DELETE FROM contact_entity")
+    @Query("DELETE FROM ContactEntity")
     public void clearContacts();
 
     /*@Query("SELECT COUNT(*) FROM contact_entity WHERE contact_number=:phone")

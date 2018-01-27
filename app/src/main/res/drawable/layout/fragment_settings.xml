@@ -46,9 +46,9 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:fontFamily="@font/semi_bold"
                     android:textColor="@android:color/white"
                     android:textSize="35sp"
-                    android:fontFamily="@font/semi_bold"
                     app:layout_constraintBottom_toBottomOf="@+id/profile_pic"
                     app:layout_constraintEnd_toEndOf="@+id/profile_pic"
                     app:layout_constraintStart_toStartOf="@+id/profile_pic"
@@ -107,8 +107,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:textAlignment="center"
-                        android:textSize="18sp"
                         android:textColor="?iconDual"
+                        android:textSize="18sp"
                         tools:text="Ayush Srivastava" />
 
                     <TextView
@@ -118,8 +118,8 @@
                         android:layout_marginBottom="16dp"
                         android:layout_marginTop="8dp"
                         android:textAlignment="center"
-                        android:textSize="16sp"
                         android:textColor="?iconDual"
+                        android:textSize="16sp"
                         tools:text="+91038474958" />
                 </LinearLayout>
 

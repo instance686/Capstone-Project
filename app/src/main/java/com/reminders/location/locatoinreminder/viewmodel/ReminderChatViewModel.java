@@ -15,6 +15,7 @@ import java.util.List;
 
 public class ReminderChatViewModel extends ViewModel {
     private LiveData<List<ReminderContact>> contactList;
+
     public LiveData<List<ReminderContact>> getContactList(AppDatabase appDatabase) {
         contactList = appDatabase.reminderContactDoa().getCurrentChats();
         return contactList;

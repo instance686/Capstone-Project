@@ -3,8 +3,7 @@ package com.reminders.location.locatoinreminder.viewmodel;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
-import com.reminders.location.locatoinreminder.pojo.ShoutsData;
+import com.reminders.location.locatoinreminder.database.entity.ChatCardsEntity;
 
 import java.util.List;
 
@@ -13,13 +12,13 @@ import java.util.List;
  */
 
 public class ShoutsFragmentViewModel extends ViewModel {
-MutableLiveData<List<ChatCards_Entity>> shoutsData=new MutableLiveData<>();
+    MutableLiveData<List<ChatCardsEntity>> shoutsData = new MutableLiveData<>();
 
-    public MutableLiveData<List<ChatCards_Entity>> getShoutsData() {
+    public MutableLiveData<List<ChatCardsEntity>> getShoutsData() {
         return shoutsData;
     }
 
-    public void setShoutsData(MutableLiveData<List<ChatCards_Entity>> shoutsData) {
+    public void setShoutsData(MutableLiveData<List<ChatCardsEntity>> shoutsData) {
         this.shoutsData = shoutsData;
     }
 }

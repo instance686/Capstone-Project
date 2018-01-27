@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/reminder_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dimen_2dp"
+    android:layout_marginBottom="@dimen/dimen_2dp"
+    android:layout_marginTop="@dimen/dimen_2dp"
+    android:layout_marginStart="@dimen/dimen_2dp"
+    android:layout_marginEnd="@dimen/dimen_2dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?selectableItemBackground"
-    card_view:cardElevation="@dimen/dimen_2dp"
-    card_view:cardCornerRadius="4dp">
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="@dimen/dimen_2dp">
 
 
     <LinearLayout
@@ -28,11 +31,10 @@
             android:layout_marginStart="@dimen/dimen_8dp"
             android:layout_marginTop="@dimen/dimen_8dp"
             android:fontFamily="@font/semi_bold"
-            android:textStyle="bold"
-            tools:text="Title"
-            android:textSize="@dimen/dimen_18sp"
             android:textColor="?android:textColorPrimary"
-            />
+            android:textSize="@dimen/dimen_18sp"
+            android:textStyle="bold"
+            tools:text="Title" />
 
         <TextView
             android:id="@+id/Note"
@@ -42,72 +44,74 @@
             android:layout_marginStart="@dimen/dimen_8dp"
             android:layout_marginTop="@dimen/dimen_8dp"
             android:fontFamily="@font/light"
-            android:textStyle="bold"
             android:lineSpacingMultiplier="1.2"
-            android:textSize="@dimen/dimen_13sp"
             android:textColor="?android:textColorPrimary"
-            tools:text="Note..."
-            />
+            android:textSize="@dimen/dimen_13sp"
+            android:textStyle="bold"
+            tools:text="Note..." />
 
         <LinearLayout
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_8dp"
+            android:layout_marginBottom="@dimen/dimen_8dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            android:layout_marginEnd="@dimen/dimen_8dp"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/note"
-            >
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/note"></LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_1dp"
-            android:background="@color/lineColor"
-            android:layout_marginTop="@dimen/dimen_8dp"
-            android:layout_marginLeft="@dimen/dimen_16dp"
-            android:layout_marginRight="@dimen/dimen_16dp"
             android:layout_marginBottom="@dimen/dimen_8dp"
-            />
+            android:layout_marginStart="@dimen/dimen_16dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:background="@color/lineColor" />
 
         <LinearLayout
             android:id="@+id/loc"
-            android:layout_margin="@dimen/dimen_8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:layout_marginBottom="@dimen/dimen_8dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/location_icon"
-                />
+                android:contentDescription="@string/location_coordinates"
+                app:srcCompat="@drawable/location_icon" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/location"
-                android:textSize="@dimen/dimen_14sp"
                 android:layout_marginStart="@dimen/dimen_4dp"
+                android:text="@string/location"
                 android:textColor="?android:textColorPrimary"
-                />
+                android:textSize="@dimen/dimen_14sp" />
+
             <TextView
                 android:id="@+id/coordinates"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/coordinates"
-                android:textSize="@dimen/dimen_14sp"
                 android:layout_marginStart="@dimen/dimen_4dp"
-                android:textColor="?android:textColorPrimary"
                 android:fontFamily="@font/semi_bold"
-                />
+                android:text="@string/coordinates"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/dimen_14sp" />
+
             <ImageView
-                android:layout_marginStart="@dimen/dimen_8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_check"
-                />
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:contentDescription="@string/check_mark"
+                app:srcCompat="@drawable/ic_check" />
 
         </LinearLayout>
-
 
 
     </LinearLayout>

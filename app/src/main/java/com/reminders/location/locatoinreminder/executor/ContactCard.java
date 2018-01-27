@@ -6,6 +6,6 @@ package com.reminders.location.locatoinreminder.executor;
 
 public interface ContactCard {
 
-    public void onContactCardSelected(int count,String number,int position,boolean selected);
+    public void onContactCardSelected(int count, String number, int position, boolean selected);
 
 }

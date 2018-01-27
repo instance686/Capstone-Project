@@ -6,6 +6,6 @@ package com.reminders.location.locatoinreminder.executor;
 
 public interface CardsSelected {
 
-    public void onCardSelected(int count,int cardId,int position,boolean selected);
+    public void onCardSelected(int count, int cardId, int position, boolean selected);
 
 }

@@ -5,8 +5,8 @@
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clipToPadding="true"
     android:background="?colorPrimary"
+    android:clipToPadding="true"
     app:behavior_hideable="true"
     app:behavior_peekHeight="0dp"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
@@ -14,19 +14,19 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/chat_background"
+            android:textColor="?android:textColorSecondary"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="?android:textColorSecondary" />
+            android:textStyle="bold" />
 
         <HorizontalScrollView
             android:layout_width="wrap_content"
@@ -42,54 +42,54 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="?android:colorBackground"
-                    android:scaleType="centerCrop"
+                    android:foreground="?selectableItemBackground"
                     android:onClick="setBackground"
-                    android:foreground="?selectableItemBackground" />
+                    android:scaleType="centerCrop" />
 
                 <Button
                     android:id="@+id/im2"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:background="@color/color1"
                     android:layout_marginStart="8dp"
-                    android:onClick="setBackground"
-                    android:foreground="?selectableItemBackground" />
+                    android:background="@color/color1"
+                    android:foreground="?selectableItemBackground"
+                    android:onClick="setBackground" />
 
                 <Button
                     android:id="@+id/im3"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:background="@color/color2"
                     android:layout_marginStart="8dp"
-                    android:onClick="setBackground"
-                    android:foreground="?selectableItemBackground" />
+                    android:background="@color/color2"
+                    android:foreground="?selectableItemBackground"
+                    android:onClick="setBackground" />
 
                 <Button
                     android:id="@+id/im4"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:background="@color/color3"
                     android:layout_marginStart="8dp"
-                    android:onClick="setBackground"
-                    android:foreground="?selectableItemBackground" />
+                    android:background="@color/color3"
+                    android:foreground="?selectableItemBackground"
+                    android:onClick="setBackground" />
 
                 <Button
                     android:id="@+id/im5"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:background="@color/color4"
                     android:layout_marginStart="8dp"
-                    android:onClick="setBackground"
-                    android:foreground="?selectableItemBackground" />
+                    android:background="@color/color4"
+                    android:foreground="?selectableItemBackground"
+                    android:onClick="setBackground" />
 
                 <Button
                     android:id="@+id/im6"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:background="@color/color5"
                     android:layout_marginStart="8dp"
-                    android:onClick="setBackground"
-                    android:foreground="?selectableItemBackground" />
+                    android:background="@color/color5"
+                    android:foreground="?selectableItemBackground"
+                    android:onClick="setBackground" />
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>

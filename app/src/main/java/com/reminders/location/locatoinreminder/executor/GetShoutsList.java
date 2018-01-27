@@ -3,11 +3,10 @@ package com.reminders.location.locatoinreminder.executor;
 import android.content.Context;
 import android.location.Location;
 import android.os.AsyncTask;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 
 import com.reminders.location.locatoinreminder.database.AppDatabase;
-import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
+import com.reminders.location.locatoinreminder.database.entity.ChatCardsEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,40 +15,40 @@ import java.util.List;
  * Created by ayush on 23/1/18.
  */
 
-public class GetShoutsList extends AsyncTask<Void,Void,Void> {
+public class GetShoutsList extends AsyncTask<Void, Void, Void> {
 
     Context context;
     AppDatabase appDatabase;
-    Location current=new Location("");
-    Location destination=new Location("");;
-    List<ChatCards_Entity> chatCardsEntities;
+    Location current = new Location("");
+    Location destination = new Location("");
+    ;
+    List<ChatCardsEntity> chatCardsEntities;
     LocationUpdateList locationUpdateList;
 
-    public GetShoutsList(Context context, AppDatabase appDatabase, Location location,LocationUpdateList locationUpdateList) {
+    public GetShoutsList(Context context, AppDatabase appDatabase, Location location, LocationUpdateList locationUpdateList) {
         this.context = context;
         this.appDatabase = appDatabase;
         this.current = location;
-        destination=new Location("");
-        chatCardsEntities=new ArrayList<>();
-        this.locationUpdateList=locationUpdateList;
-        chatCardsEntities=new ArrayList<>();
+        destination = new Location("");
+        chatCardsEntities = new ArrayList<>();
+        this.locationUpdateList = locationUpdateList;
+        chatCardsEntities = new ArrayList<>();
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
-       // Log.v("FromShouts",current.getLatitude()+" "+current.getLongitude());
-        List<ChatCards_Entity> cards=appDatabase.cardDoa().getCardsForLocation();
-        if(!cards.isEmpty()) {
-            for (ChatCards_Entity ce : cards) {
+        // Log.v("FromShouts",current.getLatitude()+" "+current.getLongitude());
+        List<ChatCardsEntity> cards = appDatabase.cardDoa().getCardsForLocation();
+        if (!cards.isEmpty()) {
+            for (ChatCardsEntity ce : cards) {
                 String[] loc = ce.getLocation().split(" ");
                 destination.setLatitude(Double.parseDouble(loc[0]));
                 destination.setLongitude(Double.parseDouble(loc[1]));
                 float distance = current.distanceTo(destination);
-                if(distance<=1000)
+                if (distance <= 1000)
                     chatCardsEntities.add(ce);
             }
         }
-        Log.v("FromShouts","BackgroundFinished");
         return null;
     }
 

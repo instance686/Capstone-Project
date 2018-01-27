@@ -5,5 +5,5 @@ package com.reminders.location.locatoinreminder.executor;
  */
 
 public interface TaskRunning {
-public void taskRunning(boolean runVal);
+    public void taskRunning(boolean runVal);
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -31,17 +30,17 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="?colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar"
-        android:background="?colorPrimary">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp">
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp">
 
             <TextView
                 android:id="@+id/textView"
@@ -50,8 +49,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/selected_contacts"
-                android:textSize="15sp"
                 android:textColor="?android:textColorSecondary"
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,10 +62,10 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 app:flexWrap="wrap"
-                app:showDivider="middle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:showDivider="middle" />
 
             <TextView
                 android:id="@+id/textView_time"
@@ -86,17 +85,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:drawableEnd="@drawable/ic_time"
                 android:fontFamily="sans-serif-light"
+                android:hint="@string/time_hint"
                 android:padding="16dp"
                 android:textColor="?android:textColorPrimary"
                 android:textColorHint="#757575"
                 android:textSize="16sp"
-                android:hint="@string/time_hint"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/date_pick"
                 app:layout_constraintHorizontal_chainStyle="spread"
-                app:layout_constraintTop_toBottomOf="@id/textView_time"
-                android:drawableEnd="@drawable/ic_time" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView_time" />
 
             <TextView
                 android:id="@+id/date_pick"
@@ -104,16 +103,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:drawableEnd="@drawable/ic_calendar"
                 android:fontFamily="sans-serif-light"
+                android:hint="@string/date_hint"
                 android:padding="16dp"
                 android:textColor="?android:textColorPrimary"
                 android:textColorHint="#757575"
                 android:textSize="16sp"
-                android:hint="@string/date_hint"
-                app:layout_constraintStart_toEndOf="@id/time_pick"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView_time"
-                android:drawableEnd="@drawable/ic_calendar" />
+                app:layout_constraintStart_toEndOf="@id/time_pick"
+                app:layout_constraintTop_toBottomOf="@id/textView_time" />
 
             <EditText
                 android:id="@+id/edit_note"
@@ -138,9 +137,9 @@
 
             <Button
                 android:id="@+id/send"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="32dp"
                 android:text="Send"

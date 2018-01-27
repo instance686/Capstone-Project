@@ -3,7 +3,6 @@ package com.reminders.location.locatoinreminder.service;
 
 import android.Manifest;
 import android.app.ActivityManager;
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,7 +10,6 @@ import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,45 +22,33 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcelable;
-import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.reminders.location.locatoinreminder.MyApplication;
 import com.reminders.location.locatoinreminder.R;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.AppDatabase;
-import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
+import com.reminders.location.locatoinreminder.database.entity.ChatCardsEntity;
 import com.reminders.location.locatoinreminder.executor.ShoutsListUpdate;
 import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
 import com.reminders.location.locatoinreminder.util.NotificationUtils;
 import com.reminders.location.locatoinreminder.view.ui.activity.MainActivity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by ayush on 21/1/18.
  */
 
 public class LocationService extends Service implements LocationListener {
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 500;// 40 meters
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 2;
+    public double latitude;
     boolean isGPSEnabled = false;
     boolean isNetworkEnabled = false;
     boolean canGetLocation = false;
@@ -72,35 +58,29 @@ public class LocationService extends Service implements LocationListener {
     Location mylocation = new Location("");
     Location dest_location = new Location("");
     NotificationManager notifier;
-    public double latitude;
     double longitude;
     LocationManager locationManager;
     AppDatabase databaseReference;
-    List<ChatCards_Entity> allDetails=new ArrayList<>();
+    List<ChatCardsEntity> allDetails = new ArrayList<>();
     Intent broadcastIntent = new Intent();
-    int locationCounter=1;
+    int locationCounter = 1;
     ShoutsListUpdate shoutsListUpdate;
-        private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
-
-    //TODO change time and distamnce over here
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 500;// 40 meters
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60*2;
+    private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.v("FromService", "on create");
-        databaseReference=getMyapp().getDatabase();
+        databaseReference = getMyapp().getDatabase();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        if(databaseReference==null){
-            databaseReference=getMyapp().getDatabase();
+        if (databaseReference == null) {
+            databaseReference = getMyapp().getDatabase();
         }
 
-        databaseReference=getMyapp().getDatabase();
+        databaseReference = getMyapp().getDatabase();
 
 
         dest_location.setLatitude(28.4401501);
@@ -108,8 +88,6 @@ public class LocationService extends Service implements LocationListener {
         mylocation = getLocation(this);
 
 
-
-        Log.v("FromService","onStartCommand");
         return START_STICKY;
     }
 
@@ -122,7 +100,6 @@ public class LocationService extends Service implements LocationListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.v("FromService", "Service Destroyed");
         flag = 0;
         stopUsingGPS();
         stopSelf();
@@ -150,21 +127,19 @@ public class LocationService extends Service implements LocationListener {
                         LocationManager.NETWORK_PROVIDER,
                         MIN_TIME_BW_UPDATES,
                         MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                if(locationManager!=null){
+                if (locationManager != null) {
                     location = locationManager
                             .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    if(location!=null){
+                    if (location != null) {
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
                         //Log.v("Distance",location.distanceTo(dest_location)+"");
-                        Log.v("FromService","onLocationChanged");
 
 
                     }
                 }
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -180,43 +155,40 @@ public class LocationService extends Service implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         getList();
-        List<ChatCards_Entity> chatCardsEntities=new ArrayList<>();
-        if(!allDetails.isEmpty()) {
+        List<ChatCardsEntity> chatCardsEntities = new ArrayList<>();
+        if (!allDetails.isEmpty()) {
             if (!chatCardsEntities.isEmpty())
                 chatCardsEntities.clear();
-            for (ChatCards_Entity ce : allDetails) {
+            for (ChatCardsEntity ce : allDetails) {
                 String[] loc = ce.getLocation().split(" ");
                 dest_location.setLatitude(Double.parseDouble(loc[0]));
                 dest_location.setLongitude(Double.parseDouble(loc[1]));
                 float distance = location.distanceTo(dest_location);
-                Log.v("FromServiceDis", distance + "");
-                if(distance<=1000)
-                chatCardsEntities.add(ce);
+                if (distance <= 1000)
+                    chatCardsEntities.add(ce);
             }
         }
-        if(appInForeGround()){
-            if(!chatCardsEntities.isEmpty()) {
+        if (appInForeGround()) {
+            if (!chatCardsEntities.isEmpty()) {
                 broadcastIntent.setAction(ConstantVar.mBroadcastArrayListAction);
-                broadcastIntent.putExtra(ConstantVar.CURRENT_LATITUDE,location.getLatitude());
-                broadcastIntent.putExtra(ConstantVar.CURRENT_LONGITUDE,location.getLongitude());
-                broadcastIntent.putParcelableArrayListExtra("TEST", (ArrayList<? extends Parcelable>) chatCardsEntities);
+                broadcastIntent.putExtra(ConstantVar.CURRENT_LATITUDE, location.getLatitude());
+                broadcastIntent.putExtra(ConstantVar.CURRENT_LONGITUDE, location.getLongitude());
+                broadcastIntent.putParcelableArrayListExtra(ConstantVar.PARCALABLE_LIST_NAME, (ArrayList<? extends Parcelable>) chatCardsEntities);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
             }
-        }
-        else {
+        } else {
             if (!chatCardsEntities.isEmpty()) {
-                long currentSeconds=(System.currentTimeMillis()/1000);
-                long lastNoififySeconds=sharedPreferenceSingleton.getSavedLong(this,ConstantVar.LAST_NOTIFICATION_TIME)/1000;
-                Log.v("FromService","Time diff="+(currentSeconds-lastNoififySeconds));
-                if((currentSeconds-lastNoififySeconds)>30) {
+                long currentSeconds = (System.currentTimeMillis() / 1000);
+                long lastNoififySeconds = sharedPreferenceSingleton.getSavedLong(this, ConstantVar.LAST_NOTIFICATION_TIME) / 1000;
+                if ((currentSeconds - lastNoififySeconds) > 30) {
                     sendNotification(location);
                 }
             }
         }
 
-        Log.v("FromService","onLocationChanged");
 
     }
+
     public MyApplication getMyapp() {
         return (MyApplication) getApplicationContext();
     }
@@ -228,28 +200,27 @@ public class LocationService extends Service implements LocationListener {
 
     @Override
     public void onProviderEnabled(String provider) {
-        Log.v("FromService",provider);
 
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        Log.v("FromService",provider);
+        Log.v("FromService", provider);
     }
 
-    public void getList(){
-        allDetails=databaseReference.cardDoa().getCardsForLocation();
+    public void getList() {
+        allDetails = databaseReference.cardDoa().getCardsForLocation();
     }
 
 
-    public boolean appInForeGround(){
+    public boolean appInForeGround() {
         ActivityManager am = (ActivityManager) this
                 .getSystemService(ACTIVITY_SERVICE);
 
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
 
         ComponentName componentInfo = taskInfo.get(0).topActivity;
-        if (componentInfo.getPackageName().equalsIgnoreCase("com.reminders.location.locatoinreminder")) {
+        if (componentInfo.getPackageName().equalsIgnoreCase(ConstantVar.APP_PACKAGE_NAME)) {
             return true;
         } else {
             return false;
@@ -257,20 +228,20 @@ public class LocationService extends Service implements LocationListener {
     }
 
     private void sendNotification(Location location) {
-        sharedPreferenceSingleton.saveAs(this,ConstantVar.LAST_NOTIFICATION_TIME,System.currentTimeMillis());
+        sharedPreferenceSingleton.saveAs(this, ConstantVar.LAST_NOTIFICATION_TIME, System.currentTimeMillis());
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
         if (Build.VERSION.SDK_INT >= 26) {
-            NotificationUtils mNotificationUtils = new NotificationUtils(this,0);
+            NotificationUtils mNotificationUtils = new NotificationUtils(this, 0);
             Notification.Builder nb = mNotificationUtils.
-                    getChannelNotification(largeIcon,allDetails);
+                    getChannelNotification(largeIcon, allDetails);
             mNotificationUtils.getManager().notify(0, nb.build());
         } else {
 
             Intent i = new Intent(this, MainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtra(ConstantVar.CURRENT_LATITUDE,location.getLatitude());
-            i.putExtra(ConstantVar.CURRENT_LONGITUDE,location.getLongitude());
-            i.putExtra(ConstantVar.FROM_NOTIFICATION,true);
+            i.putExtra(ConstantVar.CURRENT_LATITUDE, location.getLatitude());
+            i.putExtra(ConstantVar.CURRENT_LONGITUDE, location.getLongitude());
+            i.putExtra(ConstantVar.FROM_NOTIFICATION, true);
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 2, i, PendingIntent.FLAG_ONE_SHOT);
@@ -278,8 +249,8 @@ public class LocationService extends Service implements LocationListener {
             mBuilder.setPriority(Notification.PRIORITY_HIGH);
             mBuilder.setGroupSummary(true);
             mBuilder.setAutoCancel(true);
-            mBuilder.setContentTitle("You have reminders near by");
-            mBuilder.setContentText("Touch to view them");
+            mBuilder.setContentTitle(ConstantVar.NEW_REMINDERS_NEARBY);
+            mBuilder.setContentText(ConstantVar.TOUCH_TO_VIEW);
             mBuilder.setOngoing(false);
             mBuilder.setSound(defaultSoundUri);
             mBuilder.setSmallIcon(R.drawable.ic_notification);

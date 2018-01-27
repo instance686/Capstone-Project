@@ -1,9 +1,9 @@
 package com.reminders.location.locatoinreminder.view.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.reminders.location.locatoinreminder.MyApplication;
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
                     finish();
                 }
             }
-        },100);
+        }, 100);
 
 
     }

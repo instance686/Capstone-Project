@@ -14,8 +14,8 @@
         android:layout_marginTop="32dp"
         android:fontFamily="@font/lobster"
         android:text="@string/app_name"
-        android:textSize="42sp"
         android:textColor="?android:textColorPrimary"
+        android:textSize="42sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

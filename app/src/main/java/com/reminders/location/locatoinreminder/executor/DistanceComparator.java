@@ -2,7 +2,7 @@ package com.reminders.location.locatoinreminder.executor;
 
 import android.location.Location;
 
-import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
+import com.reminders.location.locatoinreminder.database.entity.ChatCardsEntity;
 
 import java.util.Comparator;
 
@@ -10,17 +10,19 @@ import java.util.Comparator;
  * Created by ayush on 24/1/18.
  */
 
-public class DistanceComparator implements Comparator<ChatCards_Entity> {
-    Location current=new Location("");
-    Location d1=new Location("");
-    Location d2=new Location("");
-    public DistanceComparator(Location location){
-        current=location;
+public class DistanceComparator implements Comparator<ChatCardsEntity> {
+    Location current = new Location("");
+    Location d1 = new Location("");
+    Location d2 = new Location("");
+
+    public DistanceComparator(Location location) {
+        current = location;
     }
+
     @Override
-    public int compare(ChatCards_Entity o1, ChatCards_Entity o2) {
-        String[] loc1=o1.getLocation().split(" ");
-        String[] loc2=o2.getLocation().split(" ");
+    public int compare(ChatCardsEntity o1, ChatCardsEntity o2) {
+        String[] loc1 = o1.getLocation().split(" ");
+        String[] loc2 = o2.getLocation().split(" ");
         try {
             d1.setLatitude(Double.parseDouble(loc1[0]));
             d1.setLongitude(Double.parseDouble(loc1[1]));
@@ -34,8 +36,7 @@ public class DistanceComparator implements Comparator<ChatCards_Entity> {
                 return 1;
             else
                 return -1;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return 0;
         }
 

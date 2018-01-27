@@ -4,9 +4,8 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.reminders.location.locatoinreminder.database.AppDatabase;
-import com.reminders.location.locatoinreminder.database.entity.ChatCards_Entity;
+import com.reminders.location.locatoinreminder.database.entity.ChatCardsEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,10 +13,10 @@ import java.util.List;
  */
 
 public class ChatActivityViewModel extends ViewModel {
-    private LiveData<List<ChatCards_Entity>> cardsList;
+    private LiveData<List<ChatCardsEntity>> cardsList;
 
-    public LiveData<List<ChatCards_Entity>> getCardsList(AppDatabase appDatabase,String phone){
-        cardsList=appDatabase.cardDoa().getCards(phone);
+    public LiveData<List<ChatCardsEntity>> getCardsList(AppDatabase appDatabase, String phone) {
+        cardsList = appDatabase.cardDoa().getCards(phone);
         return cardsList;
     }
 

@@ -1,10 +1,7 @@
 package com.reminders.location.locatoinreminder.view.adapters;
 
 import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
@@ -15,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.reminders.location.locatoinreminder.R;
+import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.viewmodel.WalkthroughActivityViewModel;
 
 /**
@@ -23,29 +21,28 @@ import com.reminders.location.locatoinreminder.viewmodel.WalkthroughActivityView
 
 public class WalkThroughViewPagerAdapter extends PagerAdapter {
 
-    private WalkthroughActivityViewModel walkthroughActivityViewModel;
-    final Observer<Integer> imageSrcObserver=(@Nullable Integer integer)->{
-        displayImageSrc(integer);
-
-    };
-    final Observer<String> headingObserver=(@Nullable String s)->{
-        displayHeading(s);
-    };
-    final Observer<String> subHeadingObserver=(@Nullable String s)->{
-        displaySubHeading(s);
-    };
-
     LifecycleOwner lifecycleOwner;
     LayoutInflater layoutInflater;
     ImageView displayImage;
+    final Observer<Integer> imageSrcObserver = (@Nullable Integer integer) -> {
+        displayImageSrc(integer);
+
+    };
     TextView heading;
+    final Observer<String> headingObserver = (@Nullable String s) -> {
+        displayHeading(s);
+    };
     TextView subheading;
+    final Observer<String> subHeadingObserver = (@Nullable String s) -> {
+        displaySubHeading(s);
+    };
+    private WalkthroughActivityViewModel walkthroughActivityViewModel;
 
     public WalkThroughViewPagerAdapter(LifecycleOwner lifecycleOwner,
-                                       LayoutInflater layoutInflater, WalkthroughActivityViewModel walkthroughActivityViewModel){
-        this.layoutInflater=layoutInflater;
-        this.walkthroughActivityViewModel=walkthroughActivityViewModel;
-        this.lifecycleOwner=lifecycleOwner;
+                                       LayoutInflater layoutInflater, WalkthroughActivityViewModel walkthroughActivityViewModel) {
+        this.layoutInflater = layoutInflater;
+        this.walkthroughActivityViewModel = walkthroughActivityViewModel;
+        this.lifecycleOwner = lifecycleOwner;
     }
 
     @Override
@@ -55,7 +52,7 @@ public class WalkThroughViewPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view==((View)object);
+        return view == ((View) object);
     }
 
     @NonNull
@@ -66,38 +63,40 @@ public class WalkThroughViewPagerAdapter extends PagerAdapter {
         displayImage = (ImageView) view.findViewById(R.id.image);
         heading = (TextView) view.findViewById(R.id.heading);
         subheading = (TextView) view.findViewById(R.id.subheading);
-        walkthroughActivityViewModel.getImageSource().observe(lifecycleOwner,imageSrcObserver);
-        walkthroughActivityViewModel.getHeading().observe(lifecycleOwner,headingObserver);
-        walkthroughActivityViewModel.getSubHeading().observe(lifecycleOwner,subHeadingObserver);
+        walkthroughActivityViewModel.getImageSource().observe(lifecycleOwner, imageSrcObserver);
+        walkthroughActivityViewModel.getHeading().observe(lifecycleOwner, headingObserver);
+        walkthroughActivityViewModel.getSubHeading().observe(lifecycleOwner, subHeadingObserver);
 
         switch (position) {
             case 0:
                 walkthroughActivityViewModel.getImageSource().setValue(R.drawable.ic_walkthrough1);
-                walkthroughActivityViewModel.getHeading().setValue("Send Location Tasks");
-                walkthroughActivityViewModel.getSubHeading().setValue("You can add,edit and send reminders related to a particular location to your family and friends");
+                walkthroughActivityViewModel.getHeading().setValue(ConstantVar.SEND_LOCATION_TASKS);
+                walkthroughActivityViewModel.getSubHeading().setValue(ConstantVar.LOCATION_TASK_DESC);
                 break;
             case 1:
                 walkthroughActivityViewModel.getImageSource().setValue(R.drawable.ic_walkthrough2);
-                walkthroughActivityViewModel.getHeading().setValue("Save reminder for yourself");
-                walkthroughActivityViewModel.getSubHeading().setValue("Add a reminder for yourself as well just by selecting your name in the contact list.");
+                walkthroughActivityViewModel.getHeading().setValue(ConstantVar.SAVE_REMINDER_SELF);
+                walkthroughActivityViewModel.getSubHeading().setValue(ConstantVar.SAVE_REMINDER_SELF_DESC);
                 break;
             case 2:
                 walkthroughActivityViewModel.getImageSource().setValue(R.drawable.ic_walkthrough3);
-                walkthroughActivityViewModel.getHeading().setValue("Find your friends");
-                walkthroughActivityViewModel.getSubHeading().setValue("Allow LocationReminder to access your contacts so you can find your friends faster.");
+                walkthroughActivityViewModel.getHeading().setValue(ConstantVar.FIND_FRIENDS);
+                walkthroughActivityViewModel.getSubHeading().setValue(ConstantVar.FIND_FRIENDS_DESC);
                 break;
         }
         container.addView(view);
         return view;
     }
-    public void displayImageSrc(Integer src){
+
+    public void displayImageSrc(Integer src) {
         displayImage.setImageResource(src);
     }
 
-    public void displayHeading(String s){
+    public void displayHeading(String s) {
         heading.setText(s);
     }
-    public void displaySubHeading(String s){
+
+    public void displaySubHeading(String s) {
         subheading.setText(s);
     }
 }

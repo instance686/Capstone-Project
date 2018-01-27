@@ -9,15 +9,13 @@ import com.reminders.location.locatoinreminder.database.AppDatabase;
 
 public class MyContentProvider extends ContentProvider {
 
-    AppDatabase appDatabase;
-
     public static final String AUTHORITY = "com.reminders.location.locatoinreminder.contentprovider";
     public static final String SCHEME = "content://";
+    public static final String CHATCARDS_ENTITY = SCHEME + AUTHORITY + "/CHATCARDS_ENTITY";
+    public static final Uri URI_CHATENTITY = Uri.parse(CHATCARDS_ENTITY);
+    public static final String CHAT_BASE = CHATCARDS_ENTITY + "/";
+    AppDatabase appDatabase;
 
-
-    public static final String CHATCARDS_ENTITY=SCHEME+AUTHORITY+"/CHATCARDS_ENTITY";
-    public static final Uri URI_CHATENTITY=Uri.parse(CHATCARDS_ENTITY);
-    public static final String CHAT_BASE=CHATCARDS_ENTITY+"/";
     public MyContentProvider() {
     }
 
@@ -43,7 +41,7 @@ public class MyContentProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         // TODO: Implement this to initialize your content provider on startup.
-        appDatabase=getMyapp().getDatabase();
+        appDatabase = getMyapp().getDatabase();
         return true;
     }
 
@@ -52,16 +50,14 @@ public class MyContentProvider extends ContentProvider {
                         String[] selectionArgs, String sortOrder) {
         // TODO: Implement this to handle query requests from clients.
 
-        Cursor result=null;
-        if(URI_CHATENTITY.equals(uri)){
-        appDatabase=getMyapp().getDatabase();
-        result=getAllReminders();
-        }
-        else if(uri.toString().startsWith(CHAT_BASE)){
+        Cursor result = null;
+        if (URI_CHATENTITY.equals(uri)) {
+            appDatabase = getMyapp().getDatabase();
+            result = getAllReminders();
+        } else if (uri.toString().startsWith(CHAT_BASE)) {
 
-        }
-        else
-        throw new UnsupportedOperationException("Not yet implemented");
+        } else
+            throw new UnsupportedOperationException("Not yet implemented");
         return result;
     }
 
@@ -72,9 +68,10 @@ public class MyContentProvider extends ContentProvider {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    synchronized Cursor getAllReminders(){
+    synchronized Cursor getAllReminders() {
         return appDatabase.cardDoa().getAllCards();
     }
+
     public MyApplication getMyapp() {
         return (MyApplication) getContext();
     }

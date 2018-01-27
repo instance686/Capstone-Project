@@ -19,10 +19,52 @@
 
     <string name="api_key">AIzaSyDGkPSymSmcZ3IqghdJSQ8ttbTfM0TocBc</string>
     <string name="api_key_debug">AIzaSyD-FDu_a6rWksybPthkJPKkNGvxANKT59o</string>
+
+
     <string name="title_activity_contacts">ContactsActivity</string>
     <string name="log_out">Log Out</string>
     <string name="titlehint">Title</string>
     <string name="refresh_chat">Refresh Chat</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="back_key_pressed">Back Key Pressed</string>
+    <string name="name_initials">Name Initials</string>
+    <string name="back_button_onlongclick">Back Button Show on Long Click</string>
+    <string name="empty_chat_image">Empty Chat Image</string>
+    <string name="no_contact_image">No Contact Image</string>
+    <string name="button_done">Dpne Button</string>
+    <string name="add_location_color">Add Location and Color</string>
+    <string name="reorder">Reorder</string>
+    <string name="delete">Delete</string>
+    <string name="selected_state">Selected State</string>
+    <string name="selection_check">On Select Contact</string>
+    <string name="no_contact_reminders">No Contacts Reminders</string>
+    <string name="select_contact">Select Contact For Reminder</string>
+    <string name="no_nearby">No Nearby Reminders</string>
+    <string name="location_icon">Set Reminders for Location</string>
+    <string name="location_coordinates">Location Coordinates</string>
+    <string name="check_mark">Check mark</string>
+    <string name="checkbox_click">Custom CheckBox Image</string>
+    <string name="no_recent_rem">No recent reminders found</string>
+    <string name="select_con">Select Contact</string>
+    <string name="contacts"> contacts</string>
+    <string name="title">Title</string>
+    <string name="edited_time">Edited :</string>
+    <string name="note_point">Note Point</string>
+    <string name="add_share_rem">Add/Share a new Reminder</string>
+    <string name="rem_nearby">Reminders near this Area</string>
+    <string name="shouts_no_cards">No reminders nearby,Swipe Down To Refresh</string>
+    <string name="refresh">REFRESH</string>
+    <string name="no_rem_nearby" >No reminders in this area</string>
+
+    <string name="rem_with_space"> Reminder</string>
+    <string name="login_canceled">Login Canceled</string>
+    <string name="no_net_connect">No Internet Connection</string>
+    <string name="enter_name">Please enter your name</string>
+    <string name="failed_to_read">Failed to read user data</string>
+    <string name="enable">ENABLE</string>
+    <string name="users">users</string>
+    <string name="card_for_del">Select Cards for Deletion</string>
+    <string name="reminders">reminders</string>
+    <string name="add_new_rem">Add a new reminder</string>
 </resources>

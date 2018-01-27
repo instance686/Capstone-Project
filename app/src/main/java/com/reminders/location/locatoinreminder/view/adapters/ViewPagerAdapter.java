@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
-import com.reminders.location.locatoinreminder.view.ui.fragments.ContactsFragment;
 import com.reminders.location.locatoinreminder.view.ui.fragments.ReminderChat;
 import com.reminders.location.locatoinreminder.view.ui.fragments.ShoutsFragment;
 
@@ -17,14 +16,15 @@ import com.reminders.location.locatoinreminder.view.ui.fragments.ShoutsFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     private Context mContext;
-    public ViewPagerAdapter(Context context,FragmentManager fm) {
+
+    public ViewPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
-        mContext=context;
+        mContext = context;
     }
 
     @Override
     public Fragment getItem(int position) {
-        if(position==0)
+        if (position == 0)
             return new ReminderChat();
         else
             return new ShoutsFragment();
@@ -39,7 +39,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        if(position==0)
+        if (position == 0)
             return ConstantVar.REMINDER;
         else
             return ConstantVar.SHOUT;
