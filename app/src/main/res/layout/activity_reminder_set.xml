@@ -23,9 +23,9 @@
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="@dimen/dimen_8dp"
                 android:layout_marginStart="@dimen/dimen_16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/dimen_8dp"
                 android:contentDescription="@string/back_key_pressed"
                 android:background="@drawable/ripple"
                 android:onClick="onClick"
@@ -98,13 +98,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:onClick="onClick"
-            card_view:cardElevation="12dp">
+            card_view:cardElevation="@dimen/dimen_12dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="@dimen/dimen_16dp"
+                android:layout_marginTop="@dimen/dimen_16dp"
                 android:layout_marginStart="@dimen/dimen_16dp"
                 android:layout_marginEnd="@dimen/dimen_16dp">
 
