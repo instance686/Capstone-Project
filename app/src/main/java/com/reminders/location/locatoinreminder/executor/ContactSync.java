@@ -59,6 +59,7 @@ public class ContactSync extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
+        Log.v("ContactSyn","Background");
         getContacts();
         return null;
     }
@@ -114,6 +115,7 @@ public class ContactSync extends AsyncTask<Void, Void, Void> {
                 for (DataSnapshot post : dataSnapshot.getChildren()) {
                     User user = post.getValue(User.class);
                     remoteContacts += "" + user.getPhone() + "//s";
+                    Log.v("REMOTECONTACTS",user.getPhone());
                 }
                 if (ContactSync.this.getStatus() == Status.RUNNING) {
 
@@ -139,6 +141,7 @@ public class ContactSync extends AsyncTask<Void, Void, Void> {
 
         ContactEntity ce = new ContactEntity(sharedPreferenceSingleton.getSavedString(context, ConstantVar.CONTACT_SELF_NUMBER),
                 sharedPreferenceSingleton.getSavedString(context, ConstantVar.CONSTANT_SELF_NAME), false);
+        Log.v("CONTACT_SELF",ce.getNumber());
         appContacts.add(ce);
         String appCon = "";
         for (String number : numberList) {

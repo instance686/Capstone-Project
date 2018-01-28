@@ -143,10 +143,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
 
     public void deleteCards() {
         if (cardIds.size() > 0) {
-            AsyncTask.execute(() -> {
                 deleteLocally();
-            });
-
             optionsToolbar.setVisibility(View.GONE);
             toolbar.setVisibility(View.VISIBLE);
         } else
@@ -187,7 +184,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
     public void onCardSelected(int count, int cardId, int position, boolean seleted) {
         if (count > 0) {
             toolbar.setVisibility(View.GONE);
-            counter.setText(count);
+            counter.setText(count+"");
             optionsToolbar.setVisibility(View.VISIBLE);
             //counter.setText(count);
         } else {

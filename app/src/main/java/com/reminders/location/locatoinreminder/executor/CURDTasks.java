@@ -3,6 +3,7 @@ package com.reminders.location.locatoinreminder.executor;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.constants.ReminderConstants;
@@ -138,7 +139,7 @@ public class CURDTasks extends AsyncTask<Void, Void, Void> {
 
     void deleteReminder() {
         appDatabase.cardDoa().deleteCard(cardIDs);
-        int reminderContactCount = reminderContactCardCount(chatID);
+        int reminderContactCount = reminderChatCardCount(chatID);
         updateContactCard(chatID, name, reminderContactCount, false, true, System.currentTimeMillis());
     }
 
