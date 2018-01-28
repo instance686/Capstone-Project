@@ -84,9 +84,19 @@ public class ContactSync extends AsyncTask<Void, Void, Void> {
             String name = data.getString(data.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY));
             String number = data.getString(data.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
             if (number.length() >= 10) {
-                String key = number.replaceAll(" ", "");
-                allContactsList.put(key, new ContactFetch(name, key));
-                numberList.add(key);
+                String key=number.replaceAll(" ", "");
+                if(number.contains(" ")) {
+                    key = number.replaceAll(" ", "");
+                }
+                else if(number.contains("-")){
+                    key = number.replaceAll("-", "");
+
+                }
+                if(!sharedPreferenceSingleton.getSavedString(context,ConstantVar.CONTACT_SELF_NUMBER).contains(key)
+                        || !key.contains(sharedPreferenceSingleton.getSavedString(context,ConstantVar.CONTACT_SELF_NUMBER))){
+                    allContactsList.put(key, new ContactFetch(name, key));
+                    numberList.add(key);
+                }
 
             }
         }

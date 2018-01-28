@@ -47,7 +47,7 @@ public class ChatCardSync extends AsyncTask<Void, Void, Void> {
         this.sendTo = sender;
         this.sendToName = sendToName;
         this.sendFrom = reciever;
-        phone = new Utils().getFullNumber(sender) + reciever;
+        phone = new Utils().getFullNumber(context,sender) + reciever;
     }
 
     @Override

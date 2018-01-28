@@ -15,7 +15,7 @@ import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
 /**
  * Created by ayush on 25/12/17.
  */
-@Database(entities = {ContactEntity.class, ChatCardsEntity.class, ReminderContact.class}, version = 3)
+@Database(entities = {ContactEntity.class, ChatCardsEntity.class, ReminderContact.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "My_DB";
     private static AppDatabase sInstance;

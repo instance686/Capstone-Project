@@ -27,6 +27,8 @@ public interface ConstantVar {
     String INSERTION_CARD = "INSERTION_CARD";
     String DELETION_CARD = "DELETION_CARD";
 
+    String COUNTRY_CODE="COUNTRY_CODE";
+
     String mBroadcastArrayListAction = "com.truiton.broadcast.arraylist";
     String fromActivityToFragment = "com.location.broadcast.arraylist";
     String APPWIDGET_ID = "APPWIDGET_ID";

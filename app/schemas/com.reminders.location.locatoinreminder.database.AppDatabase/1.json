@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "784f027ee2083aeb1c749325da040507",
+    "identityHash": "c2e4e7d239faf6fd6cef8e7dd8d78062",
     "entities": [
       {
-        "tableName": "Contact_Entity",
+        "tableName": "ContactEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contact_number` TEXT NOT NULL, `contact_name` TEXT, `contact_selection` INTEGER NOT NULL, PRIMARY KEY(`contact_number`))",
         "fields": [
           {
@@ -193,7 +193,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"784f027ee2083aeb1c749325da040507\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c2e4e7d239faf6fd6cef8e7dd8d78062\")"
     ]
   }
 }

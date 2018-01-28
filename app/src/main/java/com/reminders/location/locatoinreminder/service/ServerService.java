@@ -145,11 +145,11 @@ public class ServerService extends IntentService {
     }
 
     String serverChatID1(String s1, String s2) {
-        return s1 + new Utils().getFullNumber(s2);
+        return s1 + new Utils().getFullNumber(this,s2);
     }
 
     String serverChatID2(String s1, String s2) {
-        return new Utils().getFullNumber(s1) + s2;
+        return new Utils().getFullNumber(this,s1) + s2;
     }
 
 }

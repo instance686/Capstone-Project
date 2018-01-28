@@ -311,6 +311,7 @@ public class WalkthroughActivity extends BaseActivity {
         sharedPreferenceSingleton.saveAs(this, ConstantVar.CONSTANT_SELF_NAME, currentUser.getDisplayName());
         sharedPreferenceSingleton.saveAs(this, ConstantVar.CONTACT_SELF_NUMBER, currentUser.getPhoneNumber());
         sharedPreferenceSingleton.saveAs(this, ConstantVar.LOGGED, true);
+        sharedPreferenceSingleton.saveAs(this,ConstantVar.COUNTRY_CODE,currentUser.getPhoneNumber().substring(0,3));
         startActivity(new Intent(this, MainActivity.class));
         overridePendingTransition(R.anim.view_enter, R.anim.view_exit);
         finish();

@@ -4,11 +4,15 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.reminders.location.locatoinreminder.constants.ConstantVar;
+import com.reminders.location.locatoinreminder.singleton.SharedPreferenceSingleton;
+
 /**
  * Created by ayush on 25/12/17.
  */
 
 public class Utils {
+    private SharedPreferenceSingleton sharedPreferenceSingleton = new SharedPreferenceSingleton();
 
 
     public static boolean isConnectedToNetwork(Context context) {
@@ -34,11 +38,12 @@ public class Utils {
         return "" + s.charAt(0);
     }
 
-    public String getFullNumber(String number) {
-        if (number.contains("+91"))
+    public String getFullNumber(Context context,String number) {
+        String countryCode=sharedPreferenceSingleton.getSavedString(context, ConstantVar.COUNTRY_CODE);
+        if (number.contains(countryCode))
             return number;
         else
-            return "+91" + number;
+            return countryCode + number;
     }
 
     public String getCoordinates(String location) {
