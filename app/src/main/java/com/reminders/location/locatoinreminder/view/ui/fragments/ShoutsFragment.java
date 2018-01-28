@@ -139,7 +139,7 @@ public class ShoutsFragment extends Fragment implements LocationListener {
         shoutsFragmentViewModel = ViewModelProviders.of(this).get(ShoutsFragmentViewModel.class);
         currentLocation = new Location("");
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            refresh();
+            refresh1();
         });
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -190,19 +190,48 @@ public class ShoutsFragment extends Fragment implements LocationListener {
                     0, this);
             if (locationManager != null) {
                 currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//                Log.v("FromShouts",currentLocation.getLatitude()+" "+currentLocation.getLongitude());
-                getShoutsList(currentLocation);
+                if (currentLocation != null)
+                    getShoutsList(currentLocation);
+                else {
+                    swipeRefreshLayout.setRefreshing(false);
+
+                }
             }
         }
 
 
     }
 
+    void refresh1() {
+        locationManager = (LocationManager) getContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = locationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            Location l = locationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        getShoutsList(bestLocation);
+    }
+
     public void getShoutsList(Location location) {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(localBroadCast);
         currentLocation = location;
         new GetShoutsList(getActivity(), appDatabase, currentLocation, locationUpdateList).execute();
-
 
     }
 

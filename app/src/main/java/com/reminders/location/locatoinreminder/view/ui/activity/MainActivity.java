@@ -125,6 +125,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 sharedPreferenceSingleton.saveAs(MainActivity.this, ConstantVar.LOGGED, false);
+                sharedPreferenceSingleton.saveAs(MainActivity.this, ConstantVar.CONSTANT_SELF_NAME,"");
+                sharedPreferenceSingleton.saveAs(MainActivity.this, ConstantVar.CONTACT_SELF_NUMBER,"");
+
                 startActivity(new Intent(MainActivity.this, SplashActivity.class));
                 FirebaseAuth.getInstance().signOut();
                 finish();
