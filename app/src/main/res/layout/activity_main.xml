@@ -14,6 +14,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/maintoolbar"
             android:layout_width="match_parent"
+            android:layoutDirection="ltr"
             android:layout_height="?attr/actionBarSize">
 
             <TextView
@@ -31,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?colorPrimary"
+            android:layoutDirection="ltr"
             android:visibility="gone">
 
             <ImageButton
@@ -72,7 +74,7 @@
             app:tabMode="fixed"
             app:tabSelectedTextColor="@android:color/white"
             app:tabTextAppearance="@style/TextAppearance.AppCompat.Menu"
-            app:tabTextColor="#FFFFFF" />
+            app:tabTextColor="@color/colorMainBackground1" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager

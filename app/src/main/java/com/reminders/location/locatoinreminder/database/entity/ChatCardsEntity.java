@@ -60,7 +60,6 @@ public class ChatCardsEntity implements Parcelable {
     public ChatCardsEntity(final Parcel source) {
         cardId = source.readInt();
         cardTitle = source.readString();
-        //contactFetch=source.readParcelable(getClass().getClassLoader());
         contactFetch.setContact_number(source.readString());
         contactFetch.setContact_name(source.readString());
         sendContact = source.readString();

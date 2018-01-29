@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.dao.CardDoa;
 import com.reminders.location.locatoinreminder.database.dao.ContactDoa;
 import com.reminders.location.locatoinreminder.database.dao.ReminderContactDoa;
@@ -17,7 +18,7 @@ import com.reminders.location.locatoinreminder.database.entity.ReminderContact;
  */
 @Database(entities = {ContactEntity.class, ChatCardsEntity.class, ReminderContact.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
-    public static final String DATABASE_NAME = "My_DB";
+    public static final String DATABASE_NAME = ConstantVar.DBNAME;
     private static AppDatabase sInstance;
 
     public static AppDatabase getInstance(final Context context) {

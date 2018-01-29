@@ -34,7 +34,7 @@
                 android:layout_margin="@dimen/dimen_8dp"
                 android:src="@color/colorAccent"
                 android:transitionName="pic"
-                app:civ_border_color="#e0e0e0"
+                app:civ_border_color="@color/civBorderColor"
                 app:civ_border_width="@dimen/dimen_2dp"
                 android:contentDescription="@string/name_initials"
                 app:layout_constraintBottom_toBottomOf="parent"

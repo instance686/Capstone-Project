@@ -4,7 +4,7 @@
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="@color/colorMainBackground1"
     android:clipToPadding="true"
     app:behavior_hideable="true"
     app:behavior_peekHeight="0dp"
@@ -34,7 +34,8 @@
                 android:text="@string/loc"
                 android:textAllCaps="false"
                 android:textColor="?android:textColorPrimary"
-                android:textSize="@dimen/dimen_14sp" />
+                android:textSize="@dimen/dimen_14sp"
+                />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -50,8 +51,8 @@
                     android:layout_height="@dimen/dimen_35dp"
                     android:layout_marginStart="@dimen/dimen_16dp"
                     android:onClick="bottomSheetButtonClicked"
-                    android:src="#FFFFFF"
-                    app:civ_border_color="#BDBDBD"
+                    android:src="@color/colorMainBackground1"
+                    app:civ_border_color="@color/civBorderColor2"
                     app:civ_border_width="@dimen/dimen_1dp" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -61,7 +62,7 @@
                     android:layout_marginStart="@dimen/dimen_16dp"
                     android:onClick="bottomSheetButtonClicked"
                     android:src="@color/color1"
-                    app:civ_border_color="#BDBDBD"
+                    app:civ_border_color="@color/civBorderColor2"
                     app:civ_border_width="@dimen/dimen_1dp" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -71,7 +72,7 @@
                     android:layout_marginStart="@dimen/dimen_16dp"
                     android:onClick="bottomSheetButtonClicked"
                     android:src="@color/color2"
-                    app:civ_border_color="#BDBDBD"
+                    app:civ_border_color="@color/civBorderColor2"
                     app:civ_border_width="@dimen/dimen_1dp" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -81,7 +82,7 @@
                     android:layout_marginStart="@dimen/dimen_16dp"
                     android:onClick="bottomSheetButtonClicked"
                     android:src="@color/color3"
-                    app:civ_border_color="#BDBDBD"
+                    app:civ_border_color="@color/civBorderColor2"
                     app:civ_border_width="@dimen/dimen_1dp" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -91,7 +92,7 @@
                     android:layout_marginStart="@dimen/dimen_16dp"
                     android:onClick="bottomSheetButtonClicked"
                     android:src="@color/color4"
-                    app:civ_border_color="#BDBDBD"
+                    app:civ_border_color="@color/civBorderColor2"
                     app:civ_border_width="@dimen/dimen_1dp" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -102,7 +103,7 @@
                     android:layout_marginStart="@dimen/dimen_16dp"
                     android:onClick="bottomSheetButtonClicked"
                     android:src="@color/color5"
-                    app:civ_border_color="#BDBDBD"
+                    app:civ_border_color="@color/civBorderColor2"
                     app:civ_border_width="@dimen/dimen_1dp" />
             </LinearLayout>
 

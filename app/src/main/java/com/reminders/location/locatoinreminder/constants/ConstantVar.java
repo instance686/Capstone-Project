@@ -107,7 +107,20 @@ public interface ConstantVar {
     String COLLATE_LOCALIZED_ASC="COLLATE LOCALIZED ASC";
 
    String BROADCAST_ACTION = "android.location.PROVIDERS_CHANGED";
+    String DBNAME="My_DB";
+    String REQUESTURL="https://reqres.in";
+    String REMINDER_CONTENT_TITLE="You have reminders close by";
+    String REMINDER_CONTENT_TEXT="Touch to view them";
 
+    String DUMMY_DATA="DUMMY";
+
+    String NOTES_COLUMN="notes_data";
+    String LOCATION_COLUMN="location";
+    String S="s";
+    String QUERY_PARAMETER="?";
+    String SPACE=" ";
+    String HYPHEN="-";
+    String CONCAT_PARM="//s";
 
 
 }

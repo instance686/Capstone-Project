@@ -242,7 +242,6 @@ public class ShoutsFragment extends Fragment implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        // getShoutsList(location);
 
     }
 

@@ -59,7 +59,6 @@ public class ContactSync extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        Log.v("ContactSyn","Background");
         getContacts();
         return null;
     }
@@ -85,12 +84,12 @@ public class ContactSync extends AsyncTask<Void, Void, Void> {
             String name = data.getString(data.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY));
             String number = data.getString(data.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
             if (number.length() >= 10) {
-                String key=number.replaceAll(" ", "");
+                String key=number.replaceAll(ConstantVar.SPACE, "");
                 if(number.contains(" ")) {
-                    key = number.replaceAll(" ", "");
+                    key = number.replaceAll(ConstantVar.SPACE, "");
                 }
-                else if(number.contains("-")){
-                    key = number.replaceAll("-", "");
+                else if(number.contains(ConstantVar.HYPHEN)){
+                    key = number.replaceAll(ConstantVar.HYPHEN, "");
 
                 }
                 if(!sharedPreferenceSingleton.getSavedString(context,ConstantVar.CONTACT_SELF_NUMBER).contains(key)
@@ -114,8 +113,7 @@ public class ContactSync extends AsyncTask<Void, Void, Void> {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot post : dataSnapshot.getChildren()) {
                     User user = post.getValue(User.class);
-                    remoteContacts += "" + user.getPhone() + "//s";
-                    Log.v("REMOTECONTACTS",user.getPhone());
+                    remoteContacts += "" + user.getPhone() + ConstantVar.CONCAT_PARM;
                 }
                 if (ContactSync.this.getStatus() == Status.RUNNING) {
 
@@ -140,17 +138,15 @@ public class ContactSync extends AsyncTask<Void, Void, Void> {
     public List<ContactEntity> syncContacts(String remoteContacts, ArrayList<String> numberList) {
 
         ContactEntity ce = new ContactEntity(sharedPreferenceSingleton.getSavedString(context, ConstantVar.CONTACT_SELF_NUMBER),
-                sharedPreferenceSingleton.getSavedString(context, ConstantVar.CONSTANT_SELF_NAME), false);
-        Log.v("CONTACT_SELF",ce.getNumber());
-        appContacts.add(ce);
+                sharedPreferenceSingleton.getSavedString(context, ConstantVar.CONSTANT_SELF_NAME), false);appContacts.add(ce);
         String appCon = "";
         for (String number : numberList) {
-            if (remoteContacts.contains(number + "//s")) {
-                if (!appCon.contains(number + "//s")) {
+            if (remoteContacts.contains(number + ConstantVar.CONCAT_PARM)) {
+                if (!appCon.contains(number + ConstantVar.CONCAT_PARM)) {
                     ContactFetch cf = allContactsList.get(number);
                     appContacts.add(new ContactEntity(cf.getContact_number(), cf.getContact_name(), false));
                 }
-                appCon += number + "//s";
+                appCon += number + ConstantVar.CONCAT_PARM;
             }
         }
         return appContacts;

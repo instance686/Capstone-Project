@@ -58,12 +58,10 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
         this.context = context;
         this.reminderContacts = reminderContacts;
         appDatabase = ((MyApplication) context.getApplicationContext()).getDatabase();
-        //contactCard= (ContactCard) context;
     }
 
     public ContactChatAdapter(Context context) {
         this.context = context;
-        //contactCard= (ContactCard) context;
     }
 
     @Override
@@ -78,10 +76,9 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
         ReminderContact reminderContact = reminderContacts.get(position);
         ReminderContactViewHolder reminderContactViewHolder = (ReminderContactViewHolder) holder;
         reminderContactViewHolder.name.setText(reminderContact.getName());
-        //Log.v("reminderCount","pos="+position+" count="+reminderContact.getReminderCount());
         String rem = ConstantVar.REMINDER_SPACE;
         if (reminderContact.getReminderCount() > 1)
-            rem = rem + "s";
+            rem = rem + ConstantVar.S;
 
         reminderContactViewHolder.cardCount.setText(reminderContact.getReminderCount() + rem);
         reminderContactViewHolder.initials.setText(utils.getInitial(reminderContact.getName()));
@@ -89,7 +86,6 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
             reminderContactViewHolder.status.setVisibility(View.VISIBLE);
         else
             reminderContactViewHolder.status.setVisibility(View.GONE);
-        //  reminderContactViewHolder.cardView.setCardBackgroundColor(reminderContact.isSelection()?colorSelected:colorNormal);
         ((ReminderContactViewHolder) holder).contact = reminderContact;
 
 
@@ -147,13 +143,12 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
         @Override
         public boolean onLongClick(View v) {
             final AlertDialog.Builder alert = new AlertDialog.Builder(context);
-            alert.setMessage(ConstantVar.DELETE_CHAT_WITH + contact.getName() + "?");
+            alert.setMessage(ConstantVar.DELETE_CHAT_WITH + contact.getName() + ConstantVar.QUERY_PARAMETER);
             alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     // continue with delete
                     AsyncTask.execute(() -> {
                         deleteLocally();
-                        //deleteFromServer();
                     });
                 }
             });
@@ -165,32 +160,13 @@ public class ContactChatAdapter extends RecyclerView.Adapter {
             });
             alert.show();
 
-
-            /*if(contact.isSelection()){
-                contact.setSelection(false);
-                count--;
-                contactCard.onContactCardSelected(count,contact
-                        .getNumber(),getAdapterPosition(),false);
-            }
-            else
-            {
-                contact.setSelection(true);
-                count++;
-                contactCard.onContactCardSelected(count,contact
-                        .getNumber(),getAdapterPosition(),true);
-            }
-            cardView.setBackgroundColor(contact.isSelection()?colorSelected:colorNormal);*/
-
-
             return true;
         }
 
         public void deleteLocally() {
 
             new CURDTasks(((MyApplication) context.getApplicationContext()).getDatabase(), ConstantVar.DELETECONTACT, contact.getNumber(), context).execute();
-           /* AppDatabase appDatabase=((MyApplication)context.getApplicationContext()).getDatabase();
-            appDatabase.ReminderContactDoa().deleteCard(contact.getNumber());
-            appDatabase.CardDoa().deleteContactCards(contact.getNumber());*/
+
         }
 
         public void deleteFromServer() {

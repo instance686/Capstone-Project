@@ -1,5 +1,7 @@
 package com.reminders.location.locatoinreminder.network;
 
+import com.reminders.location.locatoinreminder.constants.ConstantVar;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -21,7 +23,7 @@ class APIClient {
 
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://reqres.in")
+                .baseUrl(ConstantVar.REQUESTURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();

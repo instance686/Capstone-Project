@@ -18,6 +18,7 @@
             android:id="@+id/toolbar_chat"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:layoutDirection="ltr"
             android:background="?colorPrimary">
 
             <android.support.constraint.ConstraintLayout
@@ -47,7 +48,7 @@
                     android:layout_marginEnd="@dimen/dimen_8dp"
                     android:contentDescription="@string/name_initials"
                     android:src="@color/colorAccent"
-                    app:civ_border_color="#e0e0e0"
+                    app:civ_border_color="@color/civBorderColor"
                     app:civ_border_width="@dimen/dimen_1dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/back"
@@ -75,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_8dp"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/colorMainBackground1"
                     android:textSize="@dimen/dimen_16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/profile_pic"
                     app:layout_constraintStart_toEndOf="@+id/profile_pic"
@@ -90,6 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?colorPrimary"
+            android:layoutDirection="ltr"
             android:visibility="gone">
 
             <ImageButton
@@ -179,42 +181,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_8dp"
                 android:text="@string/no_recent_rem"
-                android:textColor="#9e9e9e"
+                android:textColor="@color/noremColor"
                 android:textSize="@dimen/dimen_14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/im1" />
         </android.support.constraint.ConstraintLayout>
-        <!--<android.support.v7.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            card_view:cardElevation="8dp"
-            >
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp">
 
-                <TextView
-                    android:id="@+id/send_note"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Send a note"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent"
-                    android:textSize="@dimen/dimen_16sp"/>
-
-
-            </android.support.constraint.ConstraintLayout>
-
-        </android.support.v7.widget.CardView>-->
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -48,7 +48,6 @@ public class WidgetService extends RemoteViewsService implements LocationListene
         } else
             intent.putExtra(ConstantVar.REMINDER_DATA, "");
 
-        Log.v("FROMWIDGET", "onGetViewFactory");
         return new WidgetDataProvider(this.getApplicationContext(), intent);
     }
 
@@ -88,7 +87,6 @@ public class WidgetService extends RemoteViewsService implements LocationListene
                     float distance = currentLocation.distanceTo(destination);
                     if (distance <= 1000)
                         nearby.add(le);
-                    Log.v("FROMWIDGET", le.getNote());
                 }
             }
 
@@ -102,9 +100,8 @@ public class WidgetService extends RemoteViewsService implements LocationListene
             do {
                 int cardId = cursor.getInt(cursor.getColumnIndex(cursor.getColumnName(0)));
                 String cardTitle = cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1)));
-                String note = cursor.getString(cursor.getColumnIndex("notes_data"));
-                String location = cursor.getString(cursor.getColumnIndex("location"));
-                Log.v("FROMWIDGETLATLONG", location);
+                String note = cursor.getString(cursor.getColumnIndex(ConstantVar.NOTES_COLUMN));
+                String location = cursor.getString(cursor.getColumnIndex(ConstantVar.LOCATION_COLUMN));
                 allList.add(new ListData(cardId, cardTitle, note, "", location));
             }
             while (cursor.moveToNext());

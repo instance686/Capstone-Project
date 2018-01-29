@@ -25,7 +25,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        //Log.v(this.getClass().getSimpleName(), ConstantLog.MethodConstants.ONCREATE_TAG);
         setContentView(getLayoutResourceId());
         ButterKnife.bind(this);
         mLifecycleRegistry = new LifecycleRegistry(this);
@@ -38,7 +37,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
     @Override
     protected void onStart() {
         super.onStart();
-        //Log.v(this.getClass().getSimpleName(), ConstantLog.MethodConstants.ONSTART_TAG);
         mLifecycleRegistry.markState(Lifecycle.State.STARTED);
 
     }
@@ -46,7 +44,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
     @Override
     protected void onResume() {
         super.onResume();
-        // Log.v(this.getClass().getSimpleName(), ConstantLog.MethodConstants.ONRESUME_TAG);
         mLifecycleRegistry.markState(Lifecycle.State.RESUMED);
 
     }
@@ -54,28 +51,24 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
     @Override
     protected void onPause() {
         super.onPause();
-        //Log.v(this.getClass().getSimpleName(), ConstantLog.MethodConstants.ONPAUSE_TAG);
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        //Log.v(this.getClass().getSimpleName(), ConstantLog.MethodConstants.ONSTOP_TAG);
 
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        //Log.v(this.getClass().getSimpleName(), ConstantLog.MethodConstants.ONRESTART_TAG);
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Log.v(this.getClass().getSimpleName(), ConstantLog.MethodConstants.ONDESTROY_TAG);
         mLifecycleRegistry.markState(Lifecycle.State.DESTROYED);
 
     }

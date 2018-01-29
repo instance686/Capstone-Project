@@ -96,7 +96,6 @@ public class LocationWidget extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         if (ConstantVar.WIDGET_BUTTON_CLICKED.equalsIgnoreCase(intent.getAction())) {
-            Log.v("FROMWIDGETCLICK", intent.getAction());
             this.onUpdate(context, AppWidgetManager.getInstance(context), intent.getIntArrayExtra(ConstantVar.WIDGET_IDS));
         }
     }

@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Parcelable;
 import android.support.annotation.RequiresApi;
 
+import com.reminders.location.locatoinreminder.constants.ConstantVar;
 import com.reminders.location.locatoinreminder.database.entity.ChatCardsEntity;
 import com.reminders.location.locatoinreminder.view.ui.activity.MainActivity;
 
@@ -84,12 +85,12 @@ public class NotificationUtils extends ContextWrapper {
     public Notification.Builder getChannelNotification(Bitmap largeIcon, List<ChatCardsEntity> allDetails) {
         Intent i = new Intent(this, MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.putParcelableArrayListExtra("TEST", (ArrayList<? extends Parcelable>) allDetails);
+        i.putParcelableArrayListExtra(ConstantVar.PARCALABLE_LIST_NAME, (ArrayList<? extends Parcelable>) allDetails);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 2, i, PendingIntent.FLAG_ONE_SHOT);
         return new Notification.Builder(getApplicationContext())
                 .setContentIntent(resultPendingIntent)
-                .setContentTitle("You have reminders close by")
-                .setContentText("Touch to view them")
+                .setContentTitle(ConstantVar.REMINDER_CONTENT_TITLE)
+                .setContentText(ConstantVar.REMINDER_CONTENT_TEXT)
                 //.setSmallIcon(R.drawable.ic_notification)
                 .setLargeIcon(largeIcon)
                 .setAutoCancel(true)

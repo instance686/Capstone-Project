@@ -54,7 +54,6 @@ public class ContactsActivity extends BaseActivity implements TaskRunning {
         public void onChanged(@Nullable List<ContactEntity> contact_entities) {
             contact_number.setText(contact_entities.size() + " "+getResources().getString(R.string.contacts));
             contactsAdapter.addItems(contact_entities);
-            Log.d("Size", "" + contact_entities.size());
             loading_screen.setVisibility(View.GONE);
             if (contact_entities.size() > 0) {
                 empty_state.setVisibility(View.GONE);

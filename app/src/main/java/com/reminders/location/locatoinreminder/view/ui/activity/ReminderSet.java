@@ -77,7 +77,7 @@ public class ReminderSet extends BaseActivity implements View.OnClickListener, C
     private ReminderSetActivityViewModel reminderSetActivityViewModel;
     private ChatCardsEntity chatCardsEntity;
     private String location = "";
-    private String time = ConstantVar.EDITED + "DUMMY";
+    private String time = ConstantVar.EDITED + ConstantVar.DUMMY_DATA;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

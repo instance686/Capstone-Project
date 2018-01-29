@@ -31,21 +31,24 @@
             android:id="@+id/b1"
             android:layout_width="@dimen/dimen_8dp"
             android:layout_height="@dimen/dimen_8dp"
-            android:background="@drawable/walkthrough_button" />
+            android:background="@drawable/walkthrough_button"
+            style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
             android:id="@+id/b2"
             android:layout_width="@dimen/dimen_8dp"
             android:layout_height="@dimen/dimen_8dp"
             android:layout_marginStart="@dimen/dimen_12dp"
-            android:background="@drawable/walkthrough_button" />
+            android:background="@drawable/walkthrough_button"
+            style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
             android:id="@+id/b3"
             android:layout_width="@dimen/dimen_8dp"
             android:layout_height="@dimen/dimen_8dp"
             android:layout_marginStart="@dimen/dimen_12dp"
-            android:background="@drawable/walkthrough_button" />
+            android:background="@drawable/walkthrough_button"
+            style="?android:attr/buttonBarButtonStyle"/>
     </LinearLayout>
 
     <Button

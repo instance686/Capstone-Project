@@ -33,7 +33,7 @@
             android:background="#FFFFFF"
             android:gravity="center"
             android:text="@string/refresh"
-            android:textColor="#000000" />
+            android:textColor="@color/refreshTextColor" />
     </LinearLayout>
 
     <ListView

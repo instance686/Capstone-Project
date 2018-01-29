@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         GoogleApiClient.OnConnectionFailedListener {
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
     private static final int ACCESS_FINE_LOCATION_INTENT_ID = 3;
-    private static final String BROADCAST_ACTION = "android.location.PROVIDERS_CHANGED";
+    private static final String BROADCAST_ACTION = ConstantVar.BROADCAST_ACTION;
     @BindView(R.id.maintoolbar)
     Toolbar toolbar;
     @BindView(R.id.toolbarDelOptions)
@@ -229,7 +229,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case REQUEST_CHECK_SETTINGS:
                 switch (resultCode) {
                     case RESULT_OK:
-                        //startLocationUpdates();
                         break;
                     case RESULT_CANCELED:
                         checkPermissions();
@@ -280,11 +279,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onClick(View v) {
-            /*if(v.getId()==backLongClick.getId()){
-                toolbarOptions.setVisibility(View.GONE);
-                toolbar.setVisibility(View.VISIBLE);
 
-            }*/
     }
 
     @Override

@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_4dp"
             android:text="@string/shouts_no_cards"
-            android:textColor="#9e9e9e"
+            android:textColor="@color/shoutTextColor"
             android:textSize="@dimen/dimen_14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
