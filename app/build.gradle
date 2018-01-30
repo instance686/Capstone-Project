@@ -4,9 +4,9 @@ android {
     signingConfigs {
         config {
             keyAlias 'key0'
-            keyPassword 'iitian2010'
+            keyPassword 'xxxxxxxxxx'
             storeFile file("$rootDir/capstone.jks")
-            storePassword 'iitian2010'
+            storePassword 'xxxxxxxxxx'
         }
     }
     compileSdkVersion 27
